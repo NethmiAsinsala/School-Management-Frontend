@@ -20,6 +20,7 @@ export class Sidebar {
     { label: 'Dashboard', route: '/admin/dashboard', icon: 'grid' },
     { label: 'Students', route: '/admin/students', icon: 'cap' },
     { label: 'Teachers', route: '/admin/teachers', icon: 'user' },
+    { label: 'Parents', route: '/admin/parents', icon: 'users' },
     { label: 'Attendance', route: '/admin/attendance', icon: 'check-square' },
     { label: 'Exams', route: '/admin/exams', icon: 'document' },
     { label: 'Reports', route: '/admin/reports', icon: 'chart' },

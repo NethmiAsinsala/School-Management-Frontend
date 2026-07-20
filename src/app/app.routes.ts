@@ -47,6 +47,13 @@ export const routes: Routes = [
           import('./pages/teachers/teachers')
             .then(m => m.Teachers)
       },
+      
+      {
+        path: 'parents',
+        loadComponent: () =>
+          import('./pages/parent/parent')
+            .then(m => m.Parents)
+      },
 
       {
         path: 'attendance',
