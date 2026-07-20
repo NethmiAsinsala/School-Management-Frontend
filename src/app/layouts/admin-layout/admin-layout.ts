@@ -1,19 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { SidebarComponent } from '../../components/sidebar/sidebar';
-import { NavbarComponent } from '../../components/navbar/navbar';
+import { Sidebar } from '../../components/sidebar/sidebar';
 
 @Component({
   selector: 'app-admin-layout',
   standalone: true,
-  imports: [
-    SidebarComponent,
-    NavbarComponent,
-    RouterOutlet
-  ],
+  imports: [RouterOutlet, Sidebar],
   templateUrl: './admin-layout.html',
   styleUrl: './admin-layout.css'
 })
-export class AdminLayoutComponent {
-
-}
+export class AdminLayoutComponent {}

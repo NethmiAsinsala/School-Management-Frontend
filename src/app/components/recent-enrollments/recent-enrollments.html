@@ -1,1 +1,35 @@
-<p>recent-enrollments works!</p>
+<div class="panel">
+  <div class="panel-header">
+    <h3 class="panel-title">Recent Enrollments</h3>
+    <a href="#" class="view-all-link">View All</a>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="enrollments-table">
+      <thead>
+        <tr>
+          <th>Student ID</th>
+          <th>Name</th>
+          <th>Grade</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of enrollments">
+          <td class="mono">{{ row.studentId }}</td>
+          <td class="name-cell">{{ row.name }}</td>
+          <td>{{ row.grade }}</td>
+          <td>
+            <span class="status-badge" [ngClass]="'status-' + row.status.toLowerCase()">
+              {{ row.status }}
+            </span>
+          </td>
+          <td>
+            <button class="view-btn" (click)="onView(row)">View</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

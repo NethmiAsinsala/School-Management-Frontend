@@ -1,1 +1,36 @@
-<p>upcoming-events works!</p>
+<div class="panel">
+  <div class="panel-header">
+    <h3 class="panel-title">Upcoming Events</h3>
+    <button class="add-btn" aria-label="Add event">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="timeline">
+    <div class="event-row" *ngFor="let event of events; let last = last">
+      <div class="date-col">
+        <div class="date-badge" [ngClass]="'accent-' + event.accent">
+          <span class="day">{{ event.day }}</span>
+        </div>
+        <span class="month">{{ event.month }}</span>
+        <div class="connector" *ngIf="!last"></div>
+      </div>
+
+      <div class="event-content">
+        <div class="event-title">{{ event.title }}</div>
+        <div class="event-meta">{{ event.meta }}</div>
+
+        <div class="avatars" *ngIf="event.avatarCount">
+          <span class="avatar-dot" *ngFor="let i of [0,1]"></span>
+          <span class="avatar-more">+{{ event.avatarCount }}</span>
+        </div>
+
+        <span class="event-tag" *ngIf="event.tag">{{ event.tag }}</span>
+      </div>
+    </div>
+  </div>
+
+  <button class="view-calendar-btn">View Calendar</button>
+</div>

@@ -1,1 +1,74 @@
-<p>attendance-chart works!</p>
+<div class="panel">
+  <div class="panel-header">
+    <div>
+      <h3 class="panel-title">Attendance Trends</h3>
+      <p class="panel-subtitle">Weekly performance across all grades</p>
+    </div>
+
+    <div class="range-toggle">
+      <button
+        class="range-btn"
+        [class.active]="range === 'week'"
+        (click)="setRange('week')"
+      >
+        Week
+      </button>
+      <button
+        class="range-btn"
+        [class.active]="range === 'month'"
+        (click)="setRange('month')"
+      >
+        Month
+      </button>
+    </div>
+  </div>
+
+  <div class="chart-area">
+    <svg viewBox="0 0 700 280" preserveAspectRatio="none" class="chart-svg">
+      <!-- gridlines -->
+      <line x1="0" y1="0" x2="700" y2="0" stroke="#eef2f7" stroke-width="1" />
+      <line x1="0" y1="70" x2="700" y2="70" stroke="#eef2f7" stroke-width="1" />
+      <line x1="0" y1="140" x2="700" y2="140" stroke="#eef2f7" stroke-width="1" />
+      <line x1="0" y1="210" x2="700" y2="210" stroke="#eef2f7" stroke-width="1" />
+
+      <!-- filled area under line -->
+      <path
+        [attr.d]="getLinePath(700, 230) + ' L 700 230 L 0 230 Z'"
+        fill="url(#areaGradient)"
+        opacity="0.5"
+      />
+
+      <!-- line -->
+      <path
+        [attr.d]="getLinePath(700, 230)"
+        fill="none"
+        stroke="#2563eb"
+        stroke-width="3"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+
+      <!-- points -->
+      <circle
+        *ngFor="let d of activeData; let i = index"
+        [attr.cx]="i * (700 / (activeData.length - 1))"
+        [attr.cy]="getPointY(d.value, 230)"
+        r="5"
+        fill="#ffffff"
+        stroke="#2563eb"
+        stroke-width="2.5"
+      />
+
+      <defs>
+        <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.35" />
+          <stop offset="100%" stop-color="#3b82f6" stop-opacity="0" />
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <div class="x-axis">
+      <span *ngFor="let d of activeData" class="x-label">{{ d.day }}</span>
+    </div>
+  </div>
+</div>
