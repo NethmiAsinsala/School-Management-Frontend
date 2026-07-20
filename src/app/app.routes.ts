@@ -3,22 +3,21 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
 
   {
-    path: '',
-    loadComponent: () =>
-      import('./layouts/auth-layout/auth-layout')
-        .then(m => m.AuthLayoutComponent),
+  path: '',
+  loadComponent: () =>
+    import('./layouts/auth-layout/auth-layout')
+      .then(m => m.AuthLayoutComponent),
 
-    children: [
-
-      {
-        path: '',
-        loadComponent: () =>
-          import('./pages/auth/login/login')
-            .then(m => m.Login)
-      }
-
-    ]
-  },
+  children: [
+    { path: '', redirectTo: 'login', pathMatch: 'full' },
+    {
+      path: 'login',
+      loadComponent: () =>
+        import('./pages/auth/login/login')
+          .then(m => m.Login)
+    }
+  ]
+},
 
   {
     path: 'admin',
