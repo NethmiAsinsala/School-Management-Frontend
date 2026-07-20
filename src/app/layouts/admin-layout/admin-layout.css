@@ -1,0 +1,10 @@
+.admin-shell {
+  display: flex;
+  min-height: 100vh;
+  background: #f4f6fb;
+}
+
+.admin-content {
+  flex: 1;
+  min-width: 0;
+}

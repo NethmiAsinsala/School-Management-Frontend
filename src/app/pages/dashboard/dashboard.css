@@ -1,0 +1,139 @@
+.dashboard-body {
+  padding: 0 32px 32px;
+  font-family: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
+.hero-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(120deg, #1d4ed8, #3b82f6);
+  border-radius: 16px;
+  padding: 28px 32px;
+  margin-bottom: 24px;
+  color: #ffffff;
+}
+
+.hero-text h1 {
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+
+.hero-text p {
+  font-size: 14.5px;
+  margin: 0;
+  opacity: 0.9;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.btn-secondary,
+.btn-primary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-secondary svg,
+.btn-primary svg {
+  width: 16px;
+  height: 16px;
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.btn-primary {
+  background: #1e3a8a;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  opacity: 0.92;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 24px;
+  align-items: start;
+}
+
+.main-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+.stats-row {
+  display: flex;
+  gap: 20px;
+}
+
+.side-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.update-banner {
+  display: flex;
+  gap: 12px;
+  background: linear-gradient(120deg, #1d4ed8, #3b82f6);
+  color: #ffffff;
+  border-radius: 14px;
+  padding: 18px;
+}
+
+.update-banner svg {
+     width: 22px;
+     height: 22px;
+     flex-shrink: 0;
+   }
+
+.update-banner strong {
+  font-size: 14px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.update-banner p {
+  font-size: 13px;
+  margin: 0;
+  opacity: 0.9;
+  line-height: 1.4;
+}
+
+@media (max-width: 1100px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-row {
+    flex-wrap: wrap;
+  }
+
+  .stats-row app-stat-card {
+    flex: 1 1 calc(50% - 10px);
+  }
+}

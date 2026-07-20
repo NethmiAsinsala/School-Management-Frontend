@@ -1,1 +1,21 @@
-<p>quick-actions works!</p>
+<div class="panel">
+  <h3 class="panel-title">Quick Actions</h3>
+
+  <button
+    *ngFor="let action of actions"
+    class="action-item"
+    (click)="onAction(action)"
+  >
+    <span class="action-icon">
+      <svg *ngIf="action.icon === 'check'" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="8" r="3.5" stroke="currentColor" stroke-width="1.8"/><path d="M3 20C3 16.41 6.13 13.5 10 13.5C11.2 13.5 12.33 13.79 13.32 14.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M16 16.5L18 18.5L22 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <svg *ngIf="action.icon === 'mail'" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M3 7L12 13L21 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <svg *ngIf="action.icon === 'calendar'" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M3 10H21" stroke="currentColor" stroke-width="1.8"/><path d="M8 3V7M16 3V7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M12 14V18M10 16H14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </span>
+
+    <span class="action-label">{{ action.label }}</span>
+
+    <svg class="action-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>

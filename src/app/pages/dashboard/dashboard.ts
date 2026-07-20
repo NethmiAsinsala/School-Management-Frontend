@@ -1,24 +1,33 @@
 import { Component } from '@angular/core';
-
+import { CommonModule } from '@angular/common';
 import { PageHeader } from '../../components/page-header/page-header';
 import { StatCard } from '../../components/stat-card/stat-card';
-import { AttendanceChart } from '../../components/attendance-chart/attendance-chart';
 import { QuickActions } from '../../components/quick-actions/quick-actions';
-import { RecentEnrollments} from '../../components/recent-enrollments/recent-enrollments';
 import { UpcomingEvents } from '../../components/upcoming-events/upcoming-events';
+import { AttendanceChart } from '../../components/attendance-chart/attendance-chart';
+import { RecentEnrollments } from '../../components/recent-enrollments/recent-enrollments';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   imports: [
+    CommonModule,
     PageHeader,
     StatCard,
-    AttendanceChart,
     QuickActions,
-    RecentEnrollments,
-    UpcomingEvents
+    UpcomingEvents,
+    AttendanceChart,
+    RecentEnrollments
   ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })
-export class DashboardComponent {}
+export class DashboardComponent {
+  onExportReports(): void {
+    console.log('Export reports clicked');
+  }
+
+  onAddStudent(): void {
+    console.log('Add student clicked');
+  }
+}

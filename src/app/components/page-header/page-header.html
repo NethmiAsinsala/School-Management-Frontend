@@ -1,1 +1,35 @@
-<p>page-header works!</p>
+<header class="topbar">
+  <div class="search-box">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
+      <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    <input type="text" placeholder="Search students, staff, or reports..." />
+  </div>
+
+  <div class="topbar-actions">
+    <button class="icon-btn" aria-label="Notifications">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 8A6 6 0 006 8C6 15 3 17 3 17H21C21 17 18 15 18 8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M13.73 21A2 2 0 0110.27 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span class="dot" *ngIf="hasNotifications"></span>
+    </button>
+
+    <button class="icon-btn" aria-label="Settings">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+        <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09a1.65 1.65 0 001.51-1 1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" stroke="currentColor" stroke-width="1.6"/>
+      </svg>
+    </button>
+
+    <div class="user-chip">
+      <div class="avatar" *ngIf="!avatarUrl">{{ userName.charAt(0) }}</div>
+      <img *ngIf="avatarUrl" [src]="avatarUrl" class="avatar" alt="" />
+      <div class="user-info">
+        <span class="user-name">{{ userName }}</span>
+        <span class="user-role">{{ userRole }}</span>
+      </div>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,287 @@
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f4f6fb;
+  padding: 40px 16px;
+  font-family: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
+.login-wrapper {
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Brand */
+.brand {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.brand-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 16px;
+  background: #ffffff;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(30, 64, 175, 0.12);
+  color: #2563eb;
+}
+
+.brand-icon svg {
+  width: 30px;
+  height: 30px;
+}
+
+.brand-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 4px;
+}
+
+.brand-subtitle {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #64748b;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+/* Card */
+.login-card {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 40px 36px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.welcome-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 6px;
+}
+
+.welcome-subtitle {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0 0 28px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #475569;
+  margin-bottom: 8px;
+}
+
+.form-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  font-size: 15px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: #f1f5f9;
+  color: #1e293b;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.form-input::placeholder {
+  color: #94a3b8;
+}
+
+.form-input:focus {
+  outline: none;
+  background: #ffffff;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.form-input.input-error {
+  border-color: #ef4444;
+}
+
+.error-text {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  color: #ef4444;
+}
+
+/* Password field */
+.password-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-field .field-icon {
+  position: absolute;
+  left: 14px;
+  display: flex;
+  color: #94a3b8;
+  pointer-events: none;
+}
+
+.password-field .field-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.form-input.with-icon {
+  padding-left: 42px;
+  padding-right: 42px;
+}
+
+.toggle-visibility {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: #94a3b8;
+  display: flex;
+}
+
+.toggle-visibility:hover {
+  color: #64748b;
+}
+
+.toggle-visibility svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Remember / Forgot row */
+.form-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #475569;
+  cursor: pointer;
+}
+
+.checkbox-label input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+  accent-color: #2563eb;
+  cursor: pointer;
+}
+
+.forgot-link {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+}
+
+/* Submit button */
+.submit-btn {
+  width: 100%;
+  padding: 14px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: linear-gradient(90deg, #1d4ed8 0%, #3b82f6 100%);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  transition: opacity 0.15s, transform 0.1s;
+}
+
+.submit-btn:hover:not(:disabled) {
+  opacity: 0.95;
+}
+
+.submit-btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Card footer */
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.footer-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #64748b;
+  text-decoration: none;
+}
+
+.footer-item svg {
+  width: 16px;
+  height: 16px;
+  color: #94a3b8;
+}
+
+.footer-item.link {
+  color: #2563eb;
+}
+
+.footer-item.link svg {
+  color: #2563eb;
+}
+
+.footer-item.link:hover {
+  text-decoration: underline;
+}
+
+/* Page footer */
+.page-footer {
+  margin-top: 28px;
+  font-size: 13px;
+  color: #94a3b8;
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 28px 22px;
+  }
+}
