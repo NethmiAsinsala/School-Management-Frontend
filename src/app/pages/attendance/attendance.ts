@@ -9,7 +9,6 @@ interface StudentRow {
   idNumber: string;
   timeLogged: string;
   status: AttendanceStatus;
-  avatarTheme: 'blue' | 'purple';
 }
 
 @Component({
@@ -25,9 +24,9 @@ export class Attendance {
 
   currentPage = 1;
   totalPages = 3;
-  totalEntries = 35;
   rangeStart = 1;
   rangeEnd = 4;
+  totalEntries = 35;
 
   students: StudentRow[] = [
     {
@@ -35,41 +34,37 @@ export class Attendance {
       name: 'Sahan Perera',
       idNumber: 'STU-2021-045',
       timeLogged: '07:45 AM',
-      status: 'Present',
-      avatarTheme: 'blue'
+      status: 'Present'
     },
     {
       initials: 'DF',
       name: 'Dinithi Fernando',
       idNumber: 'STU-2021-082',
       timeLogged: '-',
-      status: 'Absent',
-      avatarTheme: 'purple'
+      status: 'Absent'
     },
     {
       initials: 'KS',
       name: 'Kavindu Silva',
       idNumber: 'STU-2021-112',
       timeLogged: '08:20 AM',
-      status: 'Late',
-      avatarTheme: 'purple'
+      status: 'Late'
     },
     {
       initials: 'NJ',
       name: 'Nethmi Jayasooriya',
       idNumber: 'STU-2021-154',
       timeLogged: '07:50 AM',
-      status: 'Present',
-      avatarTheme: 'blue'
+      status: 'Present'
     }
   ];
 
-  goToPreviousDay(): void {
-    console.log('Previous day clicked');
+  goToPrevDay(): void {
+    console.log('Go to previous day');
   }
 
   goToNextDay(): void {
-    console.log('Next day clicked');
+    console.log('Go to next day');
   }
 
   onMoreFilters(): void {
@@ -77,11 +72,15 @@ export class Attendance {
   }
 
   onMarkAllPresent(): void {
-    this.students = this.students.map(s => ({ ...s, status: 'Present' as AttendanceStatus, timeLogged: s.timeLogged === '-' ? '08:00 AM' : s.timeLogged }));
+    this.students = this.students.map(s => ({
+      ...s,
+      status: 'Present' as AttendanceStatus,
+      timeLogged: s.timeLogged === '-' ? '09:00 AM' : s.timeLogged
+    }));
   }
 
   onExport(): void {
-    console.log('Export clicked');
+    console.log('Export attendance clicked');
   }
 
   goToPage(page: number): void {
