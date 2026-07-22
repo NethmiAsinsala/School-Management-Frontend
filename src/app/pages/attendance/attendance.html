@@ -2,14 +2,14 @@
 
   <!-- Header -->
   <div class="page-title-row">
-    <div class="title-block">
+    <div>
       <h1>Daily Attendance</h1>
       <p>Monitor student presence across all grades for today.</p>
     </div>
 
     <div class="header-controls">
       <div class="date-picker">
-        <button class="date-arrow" (click)="goToPreviousDay()">
+        <button class="date-arrow" (click)="goToPrevDay()">
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <span class="date-display">
@@ -26,7 +26,7 @@
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
 
-      <button class="btn-filters" (click)="onMoreFilters()">
+      <button class="btn-outline" (click)="onMoreFilters()">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6H20M7 12H17M10 18H14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         More Filters
       </button>
@@ -45,18 +45,18 @@
           +1.2%
         </span>
       </div>
-      <div class="stat-footnote">1,245 of 1,321 students logged</div>
+      <div class="stat-note">1,245 of 1,321 students logged</div>
     </div>
 
     <div class="stat-card">
       <div class="stat-label">Absent Today</div>
       <div class="stat-value-row">
         <span class="stat-value">62</span>
-        <span class="stat-unit">students</span>
+        <span class="stat-suffix">students</span>
       </div>
-      <div class="chip-row">
-        <span class="chip chip-red">Unexcused: 40</span>
-        <span class="chip chip-gray">Excused: 22</span>
+      <div class="tag-row">
+        <span class="tag tag-red">Unexcused: 40</span>
+        <span class="tag tag-gray">Excused: 22</span>
       </div>
     </div>
 
@@ -69,7 +69,7 @@
           -3
         </span>
       </div>
-      <div class="stat-footnote">Average arrival time: 08:15 AM</div>
+      <div class="stat-note">Average arrival time: 08:15 AM</div>
     </div>
   </div>
 
@@ -101,7 +101,7 @@
           <tr *ngFor="let student of students">
             <td>
               <div class="student-cell">
-                <div class="avatar-initials" [ngClass]="'theme-' + student.avatarTheme">{{ student.initials }}</div>
+                <div class="avatar-initials">{{ student.initials }}</div>
                 <span class="student-name">{{ student.name }}</span>
               </div>
             </td>
@@ -112,21 +112,25 @@
                 <span class="status-dot"></span>{{ student.status }}
               </span>
             </td>
-            <td></td>
+            <td>
+              <button class="action-dots" aria-label="More actions">⋯</button>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
 
     <div class="table-footer">
-      <span class="results-text">Showing {{ rangeStart }} to {{ rangeEnd }} of {{ totalEntries }} entries</span>
+      <span class="results-text">
+        Showing {{ rangeStart }} to {{ rangeEnd }} of {{ totalEntries }} entries
+      </span>
 
       <div class="pagination">
-        <button class="page-text-btn" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">Prev</button>
+        <button class="page-text" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">Prev</button>
         <button class="page-num" [class.active]="currentPage === 1" (click)="goToPage(1)">1</button>
         <button class="page-num" [class.active]="currentPage === 2" (click)="goToPage(2)">2</button>
         <button class="page-num" [class.active]="currentPage === 3" (click)="goToPage(3)">3</button>
-        <button class="page-text-btn" (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
+        <button class="page-text" (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
       </div>
     </div>
   </div>
