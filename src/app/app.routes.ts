@@ -81,6 +81,12 @@ export const routes: Routes = [
           import('./pages/document/document')
             .then(m => m.Documents)
       },
+      {
+        path: 'notices',
+        loadComponent: () =>
+          import('./pages/notice/notice')
+            .then(m => m.Notices)
+      },
 
       {
         path: 'settings',

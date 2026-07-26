@@ -25,6 +25,7 @@ export class Sidebar {
     { label: 'Exams', route: '/admin/exams', icon: 'document' },
     { label: 'Reports', route: '/admin/reports', icon: 'chart' },
     { label: 'Documents', route: '/admin/documents', icon: 'document-lib' },
+    { label: 'Notices', route: '/admin/notices', icon: 'megaphone' },
     { label: 'Settings', route: '/admin/settings', icon: 'gear' }
   ];
 }
