@@ -22,6 +22,7 @@ export class Sidebar {
     { label: 'Teachers', route: '/admin/teachers', icon: 'user' },
     { label: 'Parents', route: '/admin/parents', icon: 'users' },
     { label: 'Attendance', route: '/admin/attendance', icon: 'check-square' },
+    { label: 'Timetable', route: '/admin/timetable', icon: 'calendar' },
     { label: 'Exams', route: '/admin/exams', icon: 'document' },
     { label: 'Reports', route: '/admin/reports', icon: 'chart' },
     { label: 'Documents', route: '/admin/documents', icon: 'document-lib' },

@@ -1,0 +1,86 @@
+<div class="timetable-page">
+
+  <div class="page-header-row">
+    <div>
+      <h2 class="page-eyebrow">Class Timetable</h2>
+      <p class="page-subtitle">Manage and view weekly schedules across all grades.</p>
+    </div>
+
+    <div class="header-controls">
+      <button class="grade-chip" (click)="onGradeChange()">
+        {{ selectedGrade }}
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="edit-btn" (click)="onEditTimetable()">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 4H4C3.45 4 3 4.45 3 5V20C3 20.55 3.45 21 4 21H19C19.55 21 20 20.55 20 20V13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.5 2.5C19.33 1.67 20.67 1.67 21.5 2.5C22.33 3.33 22.33 4.67 21.5 5.5L12 15L8 16L9 12L18.5 2.5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Edit Timetable
+      </button>
+    </div>
+  </div>
+
+  <!-- Timetable grid -->
+  <div class="timetable-panel">
+    <div class="timetable-scroll">
+      <div class="timetable-grid">
+
+        <!-- Header row -->
+        <div class="grid-header time-col">Time</div>
+        <div
+          class="grid-header day-col"
+          *ngFor="let day of days"
+          [class.today-col]="day.key === todayColumn"
+        >
+          {{ day.label }}
+          <span class="today-badge" *ngIf="day.key === todayColumn">Today</span>
+        </div>
+
+        <!-- Rows -->
+        <ng-container *ngFor="let row of rows">
+          <div class="grid-time-cell">{{ row.time }}</div>
+
+          <div
+            class="grid-cell"
+            *ngFor="let day of days"
+            [class.today-col]="day.key === todayColumn"
+          >
+            <div
+              class="cell-card"
+              *ngIf="!row[day.key].isFree"
+              [ngClass]="'category-' + row[day.key].category"
+            >
+              <span class="cell-subject">{{ row[day.key].subject }}</span>
+              <span class="cell-meta">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.8"/><path d="M4 20C4 16.13 7.58 13 12 13C16.42 13 20 16.13 20 20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                {{ row[day.key].teacher }}
+              </span>
+              <span class="cell-meta">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L20 6V12C20 16.42 16.42 20.74 12 22C7.58 20.74 4 16.42 4 12V6L12 2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+                {{ row[day.key].room }}
+              </span>
+            </div>
+
+            <div class="cell-free" *ngIf="row[day.key].isFree">
+              Free Period
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="legend-row">
+    <span class="legend-item">
+      <span class="legend-dot dot-core"></span>
+      Core Subjects
+    </span>
+    <span class="legend-item">
+      <span class="legend-dot dot-science"></span>
+      Sciences
+    </span>
+    <span class="legend-item">
+      <span class="legend-dot dot-language"></span>
+      Languages
+    </span>
+  </div>
+</div>
