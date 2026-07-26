@@ -24,6 +24,7 @@ export class Sidebar {
     { label: 'Attendance', route: '/admin/attendance', icon: 'check-square' },
     { label: 'Exams', route: '/admin/exams', icon: 'document' },
     { label: 'Reports', route: '/admin/reports', icon: 'chart' },
+    { label: 'Documents', route: '/admin/documents', icon: 'document-lib' },
     { label: 'Settings', route: '/admin/settings', icon: 'gear' }
   ];
 }
