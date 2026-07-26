@@ -1,0 +1,121 @@
+<div class="notices-page">
+
+  <div class="page-header-row">
+    <div>
+      <h1>Notice Management Center</h1>
+      <p>Manage institutional announcements across all audiences.</p>
+    </div>
+    <button class="draft-btn" (click)="onDraftNewNotice()">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+      Draft New Notice
+    </button>
+  </div>
+
+  <div class="content-grid">
+    <!-- Sidebar filters -->
+    <div class="filters-col">
+      <div class="filter-panel">
+        <h3 class="filter-heading">Audience Filters</h3>
+
+        <label class="radio-row">
+          <input type="radio" name="audience" [checked]="audienceFilter === 'all'" (change)="setAudienceFilter('all')" />
+          <span class="radio-custom"></span>
+          All Audiences
+        </label>
+        <label class="radio-row">
+          <input type="radio" name="audience" [checked]="audienceFilter === 'parents'" (change)="setAudienceFilter('parents')" />
+          <span class="radio-custom"></span>
+          Parents
+        </label>
+        <label class="radio-row">
+          <input type="radio" name="audience" [checked]="audienceFilter === 'staff'" (change)="setAudienceFilter('staff')" />
+          <span class="radio-custom"></span>
+          Staff Only
+        </label>
+        <label class="radio-row">
+          <input type="radio" name="audience" [checked]="audienceFilter === 'students'" (change)="setAudienceFilter('students')" />
+          <span class="radio-custom"></span>
+          Students
+        </label>
+
+        <div class="divider"></div>
+
+        <h3 class="filter-heading">Status</h3>
+        <div class="status-pills">
+          <button class="status-pill" [class.active]="statusFilter === 'published'" (click)="setStatusFilter('published')">Published</button>
+          <button class="status-pill" [class.active]="statusFilter === 'scheduled'" (click)="setStatusFilter('scheduled')">Scheduled</button>
+          <button class="status-pill" [class.active]="statusFilter === 'drafts'" (click)="setStatusFilter('drafts')">Drafts</button>
+        </div>
+      </div>
+
+      <div class="week-panel">
+        <h3 class="filter-heading">This Week</h3>
+        <div class="week-stats">
+          <div class="week-stat">
+            <span class="week-value">{{ activeNoticesCount }}</span>
+            <span class="week-label">Active Notices</span>
+          </div>
+          <div class="week-stat">
+            <span class="week-value">{{ totalViews }}</span>
+            <span class="week-label">Total Views</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notices list -->
+    <div class="notices-col">
+      <div
+        class="notice-card"
+        *ngFor="let notice of notices"
+        [class.high-priority]="notice.highPriority"
+        [class.is-scheduled]="notice.state === 'scheduled'"
+      >
+        <div class="notice-main">
+          <div class="tag-row">
+            <span
+              *ngFor="let tag of notice.tags"
+              class="tag"
+              [ngClass]="'tag-' + tag.theme"
+            >
+              <svg *ngIf="tag.icon === 'warning'" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 9V13M12 17H12.01M10.29 3.86L1.82 18C1.65 18.32 1.56 18.68 1.56 19.04C1.56 20.13 2.44 21 3.53 21H20.47C20.83 21 21.19 20.9 21.5 20.72C22.44 20.17 22.76 18.96 22.21 18.02L13.74 3.86C13.55 3.53 13.28 3.26 12.95 3.07C12.01 2.53 10.81 2.85 10.29 3.86Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg *ngIf="tag.icon === 'clock'" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 7V12L15.5 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              {{ tag.label }}
+            </span>
+          </div>
+
+          <h3 class="notice-title">{{ notice.title }}</h3>
+          <p class="notice-desc">{{ notice.description }}</p>
+        </div>
+
+        <div class="notice-side">
+          <span class="side-label">{{ notice.dateLabel }}</span>
+          <span class="side-date">{{ notice.dateValue }}</span>
+          <span class="side-expires" *ngIf="notice.expires">Expires: {{ notice.expires }}</span>
+
+          <div class="side-footer">
+            <span class="side-views" *ngIf="notice.views">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/></svg>
+              {{ notice.views }}
+            </span>
+            <button class="edit-btn" (click)="onEditNotice(notice)" aria-label="Edit notice">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 4H4C3.45 4 3 4.45 3 5V20C3 20.55 3.45 21 4 21H19C19.55 21 20 20.55 20 20V13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.5 2.5C19.33 1.67 20.67 1.67 21.5 2.5C22.33 3.33 22.33 4.67 21.5 5.5L12 15L8 16L9 12L18.5 2.5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="list-footer">
+        <span class="results-text">Showing {{ rangeStart }} to {{ rangeEnd }} of {{ totalNotices }} notices</span>
+        <div class="pager">
+          <button class="pager-btn" (click)="onPrevPage()" aria-label="Previous page">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="pager-btn" (click)="onNextPage()" aria-label="Next page">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
