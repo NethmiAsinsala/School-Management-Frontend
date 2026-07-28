@@ -37,6 +37,17 @@ export class Reports {
   growthMarkerY = 12;
   growthPercent = '+24% Growth';
 
+  constructor() {
+    this.currentPeriod = 'Select academic data';
+    this.gradeDistribution = [];
+    this.tuitionCollected = '—';
+    this.tuitionTrend = 'No financial API data';
+    this.tuitionProgressPercent = 0;
+    this.outstanding = '—';
+    this.scholarships = '—';
+    this.growthPercent = 'No report data';
+  }
+
   setPeriodMode(mode: 'term' | 'year'): void {
     this.periodMode = mode;
   }

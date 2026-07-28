@@ -129,3 +129,4 @@
     </div>
   </div>
 </div>
+<form *ngIf="showForm" class="parent-editor" (ngSubmit)="saveParent()"><h2>Connect parent account</h2><label>Name<input [(ngModel)]="parentForm.name" name="name" required></label><label>Phone<input [(ngModel)]="parentForm.phoneNumber" name="phone" required placeholder="0771234567"></label><label>Occupation<input [(ngModel)]="parentForm.occupation" name="occupation" required></label><label>Login email<input [(ngModel)]="parentForm.loginEmail" name="email" type="email"></label><label>Password<input [(ngModel)]="parentForm.loginPassword" name="password" type="password" minlength="8"></label><label class="wide">Address<textarea [(ngModel)]="parentForm.address" name="address" required></textarea></label><div class="wide"><button type="submit" class="primary-action">Save parent</button></div></form>

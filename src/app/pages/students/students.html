@@ -4,9 +4,10 @@
   <div class="page-tabs-row">
     <h2 class="page-name">Student Management</h2>
     <nav class="page-tabs">
-      <button class="page-tab" [class.active]="activeTab === 'directory'" (click)="setTab('directory')">Directory</button>
-      <button class="page-tab" [class.active]="activeTab === 'enrollment'" (click)="setTab('enrollment')">Enrollment</button>
-      <button class="page-tab" [class.active]="activeTab === 'archives'" (click)="setTab('archives')">Archives</button>
+      <button class="page-tab" [class.active]="activeTab === 'directory'"
+        (click)="setTab('directory')">Directory</button>
+      <button class="page-tab" [class.active]="activeTab === 'enrollment'"
+        (click)="setTab('enrollment')">Enrollment</button>
     </nav>
   </div>
 
@@ -20,27 +21,56 @@
 
     <div class="search-add-row">
       <div class="search-box">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        <input type="text" placeholder="Search by name, ID, or class..." [(ngModel)]="searchTerm" [ngModelOptions]="{standalone: true}" />
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" />
+          <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </svg>
+        <input type="text" placeholder="Search by name, ID, or class..." [(ngModel)]="searchTerm" (keyup)="search()"
+          [ngModelOptions]="{standalone: true}" />
       </div>
       <button class="btn-primary" (click)="onAddNewStudent()">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="8" r="3.5" stroke="currentColor" stroke-width="2"/><path d="M2 20C2 16.13 5.13 13 9 13C10.5 13 11.89 13.46 13.03 14.24" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M18 9V15M15 12H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="9" cy="8" r="3.5" stroke="currentColor" stroke-width="2" />
+          <path d="M2 20C2 16.13 5.13 13 9 13C10.5 13 11.89 13.46 13.03 14.24" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" />
+          <path d="M18 9V15M15 12H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </svg>
         Add New Student
       </button>
     </div>
+    <p *ngIf="errorMessage" class="form-error">{{ errorMessage }}</p>
 
     <!-- Stat cards -->
     <div class="stats-row">
       <div class="stat-card" *ngFor="let stat of stats">
         <div>
           <div class="stat-label">{{ stat.label }}</div>
-          <div class="stat-value">{{ stat.value }}</div>
+          <div class="stat-value">
+            {{ stat.label === 'Total Students' ? students.length : stat.value }}
+          </div>
         </div>
         <div class="icon-box" [ngClass]="'theme-' + stat.theme">
-          <svg *ngIf="stat.icon === 'users'" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="8" r="3" fill="currentColor"/><circle cx="17" cy="9" r="2.5" fill="currentColor" opacity="0.6"/><path d="M3 20C3 16.69 5.69 14 9 14C12.31 14 15 16.69 15 20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-          <svg *ngIf="stat.icon === 'trend'" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 17L9 11L13 15L21 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 7H21V13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <svg *ngIf="stat.icon === 'check'" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="2"/><path d="M8 12L11 15L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <svg *ngIf="stat.icon === 'card'" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="6" width="20" height="14" rx="2" stroke="currentColor" stroke-width="2"/><path d="M2 10H22" stroke="currentColor" stroke-width="2"/></svg>
+          <svg *ngIf="stat.icon === 'users'" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="9" cy="8" r="3" fill="currentColor" />
+            <circle cx="17" cy="9" r="2.5" fill="currentColor" opacity="0.6" />
+            <path d="M3 20C3 16.69 5.69 14 9 14C12.31 14 15 16.69 15 20" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" />
+          </svg>
+          <svg *ngIf="stat.icon === 'trend'" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 17L9 11L13 15L21 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M15 7H21V13" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+          <svg *ngIf="stat.icon === 'check'" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="2" />
+            <path d="M8 12L11 15L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+          <svg *ngIf="stat.icon === 'card'" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="6" width="20" height="14" rx="2" stroke="currentColor" stroke-width="2" />
+            <path d="M2 10H22" stroke="currentColor" stroke-width="2" />
+          </svg>
         </div>
       </div>
     </div>
@@ -51,10 +81,16 @@
         <h3>Recently Enrolled Students</h3>
         <div class="panel-icons">
           <button class="icon-btn-sm" aria-label="Filter">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6H20M7 12H17M10 18H14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 6H20M7 12H17M10 18H14" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
           </button>
           <button class="icon-btn-sm" aria-label="More options">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="5" r="1.5" fill="currentColor"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/><circle cx="12" cy="19" r="1.5" fill="currentColor"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="5" r="1.5" fill="currentColor" />
+              <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+              <circle cx="12" cy="19" r="1.5" fill="currentColor" />
+            </svg>
           </button>
         </div>
       </div>
@@ -76,22 +112,29 @@
               <td>
                 <div class="name-cell">
                   <img *ngIf="s.avatarUrl" [src]="s.avatarUrl" class="avatar-img" alt="" />
-                  <div *ngIf="!s.avatarUrl && s.initials" class="avatar-initials" [ngClass]="'avatar-' + s.avatarTheme">{{ s.initials }}</div>
+                  <div *ngIf="!s.avatarUrl && s.initials" class="avatar-initials" [ngClass]="'avatar-' + s.avatarTheme">
+                    {{ s.initials }}
+                  </div>
                   <div class="name-text">
-                    <span class="student-name">{{ s.name }}</span>
-                    <span class="student-email">{{ s.email }}</span>
+                    <span class="student-name">
+                      {{ s.name }}
+                    </span>
                   </div>
                 </div>
               </td>
               <td>{{ s.className }}</td>
               <td>
                 <span class="contact-cell">
-                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92V19.92C22 20.47 21.55 20.92 21 20.9C10.4 20.3 2.7 12.6 2.1 2C2.08 1.45 2.53 1 3.08 1H6.08C6.58 1 7 1.39 7.05 1.89L7.6 5.89C7.65 6.28 7.51 6.68 7.23 6.96L5.7 8.49C7.06 11.36 9.64 13.94 12.51 15.3L14.04 13.77C14.32 13.49 14.72 13.35 15.11 13.4L19.11 13.95C19.61 14 20 14.42 20 14.92V16.92" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M22 16.92V19.92C22 20.47 21.55 20.92 21 20.9C10.4 20.3 2.7 12.6 2.1 2C2.08 1.45 2.53 1 3.08 1H6.08C6.58 1 7 1.39 7.05 1.89L7.6 5.89C7.65 6.28 7.51 6.68 7.23 6.96L5.7 8.49C7.06 11.36 9.64 13.94 12.51 15.3L14.04 13.77C14.32 13.49 14.72 13.35 15.11 13.4L19.11 13.95C19.61 14 20 14.42 20 14.92V16.92"
+                      stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
                   {{ s.contact }}
                 </span>
               </td>
               <td>
-                <button class="action-dots" aria-label="More">⋯</button>
+                <span class="muted-action">Active</span>
               </td>
             </tr>
           </tbody>
@@ -99,60 +142,47 @@
       </div>
 
       <div class="table-footer">
-        <span class="results-text">Showing {{ students.length }} of 1,248 students</span>
+        <span class="results-text">Showing {{ students.length }} of {{ totalStudents }} students</span>
         <div class="pagination">
           <button class="page-arrow" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
           </button>
-          <button class="page-num" [class.active]="currentPage === 1" (click)="goToPage(1)">1</button>
-          <button class="page-num" [class.active]="currentPage === 2" (click)="goToPage(2)">2</button>
-          <button class="page-num" [class.active]="currentPage === 3" (click)="goToPage(3)">3</button>
+          <button *ngFor="let page of [].constructor(totalPages); let i = index" class="page-num"
+            [class.active]="currentPage === i + 1" (click)="goToPage(i + 1)">
+            {{ i + 1 }}
+          </button>
           <span class="page-ellipsis">...</span>
           <button class="page-arrow" (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
           </button>
         </div>
       </div>
     </div>
 
-    <!-- Bottom banners -->
-    <div class="banners-row">
-      <div class="import-banner">
-        <div>
-          <h4>Need Bulk Import?</h4>
-          <p>Download our CSV template to upload thousands of student records in seconds.</p>
-          <button class="get-template-btn" (click)="onGetTemplate()">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3V15M12 15L8 11M12 15L16 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 17V19C4 20.1 4.9 21 6 21H18C19.1 21 20 20.1 20 19V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-            Get Template
-          </button>
-        </div>
-      </div>
-
-      <div class="review-banner">
-        <div class="review-avatars">
-          <span class="avatar-dot"></span>
-          <span class="avatar-dot"></span>
-          <span class="avatar-more">+12</span>
-        </div>
-        <div class="review-text">
-          <h4>Teacher Review Required</h4>
-          <p>12 class teachers are currently reviewing attendance anomalies for the past week.</p>
-        </div>
-        <a href="#" class="view-progress-link" (click)="onViewProgress()">View Progress</a>
-      </div>
-    </div>
   </div>
 
   <!-- ================= ENROLLMENT TAB ================= -->
   <div *ngIf="activeTab === 'enrollment'">
     <div class="breadcrumb">
       <a href="#" (click)="setTab('directory')">Students</a>
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
       <span>New Enrollment</span>
     </div>
 
     <h1 class="enrollment-title">Student Enrollment</h1>
-    <p class="enrollment-subtitle">Register a new student by completing the multi-step enrollment form. Ensure all personal and academic records are accurate.</p>
+    <p class="enrollment-subtitle">Register a new student by completing the multi-step enrollment form. Ensure all
+      personal and academic records are accurate.</p>
+    <p *ngIf="errorMessage" class="form-error">{{ errorMessage }}</p>
+    <p *ngIf="successMessage" class="form-success">{{ successMessage }}</p>
 
     <div class="enrollment-grid">
       <div class="wizard-main">
@@ -161,13 +191,12 @@
         <div class="step-indicator">
           <ng-container *ngFor="let label of stepLabels; let i = index">
             <div class="step-item">
-              <button
-                class="step-circle"
-                [class.active]="currentStep === i + 1"
-                [class.done]="currentStep > i + 1"
-                (click)="setStep(i + 1)"
-              >
-                <svg *ngIf="currentStep > i + 1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12L10 17L19 8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <button class="step-circle" [class.active]="currentStep === i + 1" [class.done]="currentStep > i + 1"
+                (click)="setStep(i + 1)">
+                <svg *ngIf="currentStep > i + 1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5 12L10 17L19 8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
                 <span *ngIf="currentStep <= i + 1">{{ i + 1 }}</span>
               </button>
               <span class="step-label" [class.active-label]="currentStep === i + 1">{{ label }}</span>
@@ -183,7 +212,10 @@
             <!-- Step 1: Personal Info -->
             <div *ngIf="currentStep === 1" [formGroup]="personalGroup">
               <h3 class="step-heading">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="7" width="18" height="13" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 7V5A2 2 0 0110 3H14A2 2 0 0116 5V7" stroke="currentColor" stroke-width="1.8"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="3" y="7" width="18" height="13" rx="2" stroke="currentColor" stroke-width="1.8" />
+                  <path d="M8 7V5A2 2 0 0110 3H14A2 2 0 0116 5V7" stroke="currentColor" stroke-width="1.8" />
+                </svg>
                 Personal Information
               </h3>
 
@@ -233,14 +265,16 @@
             <!-- Step 2: Academic -->
             <div *ngIf="currentStep === 2" [formGroup]="academicGroup">
               <h3 class="step-heading">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L1 9L12 15L21 10.09V17H23V9L12 3Z" fill="currentColor"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 3L1 9L12 15L21 10.09V17H23V9L12 3Z" fill="currentColor" />
+                </svg>
                 Academic Information
               </h3>
 
               <div class="form-row-2">
                 <div class="form-group">
-                  <label>Grade Applying For</label>
-                  <input type="text" formControlName="gradeApplying" placeholder="e.g. Grade 9" class="form-input" />
+                  <label>Class</label>
+                  <select formControlName="gradeApplying" class="form-input"><option value="">Select class</option><option *ngFor="let classItem of classes" [value]="classItem.id">{{ classItem.name }}</option></select>
                 </div>
                 <div class="form-group">
                   <label>Section</label>
@@ -250,19 +284,32 @@
 
               <div class="form-group">
                 <label>Previous School (if any)</label>
-                <input type="text" formControlName="previousSchool" placeholder="e.g. Green Valley School" class="form-input" />
+                <input type="text" formControlName="previousSchool" placeholder="e.g. Green Valley School"
+                  class="form-input" />
               </div>
 
               <div class="form-group">
                 <label>Admission Date</label>
                 <input type="date" formControlName="admissionDate" class="form-input" />
               </div>
+              <div class="form-group">
+                <label>Medium</label>
+                <select formControlName="medium" class="form-input">
+                  <option value="ENGLISH">English</option>
+                  <option value="SINHALA">Sinhala</option>
+                  <option value="TAMIL">Tamil</option>
+                </select>
+              </div>
             </div>
 
             <!-- Step 3: Guardian -->
             <div *ngIf="currentStep === 3" [formGroup]="guardianGroup">
               <h3 class="step-heading">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M4 20C4 16.13 7.58 13 12 13C16.42 13 20 16.13 20 20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.8" />
+                  <path d="M4 20C4 16.13 7.58 13 12 13C16.42 13 20 16.13 20 20" stroke="currentColor" stroke-width="1.8"
+                    stroke-linecap="round" />
+                </svg>
                 Guardian Information
               </h3>
 
@@ -280,40 +327,57 @@
               <div class="form-row-2">
                 <div class="form-group">
                   <label>Contact Number</label>
-                  <input type="tel" formControlName="guardianContact" placeholder="e.g. +94 77 123 4567" class="form-input" />
+                  <input type="tel" formControlName="guardianContact" placeholder="e.g. +94 77 123 4567"
+                    class="form-input" />
                 </div>
                 <div class="form-group">
                   <label>Email</label>
-                  <input type="email" formControlName="guardianEmail" placeholder="e.g. guardian@email.com" class="form-input" />
+                  <input type="email" formControlName="guardianEmail" required placeholder="e.g. guardian@email.com"
+                    class="form-input" />
                 </div>
+              </div>
+
+              <div class="form-row-2">
+                <div class="form-group"><label>Parent account password</label><input type="password" formControlName="guardianPassword" required class="form-input" /></div>
+                <div class="form-group"><label>Occupation</label><input type="text" formControlName="occupation" required class="form-input" /></div>
               </div>
 
               <div class="form-group">
                 <label>Home Address</label>
-                <input type="text" formControlName="address" placeholder="e.g. 123 Main Street, Colombo" class="form-input" />
+                <input type="text" formControlName="address" placeholder="e.g. 123 Main Street, Colombo"
+                  class="form-input" />
               </div>
             </div>
 
             <!-- Step 4: Documents -->
             <div *ngIf="currentStep === 4">
               <h3 class="step-heading">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 2H15L19 6V22H6V2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6 2H15L19 6V22H6V2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+                </svg>
                 Upload Documents
               </h3>
 
               <div class="doc-upload-row" *ngFor="let doc of documents">
                 <div class="doc-info">
-                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 2H15L19 6V22H6V2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 2H15L19 6V22H6V2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
+                  </svg>
                   <span>{{ doc.label }}</span>
                 </div>
-                <button
-                  class="upload-btn"
-                  [class.uploaded]="doc.uploaded"
-                  (click)="toggleDocUploaded(doc)"
-                >
-                  <svg *ngIf="!doc.uploaded" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 15V3M12 3L7 8M12 3L17 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 17V19C4 20.1 4.9 21 6 21H18C19.1 21 20 20.1 20 19V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-                  <svg *ngIf="doc.uploaded" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12L10 17L19 8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  {{ doc.uploaded ? 'Uploaded' : 'Upload' }}
+                <input #fileInput type="file" hidden accept=".pdf,.png,.jpg,.jpeg,.doc,.docx" (change)="onDocumentSelected(doc, $event)" />
+                <button type="button" class="upload-btn" [class.uploaded]="doc.uploaded" (click)="fileInput.click()">
+                  <svg *ngIf="!doc.uploaded" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 15V3M12 3L7 8M12 3L17 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                    <path d="M4 17V19C4 20.1 4.9 21 6 21H18C19.1 21 20 20.1 20 19V17" stroke="currentColor"
+                      stroke-width="2" stroke-linecap="round" />
+                  </svg>
+                  <svg *ngIf="doc.uploaded" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 12L10 17L19 8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+                  {{ doc.uploaded ? (doc.file?.name || 'Selected') : 'Upload' }}
                 </button>
               </div>
             </div>
@@ -324,7 +388,8 @@
               <div class="right-actions">
                 <button type="button" class="btn-back" *ngIf="currentStep > 1" (click)="goBack()">Back</button>
                 <button type="button" class="btn-next" *ngIf="currentStep < totalSteps" (click)="goNext()">Next</button>
-                <button type="button" class="btn-submit" *ngIf="currentStep === totalSteps" (click)="onSubmitEnrollment()">Submit Enrollment</button>
+                <button type="button" class="btn-submit" *ngIf="currentStep === totalSteps" [disabled]="submittingEnrollment"
+                  (click)="onSubmitEnrollment()">{{ submittingEnrollment ? 'Submitting...' : 'Submit Enrollment' }}</button>
               </div>
             </div>
           </form>
@@ -339,18 +404,26 @@
           <div class="progress-track">
             <div class="progress-fill" [style.width.%]="progressPercent"></div>
           </div>
-          <p class="progress-note">Complete this first section to establish the core student record. You can save progress and return later if needed.</p>
+          <p class="progress-note">Complete this first section to establish the core student record. You can save
+            progress and return later if needed.</p>
         </div>
 
         <div class="panel">
           <h4 class="panel-title-sm">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M3 10H21" stroke="currentColor" stroke-width="1.8"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.8" />
+              <path d="M3 10H21" stroke="currentColor" stroke-width="1.8" />
+            </svg>
             Prepare Documents
           </h4>
           <p class="prepare-note">You will need the following documents for Step 4:</p>
           <ul class="doc-checklist">
             <li *ngFor="let doc of documents">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="18" height="18" rx="4" stroke="currentColor" stroke-width="1.6"/><path d="M8 12L11 15L16 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3" y="3" width="18" height="18" rx="4" stroke="currentColor" stroke-width="1.6" />
+                <path d="M8 12L11 15L16 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
               {{ doc.label }}
             </li>
           </ul>
@@ -359,102 +432,4 @@
     </div>
   </div>
 
-  <!-- ================= ARCHIVES TAB ================= -->
-  <div *ngIf="activeTab === 'archives'">
-    <div class="archive-header-row">
-      <div>
-        <h1>Student Archives</h1>
-        <p>Historical records of former students who have graduated, transferred, or otherwise exited the institution. These records are read-only.</p>
-      </div>
-      <button class="btn-outline" (click)="onExportArchiveList()">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3V15M12 15L8 11M12 15L16 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 17V19C4 20.1 4.9 21 6 21H18C19.1 21 20 20.1 20 19V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        Export List
-      </button>
-    </div>
-
-    <!-- Filters panel -->
-    <div class="archive-filters-panel">
-      <div class="filter-col">
-        <label>Exit Year</label>
-        <select class="filter-select" [(ngModel)]="archiveExitYear" [ngModelOptions]="{standalone: true}">
-          <option value="all">All Years</option>
-          <option value="2024">2024</option>
-          <option value="2023">2023</option>
-          <option value="2022">2022</option>
-        </select>
-      </div>
-
-      <div class="filter-col">
-        <label>Exit Reason</label>
-        <select class="filter-select" [(ngModel)]="archiveExitReason" [ngModelOptions]="{standalone: true}">
-          <option value="all">All Reasons</option>
-          <option value="Graduated">Graduated</option>
-          <option value="Transferred">Transferred</option>
-          <option value="Withdrawn">Withdrawn</option>
-        </select>
-      </div>
-
-      <div class="filter-col filter-col-search">
-        <label>Advanced Search</label>
-        <div class="archive-search-box">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-          <input type="text" placeholder="ID, Name, or Note..." [(ngModel)]="archiveSearchTerm" [ngModelOptions]="{standalone: true}" />
-        </div>
-      </div>
-
-      <button class="clear-filters-link" (click)="onClearArchiveFilters()">Clear Filters</button>
-    </div>
-
-    <!-- Archive table -->
-    <div class="table-panel">
-      <div class="table-wrapper">
-        <table class="archive-table">
-          <thead>
-            <tr>
-              <th>Student ID</th>
-              <th>Name</th>
-              <th>Batch/Year</th>
-              <th>Exit Reason</th>
-              <th>Archive Date</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let student of archivedStudents">
-              <td class="mono">{{ student.archiveId }}</td>
-              <td class="archive-name">{{ student.name }}</td>
-              <td>{{ student.batchYear }}</td>
-              <td>
-                <span class="reason-badge" [ngClass]="getExitReasonClass(student.exitReason)">
-                  {{ student.exitReason }}
-                </span>
-              </td>
-              <td>{{ student.archiveDate }}</td>
-              <td>
-                <button class="row-link" (click)="onViewProfile(student)">Profile</button>
-                <button class="row-link" (click)="onRestoreStudent(student)">Restore</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="table-footer">
-        <span class="results-text">
-          Showing 1 to {{ archivedStudents.length }} of {{ archiveTotalEntries }} entries
-        </span>
-        <div class="pagination">
-          <button class="page-arrow" (click)="goToArchivePage(archiveCurrentPage - 1)" [disabled]="archiveCurrentPage === 1">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <button class="page-num" [class.active]="archiveCurrentPage === 1" (click)="goToArchivePage(1)">1</button>
-          <button class="page-num" [class.active]="archiveCurrentPage === 2" (click)="goToArchivePage(2)">2</button>
-          <button class="page-num" [class.active]="archiveCurrentPage === 3" (click)="goToArchivePage(3)">3</button>
-          <button class="page-arrow" (click)="goToArchivePage(archiveCurrentPage + 1)" [disabled]="archiveCurrentPage === archiveTotalPages">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>

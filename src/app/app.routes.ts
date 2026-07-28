@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './services/auth.guard';
+
 
 export const routes: Routes = [
 
@@ -20,8 +22,9 @@ export const routes: Routes = [
 },
 
   {
-    path: 'admin',
-    loadComponent: () =>
+     path: 'admin',
+    canActivate: [authGuard],
+    loadComponent: () => 
       import('./layouts/admin-layout/admin-layout')
         .then(m => m.AdminLayoutComponent),
 
@@ -46,6 +49,22 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/teachers/teachers')
             .then(m => m.Teachers)
+      },
+      {
+        path: 'staff',
+        loadComponent: () => import('./pages/staff/staff').then(m => m.Staff)
+      },
+      {
+        path: 'staff/:id',
+        loadComponent: () => import('./pages/staff-profile/staff-profile').then(m => m.StaffProfile)
+      },
+      {
+        path: 'leave',
+        loadComponent: () => import('./pages/leave/leave').then(m => m.Leave)
+      },
+      {
+        path: 'archives',
+        loadComponent: () => import('./pages/archives/archives').then(m => m.Archives)
       },
       
       {

@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SchoolApiService } from '../../services/school-api.service';
 
 interface ScheduleItem {
   month: string;
@@ -23,7 +24,7 @@ interface OperationItem {
   templateUrl: './exams.html',
   styleUrl: './exams.css'
 })
-export class Exams {
+export class Exams implements OnInit {
   processingStages = ['Scanning OMRs', 'Reviewing', 'Publishing'];
   currentStageIndex = 1; // "Reviewing" is the active/current stage
   processingPercent = 68;
@@ -64,6 +65,33 @@ export class Exams {
     { label: 'Invigilator Duty Roster', icon: 'roster' },
     { label: 'Result Publishing Queue', icon: 'queue' }
   ];
+
+  constructor(private readonly api: SchoolApiService) {
+    this.schedule = [];
+    this.currentStageIndex = 0;
+    this.processingPercent = 0;
+    this.processingSubject = 'No active exam data';
+  }
+
+  ngOnInit(): void {
+    this.api.getPage<any>('exams', { page: 0, size: 10 }).subscribe({
+      next: response => {
+        this.schedule = response.content.map(exam => {
+          const date = new Date(`${exam.examDate}T00:00:00`);
+          return {
+            month: date.toLocaleString('en', { month: 'short' }).toUpperCase(),
+            day: String(date.getDate()).padStart(2, '0'),
+            dateTheme: exam.active ? 'blue' : 'purple',
+            title: exam.name,
+            meta: `${exam.className} • ${exam.subjectName}`,
+            time: '-',
+            duration: `${exam.maxMarks} marks`
+          };
+        });
+      },
+      error: error => console.error('Failed to load exams', error)
+    });
+  }
 
   isStageDone(index: number): boolean {
     return index < this.currentStageIndex;

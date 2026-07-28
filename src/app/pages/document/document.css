@@ -296,3 +296,4 @@
     grid-template-columns: 1fr;
   }
 }
+.document-upload{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;background:#fff;border:1px solid #dce7f7;border-radius:12px;padding:20px;margin-bottom:20px}.document-upload h2,.document-upload .wide{grid-column:1/-1}.document-upload h2{margin:0;font-size:18px}.document-upload label{display:grid;gap:6px;font-size:13px;font-weight:700;color:#566176}.document-upload input,.document-upload select,.document-upload textarea{border:1px solid #d7e0ed;border-radius:8px;padding:10px;font:inherit}.document-upload .check{display:flex;align-items:center;gap:8px}.document-upload .check input{width:auto}@media(max-width:700px){.document-upload{grid-template-columns:1fr}}

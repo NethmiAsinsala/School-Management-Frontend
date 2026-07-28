@@ -1130,3 +1130,5 @@ select.form-input {
     flex: 1 1 calc(50% - 10px);
   }
 }
+.form-error{margin:10px 0;color:#b42318;font-weight:600}
+.form-success{margin:10px 0;color:#157f3d;font-weight:600}

@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { SchoolApiService } from '../../services/school-api.service';
+import { StudentService, StudentDTO } from '../../services/student.service';
 
 interface DirectoryCard {
   name: string;
@@ -20,11 +23,19 @@ interface RecentFile {
 @Component({
   selector: 'app-documents',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './document.html',
   styleUrl: './document.css'
 })
-export class Documents {
+export class Documents implements OnInit {
+  showUpload = false;
+  students: StudentDTO[] = [];
+  selectedFile: File | null = null;
+  upload = { studentId: '', title: '', description: '', documentType: 'OTHER', visibleToParent: false };
+  constructor(private readonly api: SchoolApiService, private readonly studentService: StudentService) {
+    this.recentFiles = [];
+  }
+  ngOnInit(): void { this.studentService.getStudents(0, 100).subscribe({ next: page => this.students = page.content, error: error => console.error('Failed to load students', error) }); }
   directories: DirectoryCard[] = [
     {
       name: 'Curriculum',
@@ -61,7 +72,16 @@ export class Documents {
   ];
 
   onUploadFile(): void {
-    console.log('Upload file clicked');
+    this.showUpload = !this.showUpload;
+  }
+
+  setFile(event: Event): void { this.selectedFile = (event.target as HTMLInputElement).files?.[0] ?? null; }
+  submitUpload(): void {
+    if (!this.selectedFile || !this.upload.studentId) return;
+    const body = new FormData();
+    body.append('file', this.selectedFile);
+    body.append('metadata', new Blob([JSON.stringify({ ...this.upload, studentId: Number(this.upload.studentId) })], { type: 'application/json' }));
+    this.api.post('documents', body).subscribe({ next: () => { this.showUpload = false; this.selectedFile = null; }, error: error => console.error('Failed to upload document', error) });
   }
 
   onOpenDirectory(dir: DirectoryCard): void {

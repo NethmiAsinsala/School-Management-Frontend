@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { SchoolApiService } from '../../services/school-api.service';
 
 type AudienceFilter = 'all' | 'parents' | 'staff' | 'students';
 type StatusFilter = 'published' | 'scheduled' | 'drafts';
@@ -31,7 +32,7 @@ interface Notice {
   templateUrl: './notice.html',
   styleUrl: './notice.css'
 })
-export class Notices {
+export class Notices implements OnInit {
   audienceFilter: AudienceFilter = 'all';
   statusFilter: StatusFilter = 'published';
 
@@ -42,6 +43,9 @@ export class Notices {
   rangeStart = 1;
   rangeEnd = 3;
   currentPage = 1;
+  showEditor = false;
+  saving = false;
+  draft = { title: '', message: '', audience: 'ALL', publishDate: '', expiryDate: '' };
 
   notices: Notice[] = [
     {
@@ -84,6 +88,37 @@ export class Notices {
     }
   ];
 
+  constructor(private readonly api: SchoolApiService) {
+    this.notices = [];
+    this.activeNoticesCount = 0;
+    this.totalViews = '—';
+    this.totalNotices = 0;
+  }
+
+  ngOnInit(): void {
+    this.loadNotices();
+  }
+
+  loadNotices(): void {
+    this.api.getPage<any>('notices', { page: 0, size: 10 }).subscribe({
+      next: response => {
+        this.totalNotices = response.totalElements;
+        this.activeNoticesCount = response.content.filter(notice => notice.active).length;
+        this.notices = response.content.map(notice => ({
+          tags: [{ label: notice.audience?.replaceAll('_', ' ') || 'All Audiences', theme: 'gray' }],
+          title: notice.title,
+          description: notice.message,
+          state: notice.published ? 'published' : 'scheduled',
+          dateLabel: notice.published ? 'Published' : 'Scheduled For',
+          dateValue: notice.publishDate || '-',
+          expires: notice.expiryDate,
+          highPriority: false
+        }));
+      },
+      error: error => console.error('Failed to load notices', error)
+    });
+  }
+
   setAudienceFilter(filter: AudienceFilter): void {
     this.audienceFilter = filter;
   }
@@ -93,7 +128,15 @@ export class Notices {
   }
 
   onDraftNewNotice(): void {
-    console.log('Draft new notice clicked');
+    this.showEditor = !this.showEditor;
+  }
+
+  saveNotice(): void {
+    this.saving = true;
+    this.api.post('notices', { ...this.draft, published: false, active: true, publishDate: this.draft.publishDate || null, expiryDate: this.draft.expiryDate || null }).subscribe({
+      next: () => { this.saving = false; this.showEditor = false; this.draft = { title: '', message: '', audience: 'ALL', publishDate: '', expiryDate: '' }; this.loadNotices(); },
+      error: error => { console.error('Failed to save notice', error); this.saving = false; }
+    });
   }
 
   onEditNotice(notice: Notice): void {

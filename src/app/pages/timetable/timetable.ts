@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { SchoolApiService } from '../../services/school-api.service';
 
 type SubjectCategory = 'core' | 'science' | 'language' | 'free';
 
@@ -23,12 +25,14 @@ interface TimetableRow {
 @Component({
   selector: 'app-timetable',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './timetable.html',
   styleUrl: './timetable.css'
 })
-export class Timetable {
-  selectedGrade = 'Grade 10 - A';
+export class Timetable implements OnInit {
+  selectedGrade = 'Select a class';
+  selectedClassId = '';
+  classes: { id: number; name: string }[] = [];
   todayColumn: keyof Omit<TimetableRow, 'time'> = 'wednesday';
 
   days: { key: keyof Omit<TimetableRow, 'time'>; label: string }[] = [
@@ -74,8 +78,39 @@ export class Timetable {
     }
   ];
 
+  constructor(private readonly api: SchoolApiService) {
+    this.rows = [];
+  }
+
+  ngOnInit(): void {
+    this.api.get<{ id: number; name: string }[]>('classes/active').subscribe({
+      next: classes => { this.classes = classes; if (classes.length) { this.selectedClassId = String(classes[0].id); this.loadTimetable(); } },
+      error: error => console.error('Failed to load classes', error)
+    });
+  }
+
+  loadTimetable(): void {
+    const classId = Number(this.selectedClassId);
+    const current = this.classes.find(item => item.id === classId);
+    this.selectedGrade = current?.name ?? 'Select a class';
+    if (!classId) { this.rows = []; return; }
+    this.api.get<any[]>(`timetable/class/${classId}`).subscribe({ next: entries => this.rows = this.mapRows(entries), error: error => { console.error('Failed to load timetable', error); this.rows = []; } });
+  }
+
+  private mapRows(entries: any[]): TimetableRow[] {
+    const grouped = new Map<string, TimetableRow>();
+    const blank = (): TimetableCell => ({ category: 'free', isFree: true });
+    for (const entry of entries) {
+      const key = entry.startTime;
+      if (!grouped.has(key)) grouped.set(key, { time: entry.startTime, monday: blank(), tuesday: blank(), wednesday: blank(), thursday: blank(), friday: blank() });
+      const day = String(entry.dayOfWeek).toLowerCase() as keyof Omit<TimetableRow, 'time'>;
+      if (day in grouped.get(key)!) grouped.get(key)![day] = { subject: entry.subjectName, teacher: entry.staffName, room: entry.roomNumber || '—', category: 'core' };
+    }
+    return [...grouped.values()].sort((a, b) => a.time.localeCompare(b.time));
+  }
+
   onGradeChange(): void {
-    console.log('Grade selector clicked');
+    this.loadTimetable();
   }
 
   onEditTimetable(): void {

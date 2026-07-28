@@ -11,6 +11,8 @@
     </button>
   </div>
 
+  <form *ngIf="showUpload" class="document-upload" (ngSubmit)="submitUpload()"><h2>Upload student document</h2><label>Student<select [(ngModel)]="upload.studentId" name="student" required><option value="">Choose a student</option><option *ngFor="let student of students" [value]="student.id">{{ student.name }}</option></select></label><label>Document title<input [(ngModel)]="upload.title" name="title" required></label><label>Document type<select [(ngModel)]="upload.documentType" name="type"><option value="REPORT_CARD">Report card</option><option value="MEDICAL_RECORD">Medical record</option><option value="CERTIFICATE">Certificate</option><option value="STUDENT_RECORD">Student record</option><option value="OTHER">Other</option></select></label><label>File<input type="file" (change)="setFile($event)" required></label><label class="wide">Description<textarea [(ngModel)]="upload.description" name="description"></textarea></label><label class="wide check"><input type="checkbox" [(ngModel)]="upload.visibleToParent" name="visible"> Visible to parent</label><div class="wide"><button class="upload-btn" type="submit">Upload document</button></div></form>
+
   <div class="content-grid">
     <!-- Primary directories -->
     <div class="directories-col">
