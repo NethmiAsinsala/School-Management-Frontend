@@ -37,4 +37,6 @@ export class UpcomingEvents {
       accent: 'purple'
     }
   ];
+
+  constructor() { this.events = []; }
 }

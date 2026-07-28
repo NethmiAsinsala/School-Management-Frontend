@@ -26,6 +26,11 @@ export class AttendanceChart {
     { day: 'Wk 4', value: 94 }
   ];
 
+  constructor() {
+    this.weekData = [];
+    this.monthData = [];
+  }
+
   get activeData() {
     return this.range === 'week' ? this.weekData : this.monthData;
   }
@@ -37,6 +42,9 @@ export class AttendanceChart {
   /** Builds a smooth SVG path for the line chart based on active data. */
   getLinePath(width: number, height: number): string {
     const data = this.activeData;
+    if (data.length < 2) {
+      return '';
+    }
     const max = 100;
     const min = 70;
     const stepX = width / (data.length - 1);

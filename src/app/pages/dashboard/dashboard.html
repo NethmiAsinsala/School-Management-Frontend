@@ -29,8 +29,8 @@
           icon="users"
           theme="blue"
           label="Total Students"
-          value="1,248"
-          trendText="+12 this week"
+          [value]="totalStudents"
+          trendText="Live total"
           trendType="up"
         ></app-stat-card>
 
@@ -38,8 +38,8 @@
           icon="book"
           theme="purple"
           label="Faculty Members"
-          value="86"
-          trendText="Stable"
+          [value]="totalStaff"
+          trendText="Live total"
           trendType="neutral"
         ></app-stat-card>
 
@@ -47,8 +47,8 @@
           icon="document"
           theme="violet"
           label="Active Exams"
-          value="14"
-          trendText="In Progress"
+          [value]="totalExams"
+          trendText="Live total"
           trendType="neutral"
         ></app-stat-card>
 
@@ -56,9 +56,8 @@
           icon="user-check"
           theme="blue"
           label="Daily Attendance"
-          value="94"
-          valueSuffix="%"
-          trendText="-2% from yest."
+          [value]="attendanceRate"
+          trendText="No attendance summary"
           trendType="down"
         ></app-stat-card>
       </div>

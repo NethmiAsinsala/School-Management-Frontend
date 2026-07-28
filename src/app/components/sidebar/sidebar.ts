@@ -20,6 +20,7 @@ export class Sidebar {
     { label: 'Dashboard', route: '/admin/dashboard', icon: 'grid' },
     { label: 'Students', route: '/admin/students', icon: 'cap' },
     { label: 'Teachers', route: '/admin/teachers', icon: 'user' },
+    { label: 'Staff', route: '/admin/staff', icon: 'users' },
     { label: 'Parents', route: '/admin/parents', icon: 'users' },
     { label: 'Attendance', route: '/admin/attendance', icon: 'check-square' },
     { label: 'Timetable', route: '/admin/timetable', icon: 'calendar' },
@@ -27,6 +28,8 @@ export class Sidebar {
     { label: 'Reports', route: '/admin/reports', icon: 'chart' },
     { label: 'Documents', route: '/admin/documents', icon: 'document-lib' },
     { label: 'Notices', route: '/admin/notices', icon: 'megaphone' },
+    { label: 'Leave Requests', route: '/admin/leave', icon: 'calendar' },
+    { label: 'Archives', route: '/admin/archives', icon: 'document-lib' },
     { label: 'Settings', route: '/admin/settings', icon: 'gear' }
   ];
 }

@@ -11,6 +11,16 @@
     </button>
   </div>
 
+  <form *ngIf="showEditor" class="notice-editor" (ngSubmit)="saveNotice()">
+    <h2>Draft new notice</h2>
+    <label>Title<input [(ngModel)]="draft.title" name="title" required></label>
+    <label>Audience<select [(ngModel)]="draft.audience" name="audience"><option value="ALL">All audiences</option><option value="PARENTS">Parents</option><option value="STAFF">Staff</option><option value="STUDENTS">Students</option></select></label>
+    <label class="wide">Message<textarea [(ngModel)]="draft.message" name="message" rows="4" required></textarea></label>
+    <label>Publish date<input [(ngModel)]="draft.publishDate" name="publishDate" type="date"></label>
+    <label>Expiry date<input [(ngModel)]="draft.expiryDate" name="expiryDate" type="date"></label>
+    <div class="wide"><button class="draft-btn" [disabled]="saving">{{ saving ? 'Saving…' : 'Save draft' }}</button></div>
+  </form>
+
   <div class="content-grid">
     <!-- Sidebar filters -->
     <div class="filters-col">

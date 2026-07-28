@@ -26,6 +26,8 @@ export class RecentEnrollments {
     { studentId: 'STU-2045', name: 'Ishan Jayasuriya', grade: 'Grade 8', status: 'Inactive' }
   ];
 
+  constructor() { this.enrollments = []; }
+
   onView(enrollment: Enrollment): void {
     console.log('View student:', enrollment.studentId);
   }

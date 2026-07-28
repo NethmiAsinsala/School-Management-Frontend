@@ -477,3 +477,4 @@
     grid-template-columns: 1fr;
   }
 }
+.parent-editor{margin:0 0 20px;background:#fff;border:1px solid #dae6f7;border-radius:13px;padding:20px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.parent-editor h2,.parent-editor .wide{grid-column:1/-1}.parent-editor label{display:grid;gap:6px;font-size:13px;font-weight:700;color:#667085}.parent-editor input,.parent-editor textarea{border:1px solid #dbe3ef;border-radius:8px;padding:10px;font:inherit}@media(max-width:700px){.parent-editor{grid-template-columns:1fr}}

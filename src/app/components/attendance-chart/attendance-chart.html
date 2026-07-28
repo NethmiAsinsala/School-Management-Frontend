@@ -33,6 +33,7 @@
 
       <!-- filled area under line -->
       <path
+        *ngIf="activeData.length > 1"
         [attr.d]="getLinePath(700, 230) + ' L 700 230 L 0 230 Z'"
         fill="url(#areaGradient)"
         opacity="0.5"
@@ -40,6 +41,7 @@
 
       <!-- line -->
       <path
+        *ngIf="activeData.length > 1"
         [attr.d]="getLinePath(700, 230)"
         fill="none"
         stroke="#2563eb"

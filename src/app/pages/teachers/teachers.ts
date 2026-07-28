@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { SchoolApiService } from '../../services/school-api.service';
 
 type TeacherStatus = 'Active' | 'On Leave';
 
@@ -21,49 +22,48 @@ interface Teacher {
   templateUrl: './teachers.html',
   styleUrl: './teachers.css'
 })
-export class Teachers {
+export class Teachers implements OnInit {
   activeTab: 'all' | 'department' | 'status' = 'all';
   searchTerm = '';
 
   currentPage = 1;
-  totalPages = 9;
-  totalResults = 86;
+  totalPages = 1;
+  totalResults = 0;
 
   stats = [
-    { label: 'Total Teachers', value: '86', accent: 'blue' as const, badge: '' },
-    { label: 'Active Now', value: '72', accent: 'blue' as const, badge: 'Today' },
-    { label: 'Departments', value: '8', accent: 'gray' as const, badge: '' },
-    { label: 'On Leave', value: '4', accent: 'orange' as const, badge: '' }
+    { label: 'Total Teachers', value: '0', accent: 'blue' as const, badge: '' },
+    { label: 'Active Now', value: '0', accent: 'blue' as const, badge: '' },
+    { label: 'Departments', value: '0', accent: 'gray' as const, badge: '' },
+    { label: 'On Leave', value: '0', accent: 'orange' as const, badge: '' }
   ];
 
-  teachers: Teacher[] = [
-    {
-      name: 'Nilanthi Perera',
-      role: 'Senior Lecturer',
-      id: '#TCH-001',
-      department: 'Science',
-      contact: '+94 77 123 4567',
-      status: 'Active',
-      avatarUrl: ''
-    },
-    {
-      name: 'Sunimal Silva',
-      role: 'Head of Department',
-      id: '#TCH-042',
-      department: 'Mathematics',
-      contact: '+94 71 987 6543',
-      status: 'Active',
-      avatarUrl: ''
-    },
-    {
-      name: 'Kanthi Fernando',
-      role: 'Instructor',
-      id: '#TCH-089',
-      department: 'English',
-      contact: '+94 76 555 1212',
-      status: 'Active'
-    }
-  ];
+  teachers: Teacher[] = [];
+
+  constructor(private readonly api: SchoolApiService) {}
+
+  ngOnInit(): void {
+    this.loadTeachers();
+  }
+
+  private loadTeachers(): void {
+    this.api.getPage<any>('staff/filter', { page: this.currentPage - 1, size: 10, category: 'ACADEMIC' }).subscribe({
+      next: response => {
+        this.totalPages = Math.max(response.totalPages, 1);
+        this.totalResults = response.totalElements;
+        this.stats[0].value = String(response.totalElements);
+        this.teachers = response.content.map(staff => ({
+          name: staff.name,
+          role: staff.designation,
+          id: staff.staffId,
+          department: staff.department || 'Unassigned',
+          contact: staff.phoneNumber,
+          status: staff.active ? 'Active' : 'On Leave',
+          avatarUrl: ''
+        }));
+      },
+      error: error => console.error('Failed to load teachers', error)
+    });
+  }
 
   setTab(tab: 'all' | 'department' | 'status'): void {
     this.activeTab = tab;
@@ -74,6 +74,7 @@ export class Teachers {
       return;
     }
     this.currentPage = page;
+    this.loadTeachers();
   }
 
   onExport(): void {
