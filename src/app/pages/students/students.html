@@ -8,7 +8,6 @@
         (click)="setTab('directory')">Directory</button>
       <button class="page-tab" [class.active]="activeTab === 'enrollment'"
         (click)="setTab('enrollment')">Enrollment</button>
-      <button class="page-tab" [class.active]="activeTab === 'archives'" (click)="setTab('archives')">Archives</button>
     </nav>
   </div>
 
@@ -135,7 +134,7 @@
                 </span>
               </td>
               <td>
-                <button class="action-dots" aria-label="Archive student" (click)="deactivateStudent(s)">Archive</button>
+                <span class="muted-action">Active</span>
               </td>
             </tr>
           </tbody>
@@ -166,37 +165,6 @@
       </div>
     </div>
 
-    <!-- Bottom banners -->
-    <div class="banners-row">
-      <div class="import-banner">
-        <div>
-          <h4>Need Bulk Import?</h4>
-          <p>Download our CSV template to upload thousands of student records in seconds.</p>
-          <button class="get-template-btn" (click)="onGetTemplate()">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 3V15M12 15L8 11M12 15L16 11" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" />
-              <path d="M4 17V19C4 20.1 4.9 21 6 21H18C19.1 21 20 20.1 20 19V17" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" />
-            </svg>
-            Get Template
-          </button>
-        </div>
-      </div>
-
-      <div class="review-banner">
-        <div class="review-avatars">
-          <span class="avatar-dot"></span>
-          <span class="avatar-dot"></span>
-          <span class="avatar-more">+12</span>
-        </div>
-        <div class="review-text">
-          <h4>Teacher Review Required</h4>
-          <p>12 class teachers are currently reviewing attendance anomalies for the past week.</p>
-        </div>
-        <a href="#" class="view-progress-link" (click)="onViewProgress()">View Progress</a>
-      </div>
-    </div>
   </div>
 
   <!-- ================= ENROLLMENT TAB ================= -->
@@ -464,120 +432,4 @@
     </div>
   </div>
 
-  <!-- ================= ARCHIVES TAB ================= -->
-  <div *ngIf="activeTab === 'archives'">
-    <div class="archive-header-row">
-      <div>
-        <h1>Student Archives</h1>
-        <p>Historical records of former students who have graduated, transferred, or otherwise exited the institution.
-          These records are read-only.</p>
-      </div>
-      <button class="btn-outline" (click)="onExportArchiveList()">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 3V15M12 15L8 11M12 15L16 11" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round" />
-          <path d="M4 17V19C4 20.1 4.9 21 6 21H18C19.1 21 20 20.1 20 19V17" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" />
-        </svg>
-        Export List
-      </button>
-    </div>
-
-    <!-- Filters panel -->
-    <div class="archive-filters-panel">
-      <div class="filter-col">
-        <label>Exit Year</label>
-        <select class="filter-select" [(ngModel)]="archiveExitYear" [ngModelOptions]="{standalone: true}">
-          <option value="all">All Years</option>
-          <option value="2024">2024</option>
-          <option value="2023">2023</option>
-          <option value="2022">2022</option>
-        </select>
-      </div>
-
-      <div class="filter-col">
-        <label>Exit Reason</label>
-        <select class="filter-select" [(ngModel)]="archiveExitReason" [ngModelOptions]="{standalone: true}">
-          <option value="all">All Reasons</option>
-          <option value="Graduated">Graduated</option>
-          <option value="Transferred">Transferred</option>
-          <option value="Withdrawn">Withdrawn</option>
-        </select>
-      </div>
-
-      <div class="filter-col filter-col-search">
-        <label>Advanced Search</label>
-        <div class="archive-search-box">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" />
-            <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-          </svg>
-          <input type="text" placeholder="ID, Name, or Note..." [(ngModel)]="archiveSearchTerm"
-            [ngModelOptions]="{standalone: true}" />
-        </div>
-      </div>
-
-      <button class="clear-filters-link" (click)="onClearArchiveFilters()">Clear Filters</button>
-    </div>
-
-    <!-- Archive table -->
-    <div class="table-panel">
-      <div class="table-wrapper">
-        <table class="archive-table">
-          <thead>
-            <tr>
-              <th>Student ID</th>
-              <th>Name</th>
-              <th>Batch/Year</th>
-              <th>Exit Reason</th>
-              <th>Archive Date</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let student of archivedStudents">
-              <td class="mono">{{ student.archiveId }}</td>
-              <td class="archive-name">{{ student.name }}</td>
-              <td>{{ student.batchYear }}</td>
-              <td>
-                <span class="reason-badge" [ngClass]="getExitReasonClass(student.exitReason)">
-                  {{ student.exitReason }}
-                </span>
-              </td>
-              <td>{{ student.archiveDate }}</td>
-              <td>
-                <button class="row-link" (click)="onViewProfile(student)">Profile</button>
-                <button class="row-link" (click)="onRestoreStudent(student)">Restore</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="table-footer">
-        <span class="results-text">
-          Showing 1 to {{ archivedStudents.length }} of {{ archiveTotalEntries }} entries
-        </span>
-        <div class="pagination">
-          <button class="page-arrow" (click)="goToArchivePage(archiveCurrentPage - 1)"
-            [disabled]="archiveCurrentPage === 1">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" />
-            </svg>
-          </button>
-          <button class="page-num" [class.active]="archiveCurrentPage === 1" (click)="goToArchivePage(1)">1</button>
-          <button class="page-num" [class.active]="archiveCurrentPage === 2" (click)="goToArchivePage(2)">2</button>
-          <button class="page-num" [class.active]="archiveCurrentPage === 3" (click)="goToArchivePage(3)">3</button>
-          <button class="page-arrow" (click)="goToArchivePage(archiveCurrentPage + 1)"
-            [disabled]="archiveCurrentPage === archiveTotalPages">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" />
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>

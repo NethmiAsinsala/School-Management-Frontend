@@ -1,1 +1,3 @@
 small { color: #7c8798; } a.lumina-button { text-decoration: none; font-size: 13px; padding: 8px 11px; }
+.lumina-error { color: #b42318; background: #fef3f2; border: 1px solid #fecdca; border-radius: 8px; padding: 10px 12px; }
+.lumina-pager { display: flex; align-items: center; justify-content: flex-end; gap: 10px; padding-top: 16px; }

@@ -653,3 +653,1143 @@ Component update sent to client(s).
 Application bundle generation complete. [3.681 seconds] - 2026-07-28T13:39:06.657Z
 
 Page reload sent to client(s).
+[33m>[39m Changes detected. Rebuilding...
+[32m√[39m Changes detected. Rebuilding...
+[1mInitial chunk files[22m[2m | [22m[1mNames[22m   [2m | [22m [1mRaw size[22m
+[32mmain.js[39m            [2m | [22m[2mmain[22m    [2m | [22m  [36m5.91 kB[39m[2m | [22m
+
+[1mLazy chunk files[22m   [2m | [22m[1mNames[22m   [2m | [22m [1mRaw size[22m
+[32mchunk-HDO3ABQN.js[39m  [2m | [22m[2mstudents[22m[2m | [22m[36m144.20 kB[39m[2m | [22m
+[32mchunk-GYDR25J2.js[39m  [2m | [22m[2mdocument[22m[2m | [22m [36m44.85 kB[39m[2m | [22m
+[32mchunk-HF6V7NSY.js[39m  [2m | [22m[2marchives[22m[2m | [22m [36m10.33 kB[39m[2m | [22m
+[32mchunk-6CPK3FLY.js[39m  [2m | [22m[2m-[22m       [2m | [22m  [36m1.86 kB[39m[2m | [22m
+
+Application bundle generation complete. [3.443 seconds] - 2026-07-28T13:42:17.018Z
+
+Page reload sent to client(s).
+[33m>[39m Changes detected. Rebuilding...
+[32m√[39m Changes detected. Rebuilding...
+Application bundle generation failed. [1.855 seconds] - 2026-07-28T13:42:29.891Z
+
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'id' is missing in type '{ archiveId: string; name: string; batchYear: string; exitReason: "Graduated"; archiveDate: string; }' but required in type 'ArchivedStudent'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.ts:110:4:
+[37m      110 │     [32m{[37m
+          ╵     [32m^[0m
+
+  'id' is declared here.
+
+    src/app/pages/students/students.ts:38:2:
+[37m      38 │   [32mid[37m: number;
+         ╵   [32m~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'id' is missing in type '{ archiveId: string; name: string; batchYear: string; exitReason: "Transferred"; archiveDate: string; }' but required in type 'ArchivedStudent'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.ts:117:4:
+[37m      117 │     [32m{[37m
+          ╵     [32m^[0m
+
+  'id' is declared here.
+
+    src/app/pages/students/students.ts:38:2:
+[37m      38 │   [32mid[37m: number;
+         ╵   [32m~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'id' is missing in type '{ archiveId: string; name: string; batchYear: string; exitReason: "Graduated"; archiveDate: string; }' but required in type 'ArchivedStudent'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.ts:124:4:
+[37m      124 │     [32m{[37m
+          ╵     [32m^[0m
+
+  'id' is declared here.
+
+    src/app/pages/students/students.ts:38:2:
+[37m      38 │   [32mid[37m: number;
+         ╵   [32m~~[0m
+
+[39m[22m
+[33m>[39m Changes detected. Rebuilding...
+[32m√[39m Changes detected. Rebuilding...
+Application bundle generation failed. [8.015 seconds] - 2026-07-28T13:47:55.180Z
+
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2367: This comparison appears to be unintentional because the types 'MainTab' and '"archives"' have no overlap.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:11:47:
+[37m      11 │ ...ab" [class.active]="[32mactiveTab === 'archives'[37m" (click)="setTab('...
+         ╵                        [32m~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2345: Argument of type '"archives"' is not assignable to parameter of type 'MainTab'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:11:89:
+[37m      11 │ ...Tab === 'archives'" (click)="setTab([32m'archives'[37m)">Archives</button>
+         ╵                                        [32m~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'deactivateStudent' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:138:82:
+[37m      138 │ ..."Archive student" (click)="[32mdeactivateStudent[37m(s)">Archive</button>
+          ╵                               [32m~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2367: This comparison appears to be unintentional because the types 'MainTab' and '"archives"' have no overlap.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:468:14:
+[37m      468 │   <div *ngIf="[32mactiveTab === 'archives'[37m">
+          ╵               [32m~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'onExportArchiveList' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:475:43:
+[37m      475 │       <button class="btn-outline" (click)="[32monExportArchiveList[37m()">
+          ╵                                            [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'archiveExitYear' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:490:51:
+[37m      490 │ ...er-select" [(ngModel)]="[32marchiveExitYear[37m" [ngModelOptions]="{st...
+          ╵                            [32m~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'archiveExitYear' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:490:51:
+[37m      490 │ ...er-select" [(ngModel)]="[32marchiveExitYear[37m" [ngModelOptions]="{st...
+          ╵                            [32m~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'archiveExitReason' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:500:51:
+[37m      500 │ ...r-select" [(ngModel)]="[32marchiveExitReason[37m" [ngModelOptions]="{s...
+          ╵                           [32m~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'archiveExitReason' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:500:51:
+[37m      500 │ ...r-select" [(ngModel)]="[32marchiveExitReason[37m" [ngModelOptions]="{s...
+          ╵                           [32m~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'archiveSearchTerm' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:515:77:
+[37m      515 │ ...laceholder="ID, Name, or Note..." [(ngModel)]="[32marchiveSearchTerm[37m"
+          ╵                                                   [32m~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'archiveSearchTerm' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:515:77:
+[37m      515 │ ...laceholder="ID, Name, or Note..." [(ngModel)]="[32marchiveSearchTerm[37m"
+          ╵                                                   [32m~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'onClearArchiveFilters' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:520:50:
+[37m      520 │ ...lters-link" (click)="[32monClearArchiveFilters[37m()">Clear Filters</b...
+          ╵                         [32m~~~~~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'archivedStudents' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:538:39:
+[37m      538 │             <tr *ngFor="let student of [32marchivedStudents[37m">
+          ╵                                        [32m~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'getExitReasonClass' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:543:54:
+[37m      543 │ ...reason-badge" [ngClass]="[32mgetExitReasonClass[37m(student.exitReason)">
+          ╵                             [32m~~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'onViewProfile' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:549:50:
+[37m      549 │ ...lass="row-link" (click)="[32monViewProfile[37m(student)">Profile</button>
+          ╵                             [32m~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'onRestoreStudent' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:550:50:
+[37m      550 │ ...ss="row-link" (click)="[32monRestoreStudent[37m(student)">Restore</but...
+          ╵                           [32m~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'archivedStudents' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:559:26:
+[37m      559 │           Showing 1 to {{ [32marchivedStudents[37m.length }} of {{ archiv...
+          ╵                           [32m~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'archiveTotalEntries' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:559:59:
+[37m      559 │ ...{ archivedStudents.length }} of {{ [32marchiveTotalEntries[37m }} entries
+          ╵                                       [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'goToArchivePage' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:562:46:
+[37m      562 │ ...ss="page-arrow" (click)="[32mgoToArchivePage[37m(archiveCurrentPage - 1)"
+          ╵                             [32m~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'archiveCurrentPage' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:562:62:
+[37m      562 │ ...ss="page-arrow" (click)="goToArchivePage([32marchiveCurrentPage[37m - 1)"
+          ╵                                             [32m~~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'archiveCurrentPage' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:563:24:
+[37m      563 │             [disabled]="[32marchiveCurrentPage[37m === 1">
+          ╵                         [32m~~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'archiveCurrentPage' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:569:51:
+[37m      569 │ ...-num" [class.active]="[32marchiveCurrentPage[37m === 1" (click)="goToA...
+          ╵                          [32m~~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'goToArchivePage' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:569:86:
+[37m      569 │ ...archiveCurrentPage === 1" (click)="[32mgoToArchivePage[37m(1)">1</button>
+          ╵                                       [32m~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'archiveCurrentPage' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:570:51:
+[37m      570 │ ...-num" [class.active]="[32marchiveCurrentPage[37m === 2" (click)="goToA...
+          ╵                          [32m~~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'goToArchivePage' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:570:86:
+[37m      570 │ ...archiveCurrentPage === 2" (click)="[32mgoToArchivePage[37m(2)">2</button>
+          ╵                                       [32m~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'archiveCurrentPage' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:571:51:
+[37m      571 │ ...-num" [class.active]="[32marchiveCurrentPage[37m === 3" (click)="goToA...
+          ╵                          [32m~~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'goToArchivePage' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:571:86:
+[37m      571 │ ...archiveCurrentPage === 3" (click)="[32mgoToArchivePage[37m(3)">3</button>
+          ╵                                       [32m~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'goToArchivePage' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:572:46:
+[37m      572 │ ...ss="page-arrow" (click)="[32mgoToArchivePage[37m(archiveCurrentPage + 1)"
+          ╵                             [32m~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'archiveCurrentPage' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:572:62:
+[37m      572 │ ...ss="page-arrow" (click)="goToArchivePage([32marchiveCurrentPage[37m + 1)"
+          ╵                                             [32m~~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'archiveCurrentPage' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:573:24:
+[37m      573 │             [disabled]="[32marchiveCurrentPage[37m === archiveTotalPages">
+          ╵                         [32m~~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'archiveTotalPages' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:573:47:
+[37m      573 │             [disabled]="archiveCurrentPage === [32marchiveTotalPages[37m">
+          ╵                                                [32m~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+[33m>[39m Changes detected. Rebuilding...
+[32m√[39m Changes detected. Rebuilding...
+Application bundle generation failed. [0.811 seconds] - 2026-07-28T13:47:56.034Z
+
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2367: This comparison appears to be unintentional because the types 'MainTab' and '"archives"' have no overlap.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:11:47:
+[37m      11 │ ...ab" [class.active]="[32mactiveTab === 'archives'[37m" (click)="setTab('...
+         ╵                        [32m~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2345: Argument of type '"archives"' is not assignable to parameter of type 'MainTab'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:11:89:
+[37m      11 │ ...Tab === 'archives'" (click)="setTab([32m'archives'[37m)">Archives</button>
+         ╵                                        [32m~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'deactivateStudent' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:138:82:
+[37m      138 │ ..."Archive student" (click)="[32mdeactivateStudent[37m(s)">Archive</button>
+          ╵                               [32m~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2367: This comparison appears to be unintentional because the types 'MainTab' and '"archives"' have no overlap.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:468:14:
+[37m      468 │   <div *ngIf="[32mactiveTab === 'archives'[37m">
+          ╵               [32m~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'onExportArchiveList' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:475:43:
+[37m      475 │       <button class="btn-outline" (click)="[32monExportArchiveList[37m()">
+          ╵                                            [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'archiveExitYear' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:490:51:
+[37m      490 │ ...er-select" [(ngModel)]="[32marchiveExitYear[37m" [ngModelOptions]="{st...
+          ╵                            [32m~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'archiveExitYear' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:490:51:
+[37m      490 │ ...er-select" [(ngModel)]="[32marchiveExitYear[37m" [ngModelOptions]="{st...
+          ╵                            [32m~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'archiveExitReason' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:500:51:
+[37m      500 │ ...r-select" [(ngModel)]="[32marchiveExitReason[37m" [ngModelOptions]="{s...
+          ╵                           [32m~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'archiveExitReason' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:500:51:
+[37m      500 │ ...r-select" [(ngModel)]="[32marchiveExitReason[37m" [ngModelOptions]="{s...
+          ╵                           [32m~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'archiveSearchTerm' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:515:77:
+[37m      515 │ ...laceholder="ID, Name, or Note..." [(ngModel)]="[32marchiveSearchTerm[37m"
+          ╵                                                   [32m~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'archiveSearchTerm' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:515:77:
+[37m      515 │ ...laceholder="ID, Name, or Note..." [(ngModel)]="[32marchiveSearchTerm[37m"
+          ╵                                                   [32m~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'onClearArchiveFilters' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:520:50:
+[37m      520 │ ...lters-link" (click)="[32monClearArchiveFilters[37m()">Clear Filters</b...
+          ╵                         [32m~~~~~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'archivedStudents' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:538:39:
+[37m      538 │             <tr *ngFor="let student of [32marchivedStudents[37m">
+          ╵                                        [32m~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'getExitReasonClass' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:543:54:
+[37m      543 │ ...reason-badge" [ngClass]="[32mgetExitReasonClass[37m(student.exitReason)">
+          ╵                             [32m~~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'onViewProfile' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:549:50:
+[37m      549 │ ...lass="row-link" (click)="[32monViewProfile[37m(student)">Profile</button>
+          ╵                             [32m~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'onRestoreStudent' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:550:50:
+[37m      550 │ ...ss="row-link" (click)="[32monRestoreStudent[37m(student)">Restore</but...
+          ╵                           [32m~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'archivedStudents' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:559:26:
+[37m      559 │           Showing 1 to {{ [32marchivedStudents[37m.length }} of {{ archiv...
+          ╵                           [32m~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'archiveTotalEntries' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:559:59:
+[37m      559 │ ...{ archivedStudents.length }} of {{ [32marchiveTotalEntries[37m }} entries
+          ╵                                       [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'goToArchivePage' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:562:46:
+[37m      562 │ ...ss="page-arrow" (click)="[32mgoToArchivePage[37m(archiveCurrentPage - 1)"
+          ╵                             [32m~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'archiveCurrentPage' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:562:62:
+[37m      562 │ ...ss="page-arrow" (click)="goToArchivePage([32marchiveCurrentPage[37m - 1)"
+          ╵                                             [32m~~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'archiveCurrentPage' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:563:24:
+[37m      563 │             [disabled]="[32marchiveCurrentPage[37m === 1">
+          ╵                         [32m~~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'archiveCurrentPage' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:569:51:
+[37m      569 │ ...-num" [class.active]="[32marchiveCurrentPage[37m === 1" (click)="goToA...
+          ╵                          [32m~~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'goToArchivePage' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:569:86:
+[37m      569 │ ...archiveCurrentPage === 1" (click)="[32mgoToArchivePage[37m(1)">1</button>
+          ╵                                       [32m~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'archiveCurrentPage' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:570:51:
+[37m      570 │ ...-num" [class.active]="[32marchiveCurrentPage[37m === 2" (click)="goToA...
+          ╵                          [32m~~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'goToArchivePage' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:570:86:
+[37m      570 │ ...archiveCurrentPage === 2" (click)="[32mgoToArchivePage[37m(2)">2</button>
+          ╵                                       [32m~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'archiveCurrentPage' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:571:51:
+[37m      571 │ ...-num" [class.active]="[32marchiveCurrentPage[37m === 3" (click)="goToA...
+          ╵                          [32m~~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'goToArchivePage' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:571:86:
+[37m      571 │ ...archiveCurrentPage === 3" (click)="[32mgoToArchivePage[37m(3)">3</button>
+          ╵                                       [32m~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'goToArchivePage' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:572:46:
+[37m      572 │ ...ss="page-arrow" (click)="[32mgoToArchivePage[37m(archiveCurrentPage + 1)"
+          ╵                             [32m~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'archiveCurrentPage' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:572:62:
+[37m      572 │ ...ss="page-arrow" (click)="goToArchivePage([32marchiveCurrentPage[37m + 1)"
+          ╵                                             [32m~~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'archiveCurrentPage' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:573:24:
+[37m      573 │             [disabled]="[32marchiveCurrentPage[37m === archiveTotalPages">
+          ╵                         [32m~~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'archiveTotalPages' does not exist on type 'Students'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/students/students.html:573:47:
+[37m      573 │             [disabled]="archiveCurrentPage === [32marchiveTotalPages[37m">
+          ╵                                                [32m~~~~~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component Students.
+
+    src/app/pages/students/students.ts:43:15:
+[37m      43 │   templateUrl: [32m'./students.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+[33m>[39m Changes detected. Rebuilding...
+[32m√[39m Changes detected. Rebuilding...
+[1mInitial chunk files[22m[2m | [22m[1mNames[22m        [2m | [22m [1mRaw size[22m
+[32mstyles.css[39m         [2m | [22m[2mstyles[22m       [2m | [22m  [36m9.04 kB[39m[2m | [22m
+[32mmain.js[39m            [2m | [22m[2mmain[22m         [2m | [22m  [36m5.91 kB[39m[2m | [22m
+[32mchunk-ZRSU74BT.js[39m  [2m | [22m[2m-[22m            [2m | [22m  [36m3.10 kB[39m[2m | [22m
+[32mchunk-CZJLB7T5.js[39m  [2m | [22m[2m-[22m            [2m | [22m  [36m1.08 kB[39m[2m | [22m
+[32mchunk-3UHMZ34P.js[39m  [2m | [22m[2m-[22m            [2m | [22m[36m187 bytes[39m[2m | [22m
+
+[1m [22m                  [2m | [22m[1mInitial total[22m[2m | [22m [1m19.30 kB[22m
+
+[1mLazy chunk files[22m   [2m | [22m[1mNames[22m        [2m | [22m [1mRaw size[22m
+[32mchunk-BJIO2BI2.js[39m  [2m | [22m[2mstudents[22m     [2m | [22m[36m124.03 kB[39m[2m | [22m
+[32mchunk-SHSROEOO.js[39m  [2m | [22m[2mdashboard[22m    [2m | [22m [36m97.00 kB[39m[2m | [22m
+[32mchunk-MCRBLI3V.js[39m  [2m | [22m[2mparent[22m       [2m | [22m [36m50.27 kB[39m[2m | [22m
+[32mchunk-WUS5NERU.js[39m  [2m | [22m[2mnotice[22m       [2m | [22m [36m49.38 kB[39m[2m | [22m
+[32mchunk-ZPZ5QGHU.js[39m  [2m | [22m[2mdocument[22m     [2m | [22m [36m44.85 kB[39m[2m | [22m
+[32mchunk-S7WN77HU.js[39m  [2m | [22m[2mteachers[22m     [2m | [22m [36m41.58 kB[39m[2m | [22m
+[32mchunk-YINZYEMH.js[39m  [2m | [22m[2mattendance[22m   [2m | [22m [36m40.79 kB[39m[2m | [22m
+[32mchunk-ZJTMA5UB.js[39m  [2m | [22m[2mexams[22m        [2m | [22m [36m37.08 kB[39m[2m | [22m
+[32mchunk-7XVZYCFD.js[39m  [2m | [22m[2mreports[22m      [2m | [22m [36m36.61 kB[39m[2m | [22m
+[32mchunk-CLYKLUYZ.js[39m  [2m | [22m[2madmin-layout[22m [2m | [22m [36m29.51 kB[39m[2m | [22m
+[32mchunk-IZSORWDZ.js[39m  [2m | [22m[2mlogin[22m        [2m | [22m [36m29.48 kB[39m[2m | [22m
+[32mchunk-J356FTL6.js[39m  [2m | [22m[2mtimetable[22m    [2m | [22m [36m28.39 kB[39m[2m | [22m
+[32mchunk-GW4PWDHC.js[39m  [2m | [22m[2mstaff[22m        [2m | [22m [36m21.77 kB[39m[2m | [22m
+[32mchunk-RNP4K7WM.js[39m  [2m | [22m[2msettings[22m     [2m | [22m [36m15.35 kB[39m[2m | [22m
+[32mchunk-47BKQX7L.js[39m  [2m | [22m[2mleave[22m        [2m | [22m [36m13.51 kB[39m[2m | [22m
+[2m...and 5 more lazy chunks files. Use "--verbose" to show all the files.[22m
+
+Application bundle generation complete. [2.201 seconds] - 2026-07-28T13:48:41.714Z
+
+Page reload sent to client(s).
+[33m>[39m Changes detected. Rebuilding...
+[32m√[39m Changes detected. Rebuilding...
+[1mInitial chunk files[22m[2m | [22m[1mNames[22m   [2m | [22m [1mRaw size[22m
+[32mmain.js[39m            [2m | [22m[2mmain[22m    [2m | [22m  [36m5.91 kB[39m[2m | [22m
+
+[1mLazy chunk files[22m   [2m | [22m[1mNames[22m   [2m | [22m [1mRaw size[22m
+[32mchunk-IXXFCACT.js[39m  [2m | [22m[2mstudents[22m[2m | [22m[36m120.16 kB[39m[2m | [22m
+
+Application bundle generation complete. [8.338 seconds] - 2026-07-28T14:00:24.374Z
+
+Page reload sent to client(s).
+[33m>[39m Changes detected. Rebuilding...
+[32m√[39m Changes detected. Rebuilding...
+[1mInitial chunk files[22m[2m | [22m[1mNames[22m        [2m | [22m [1mRaw size[22m
+[32mstyles.css[39m         [2m | [22m[2mstyles[22m       [2m | [22m  [36m9.04 kB[39m[2m | [22m
+[32mmain.js[39m            [2m | [22m[2mmain[22m         [2m | [22m  [36m5.91 kB[39m[2m | [22m
+[32mchunk-ZRSU74BT.js[39m  [2m | [22m[2m-[22m            [2m | [22m  [36m3.10 kB[39m[2m | [22m
+[32mchunk-CZJLB7T5.js[39m  [2m | [22m[2m-[22m            [2m | [22m  [36m1.08 kB[39m[2m | [22m
+[32mchunk-3UHMZ34P.js[39m  [2m | [22m[2m-[22m            [2m | [22m[36m187 bytes[39m[2m | [22m
+
+[1m [22m                  [2m | [22m[1mInitial total[22m[2m | [22m [1m19.30 kB[22m
+
+[1mLazy chunk files[22m   [2m | [22m[1mNames[22m        [2m | [22m [1mRaw size[22m
+[32mchunk-IXXFCACT.js[39m  [2m | [22m[2mstudents[22m     [2m | [22m[36m120.16 kB[39m[2m | [22m
+[32mchunk-SHSROEOO.js[39m  [2m | [22m[2mdashboard[22m    [2m | [22m [36m97.00 kB[39m[2m | [22m
+[32mchunk-MCRBLI3V.js[39m  [2m | [22m[2mparent[22m       [2m | [22m [36m50.27 kB[39m[2m | [22m
+[32mchunk-WUS5NERU.js[39m  [2m | [22m[2mnotice[22m       [2m | [22m [36m49.38 kB[39m[2m | [22m
+[32mchunk-ZPZ5QGHU.js[39m  [2m | [22m[2mdocument[22m     [2m | [22m [36m44.85 kB[39m[2m | [22m
+[32mchunk-S7WN77HU.js[39m  [2m | [22m[2mteachers[22m     [2m | [22m [36m41.58 kB[39m[2m | [22m
+[32mchunk-YINZYEMH.js[39m  [2m | [22m[2mattendance[22m   [2m | [22m [36m40.79 kB[39m[2m | [22m
+[32mchunk-ZJTMA5UB.js[39m  [2m | [22m[2mexams[22m        [2m | [22m [36m37.08 kB[39m[2m | [22m
+[32mchunk-7XVZYCFD.js[39m  [2m | [22m[2mreports[22m      [2m | [22m [36m36.61 kB[39m[2m | [22m
+[32mchunk-CLYKLUYZ.js[39m  [2m | [22m[2madmin-layout[22m [2m | [22m [36m29.51 kB[39m[2m | [22m
+[32mchunk-IZSORWDZ.js[39m  [2m | [22m[2mlogin[22m        [2m | [22m [36m29.48 kB[39m[2m | [22m
+[32mchunk-J356FTL6.js[39m  [2m | [22m[2mtimetable[22m    [2m | [22m [36m28.39 kB[39m[2m | [22m
+[32mchunk-GW4PWDHC.js[39m  [2m | [22m[2mstaff[22m        [2m | [22m [36m21.77 kB[39m[2m | [22m
+[32mchunk-RNP4K7WM.js[39m  [2m | [22m[2msettings[22m     [2m | [22m [36m15.35 kB[39m[2m | [22m
+[32mchunk-47BKQX7L.js[39m  [2m | [22m[2mleave[22m        [2m | [22m [36m13.51 kB[39m[2m | [22m
+[2m...and 5 more lazy chunks files. Use "--verbose" to show all the files.[22m
+
+Application bundle generation complete. [3.923 seconds] - 2026-07-28T14:00:28.330Z
+
+Component update sent to client(s).
+[33m>[39m Changes detected. Rebuilding...
+[32m√[39m Changes detected. Rebuilding...
+[1mInitial chunk files[22m[2m | [22m[1mNames[22m   [2m | [22m[1mRaw size[22m
+[32mmain.js[39m            [2m | [22m[2mmain[22m    [2m | [22m [36m5.91 kB[39m[2m | [22m
+
+[1mLazy chunk files[22m   [2m | [22m[1mNames[22m   [2m | [22m[1mRaw size[22m
+[32mchunk-OFTJBFYB.js[39m  [2m | [22m[2mteachers[22m[2m | [22m[36m47.60 kB[39m[2m | [22m
+
+Application bundle generation complete. [6.169 seconds] - 2026-07-28T14:05:14.855Z
+
+Page reload sent to client(s).
+[33m>[39m Changes detected. Rebuilding...
+[32m√[39m Changes detected. Rebuilding...
+[1mInitial chunk files[22m[2m | [22m[1mNames[22m        [2m | [22m [1mRaw size[22m
+[32mstyles.css[39m         [2m | [22m[2mstyles[22m       [2m | [22m  [36m9.04 kB[39m[2m | [22m
+[32mmain.js[39m            [2m | [22m[2mmain[22m         [2m | [22m  [36m5.91 kB[39m[2m | [22m
+[32mchunk-ZRSU74BT.js[39m  [2m | [22m[2m-[22m            [2m | [22m  [36m3.10 kB[39m[2m | [22m
+[32mchunk-CZJLB7T5.js[39m  [2m | [22m[2m-[22m            [2m | [22m  [36m1.08 kB[39m[2m | [22m
+[32mchunk-3UHMZ34P.js[39m  [2m | [22m[2m-[22m            [2m | [22m[36m187 bytes[39m[2m | [22m
+
+[1m [22m                  [2m | [22m[1mInitial total[22m[2m | [22m [1m19.30 kB[22m
+
+[1mLazy chunk files[22m   [2m | [22m[1mNames[22m        [2m | [22m [1mRaw size[22m
+[32mchunk-IXXFCACT.js[39m  [2m | [22m[2mstudents[22m     [2m | [22m[36m120.16 kB[39m[2m | [22m
+[32mchunk-SHSROEOO.js[39m  [2m | [22m[2mdashboard[22m    [2m | [22m [36m97.00 kB[39m[2m | [22m
+[32mchunk-MCRBLI3V.js[39m  [2m | [22m[2mparent[22m       [2m | [22m [36m50.27 kB[39m[2m | [22m
+[32mchunk-WUS5NERU.js[39m  [2m | [22m[2mnotice[22m       [2m | [22m [36m49.38 kB[39m[2m | [22m
+[32mchunk-OFTJBFYB.js[39m  [2m | [22m[2mteachers[22m     [2m | [22m [36m47.60 kB[39m[2m | [22m
+[32mchunk-ZPZ5QGHU.js[39m  [2m | [22m[2mdocument[22m     [2m | [22m [36m44.85 kB[39m[2m | [22m
+[32mchunk-YINZYEMH.js[39m  [2m | [22m[2mattendance[22m   [2m | [22m [36m40.79 kB[39m[2m | [22m
+[32mchunk-ZJTMA5UB.js[39m  [2m | [22m[2mexams[22m        [2m | [22m [36m37.08 kB[39m[2m | [22m
+[32mchunk-7XVZYCFD.js[39m  [2m | [22m[2mreports[22m      [2m | [22m [36m36.61 kB[39m[2m | [22m
+[32mchunk-CLYKLUYZ.js[39m  [2m | [22m[2madmin-layout[22m [2m | [22m [36m29.51 kB[39m[2m | [22m
+[32mchunk-IZSORWDZ.js[39m  [2m | [22m[2mlogin[22m        [2m | [22m [36m29.48 kB[39m[2m | [22m
+[32mchunk-J356FTL6.js[39m  [2m | [22m[2mtimetable[22m    [2m | [22m [36m28.39 kB[39m[2m | [22m
+[32mchunk-GW4PWDHC.js[39m  [2m | [22m[2mstaff[22m        [2m | [22m [36m21.77 kB[39m[2m | [22m
+[32mchunk-RNP4K7WM.js[39m  [2m | [22m[2msettings[22m     [2m | [22m [36m15.35 kB[39m[2m | [22m
+[32mchunk-47BKQX7L.js[39m  [2m | [22m[2mleave[22m        [2m | [22m [36m13.51 kB[39m[2m | [22m
+[2m...and 5 more lazy chunks files. Use "--verbose" to show all the files.[22m
+
+Application bundle generation complete. [1.066 seconds] - 2026-07-28T14:05:15.956Z
+
+Component update sent to client(s).
+[33m>[39m Changes detected. Rebuilding...
+[32m√[39m Changes detected. Rebuilding...
+[1mInitial chunk files[22m[2m | [22m[1mNames[22m   [2m | [22m[1mRaw size[22m
+[32mmain.js[39m            [2m | [22m[2mmain[22m    [2m | [22m [36m5.91 kB[39m[2m | [22m
+
+[1mLazy chunk files[22m   [2m | [22m[1mNames[22m   [2m | [22m[1mRaw size[22m
+[32mchunk-KUDDDYHK.js[39m  [2m | [22m[2mteachers[22m[2m | [22m[36m50.20 kB[39m[2m | [22m
+
+Application bundle generation complete. [0.789 seconds] - 2026-07-28T14:05:23.364Z
+
+Component update sent to client(s).
+[33m>[39m Changes detected. Rebuilding...
+[32m√[39m Changes detected. Rebuilding...
+[1mInitial chunk files[22m[2m | [22m[1mNames[22m[2m | [22m[1mRaw size[22m
+[32mmain.js[39m            [2m | [22m[2mmain[22m [2m | [22m [36m5.91 kB[39m[2m | [22m
+
+[1mLazy chunk files[22m   [2m | [22m[1mNames[22m[2m | [22m[1mRaw size[22m
+[32mchunk-2S2GSZVH.js[39m  [2m | [22m[2mstaff[22m[2m | [22m[36m22.35 kB[39m[2m | [22m
+
+Application bundle generation complete. [0.345 seconds] - 2026-07-28T14:06:11.420Z
+
+Page reload sent to client(s).
+[33m>[39m Changes detected. Rebuilding...
+[32m√[39m Changes detected. Rebuilding...
+[1mInitial chunk files[22m[2m | [22m[1mNames[22m[2m | [22m[1mRaw size[22m
+[32mmain.js[39m            [2m | [22m[2mmain[22m [2m | [22m [36m5.91 kB[39m[2m | [22m
+
+[1mLazy chunk files[22m   [2m | [22m[1mNames[22m[2m | [22m[1mRaw size[22m
+[32mchunk-IZIH2ACC.js[39m  [2m | [22m[2mstaff[22m[2m | [22m [36m2.62 kB[39m[2m | [22m
+
+Application bundle generation complete. [0.261 seconds] - 2026-07-28T14:06:54.913Z
+
+Page reload sent to client(s).
+[33m>[39m Changes detected. Rebuilding...
+[32m√[39m Changes detected. Rebuilding...
+[1mInitial chunk files[22m[2m | [22m[1mNames[22m        [2m | [22m [1mRaw size[22m
+[32mstyles.css[39m         [2m | [22m[2mstyles[22m       [2m | [22m  [36m9.04 kB[39m[2m | [22m
+[32mmain.js[39m            [2m | [22m[2mmain[22m         [2m | [22m  [36m5.91 kB[39m[2m | [22m
+[32mchunk-ZRSU74BT.js[39m  [2m | [22m[2m-[22m            [2m | [22m  [36m3.10 kB[39m[2m | [22m
+[32mchunk-CZJLB7T5.js[39m  [2m | [22m[2m-[22m            [2m | [22m  [36m1.08 kB[39m[2m | [22m
+[32mchunk-3UHMZ34P.js[39m  [2m | [22m[2m-[22m            [2m | [22m[36m187 bytes[39m[2m | [22m
+
+[1m [22m                  [2m | [22m[1mInitial total[22m[2m | [22m [1m19.30 kB[22m
+
+[1mLazy chunk files[22m   [2m | [22m[1mNames[22m        [2m | [22m [1mRaw size[22m
+[32mchunk-IXXFCACT.js[39m  [2m | [22m[2mstudents[22m     [2m | [22m[36m120.16 kB[39m[2m | [22m
+[32mchunk-SHSROEOO.js[39m  [2m | [22m[2mdashboard[22m    [2m | [22m [36m97.00 kB[39m[2m | [22m
+[32mchunk-MCRBLI3V.js[39m  [2m | [22m[2mparent[22m       [2m | [22m [36m50.27 kB[39m[2m | [22m
+[32mchunk-KUDDDYHK.js[39m  [2m | [22m[2mteachers[22m     [2m | [22m [36m50.20 kB[39m[2m | [22m
+[32mchunk-WUS5NERU.js[39m  [2m | [22m[2mnotice[22m       [2m | [22m [36m49.38 kB[39m[2m | [22m
+[32mchunk-ZPZ5QGHU.js[39m  [2m | [22m[2mdocument[22m     [2m | [22m [36m44.85 kB[39m[2m | [22m
+[32mchunk-YINZYEMH.js[39m  [2m | [22m[2mattendance[22m   [2m | [22m [36m40.79 kB[39m[2m | [22m
+[32mchunk-ZJTMA5UB.js[39m  [2m | [22m[2mexams[22m        [2m | [22m [36m37.08 kB[39m[2m | [22m
+[32mchunk-7XVZYCFD.js[39m  [2m | [22m[2mreports[22m      [2m | [22m [36m36.61 kB[39m[2m | [22m
+[32mchunk-CLYKLUYZ.js[39m  [2m | [22m[2madmin-layout[22m [2m | [22m [36m29.51 kB[39m[2m | [22m
+[32mchunk-IZSORWDZ.js[39m  [2m | [22m[2mlogin[22m        [2m | [22m [36m29.48 kB[39m[2m | [22m
+[32mchunk-J356FTL6.js[39m  [2m | [22m[2mtimetable[22m    [2m | [22m [36m28.39 kB[39m[2m | [22m
+[32mchunk-RNP4K7WM.js[39m  [2m | [22m[2msettings[22m     [2m | [22m [36m15.35 kB[39m[2m | [22m
+[32mchunk-47BKQX7L.js[39m  [2m | [22m[2mleave[22m        [2m | [22m [36m13.51 kB[39m[2m | [22m
+[32mchunk-4XHLFTKE.js[39m  [2m | [22m[2mstaff-profile[22m[2m | [22m [36m12.38 kB[39m[2m | [22m
+[2m...and 5 more lazy chunks files. Use "--verbose" to show all the files.[22m
+
+Application bundle generation complete. [0.044 seconds] - 2026-07-28T14:06:55.275Z
+
+[33m>[39m Changes detected. Rebuilding...
+[32m√[39m Changes detected. Rebuilding...
+[1mInitial chunk files[22m[2m | [22m[1mNames[22m[2m | [22m[1mRaw size[22m
+[32mmain.js[39m            [2m | [22m[2mmain[22m [2m | [22m [36m5.91 kB[39m[2m | [22m
+
+[1mLazy chunk files[22m   [2m | [22m[1mNames[22m[2m | [22m[1mRaw size[22m
+[32mchunk-T2HC4LLN.js[39m  [2m | [22m[2mstaff[22m[2m | [22m[36m26.02 kB[39m[2m | [22m
+
+Application bundle generation complete. [0.488 seconds] - 2026-07-28T14:06:56.406Z
+
+Component update sent to client(s).
+[33m>[39m Changes detected. Rebuilding...
+[32m√[39m Changes detected. Rebuilding...
+Application bundle generation failed. [0.772 seconds] - 2026-07-28T14:08:25.774Z
+
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module './pages/staff-profile/staff-profile' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.routes.ts:59:36:
+[37m      59 │ ...() => import([32m'./pages/staff-profile/staff-profile'[37m).then(m => m...
+         ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+[33m>[39m Changes detected. Rebuilding...
+[32m√[39m Changes detected. Rebuilding...
+Application bundle generation failed. [0.045 seconds] - 2026-07-28T14:08:25.871Z
+
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module './pages/staff-profile/staff-profile' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.routes.ts:59:36:
+[37m      59 │ ...() => import([32m'./pages/staff-profile/staff-profile'[37m).then(m => m...
+         ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+[33m>[39m Changes detected. Rebuilding...
+[32m√[39m Changes detected. Rebuilding...
+Application bundle generation failed. [0.031 seconds] - 2026-07-28T14:08:26.593Z
+
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module './pages/staff-profile/staff-profile' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.routes.ts:59:36:
+[37m      59 │ ...() => import([32m'./pages/staff-profile/staff-profile'[37m).then(m => m...
+         ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+[33m>[39m Changes detected. Rebuilding...
+[32m√[39m Changes detected. Rebuilding...
+Application bundle generation failed. [0.060 seconds] - 2026-07-28T14:08:27.190Z
+
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module './pages/staff-profile/staff-profile' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.routes.ts:59:36:
+[37m      59 │ ...() => import([32m'./pages/staff-profile/staff-profile'[37m).then(m => m...
+         ╵                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+[33m>[39m Changes detected. Rebuilding...
+[32m√[39m Changes detected. Rebuilding...
+[1mInitial chunk files[22m[2m | [22m[1mNames[22m        [2m | [22m [1mRaw size[22m
+[32mstyles.css[39m         [2m | [22m[2mstyles[22m       [2m | [22m  [36m9.04 kB[39m[2m | [22m
+[32mmain.js[39m            [2m | [22m[2mmain[22m         [2m | [22m  [36m5.91 kB[39m[2m | [22m
+[32mchunk-ZRSU74BT.js[39m  [2m | [22m[2m-[22m            [2m | [22m  [36m3.10 kB[39m[2m | [22m
+[32mchunk-CZJLB7T5.js[39m  [2m | [22m[2m-[22m            [2m | [22m  [36m1.08 kB[39m[2m | [22m
+[32mchunk-3UHMZ34P.js[39m  [2m | [22m[2m-[22m            [2m | [22m[36m187 bytes[39m[2m | [22m
+
+[1m [22m                  [2m | [22m[1mInitial total[22m[2m | [22m [1m19.30 kB[22m
+
+[1mLazy chunk files[22m   [2m | [22m[1mNames[22m        [2m | [22m [1mRaw size[22m
+[32mchunk-IXXFCACT.js[39m  [2m | [22m[2mstudents[22m     [2m | [22m[36m120.16 kB[39m[2m | [22m
+[32mchunk-SHSROEOO.js[39m  [2m | [22m[2mdashboard[22m    [2m | [22m [36m97.00 kB[39m[2m | [22m
+[32mchunk-MCRBLI3V.js[39m  [2m | [22m[2mparent[22m       [2m | [22m [36m50.27 kB[39m[2m | [22m
+[32mchunk-KUDDDYHK.js[39m  [2m | [22m[2mteachers[22m     [2m | [22m [36m50.20 kB[39m[2m | [22m
+[32mchunk-WUS5NERU.js[39m  [2m | [22m[2mnotice[22m       [2m | [22m [36m49.38 kB[39m[2m | [22m
+[32mchunk-ZPZ5QGHU.js[39m  [2m | [22m[2mdocument[22m     [2m | [22m [36m44.85 kB[39m[2m | [22m
+[32mchunk-YINZYEMH.js[39m  [2m | [22m[2mattendance[22m   [2m | [22m [36m40.79 kB[39m[2m | [22m
+[32mchunk-ZJTMA5UB.js[39m  [2m | [22m[2mexams[22m        [2m | [22m [36m37.08 kB[39m[2m | [22m
+[32mchunk-7XVZYCFD.js[39m  [2m | [22m[2mreports[22m      [2m | [22m [36m36.61 kB[39m[2m | [22m
+[32mchunk-CLYKLUYZ.js[39m  [2m | [22m[2madmin-layout[22m [2m | [22m [36m29.51 kB[39m[2m | [22m
+[32mchunk-IZSORWDZ.js[39m  [2m | [22m[2mlogin[22m        [2m | [22m [36m29.48 kB[39m[2m | [22m
+[32mchunk-J356FTL6.js[39m  [2m | [22m[2mtimetable[22m    [2m | [22m [36m28.39 kB[39m[2m | [22m
+[32mchunk-T2HC4LLN.js[39m  [2m | [22m[2mstaff[22m        [2m | [22m [36m26.02 kB[39m[2m | [22m
+[32mchunk-BYMRWY47.js[39m  [2m | [22m[2mstaff-profile[22m[2m | [22m [36m25.09 kB[39m[2m | [22m
+[32mchunk-RNP4K7WM.js[39m  [2m | [22m[2msettings[22m     [2m | [22m [36m15.35 kB[39m[2m | [22m
+[2m...and 5 more lazy chunks files. Use "--verbose" to show all the files.[22m
+
+Application bundle generation complete. [0.494 seconds] - 2026-07-28T14:08:28.383Z
+
+Page reload sent to client(s).

@@ -18,6 +18,8 @@ export interface StudentDTO {
   currentClassId?: number;
   currentClassName: string;
   active: boolean;
+  status?: string;
+  createdAt?: string;
   currentAcademicYearName: string;
   medium?: string;
   newParents?: Array<{ name: string; phoneNumber: string; email: string; password: string; address: string; occupation: string }>;
@@ -41,10 +43,6 @@ export class StudentService {
 
   createStudent(student: Partial<StudentDTO>): Observable<StudentDTO> {
     return this.http.post<StudentDTO>(this.apiUrl, student);
-  }
-
-  deactivateStudent(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
   updateStudent(id: number, student: Partial<StudentDTO>): Observable<StudentDTO> {

@@ -11,7 +11,7 @@ import { StudentService, StudentDTO } from '../../services/student.service';
 import { SchoolApiService } from '../../services/school-api.service';
 import { Subscription, finalize, forkJoin, map, of, switchMap } from 'rxjs';
 
-type MainTab = 'directory' | 'enrollment' | 'archives';
+type MainTab = 'directory' | 'enrollment';
 
 interface StudentRow {
   id: number;
@@ -30,16 +30,6 @@ interface DocItem {
   uploaded: boolean;
   file?: File;
   documentType: 'CERTIFICATE' | 'REPORT_CARD' | 'MEDICAL_RECORD' | 'OTHER';
-}
-
-type ExitReason = 'Graduated' | 'Transferred' | 'Withdrawn';
-
-interface ArchivedStudent {
-  archiveId: string;
-  name: string;
-  batchYear: string;
-  exitReason: ExitReason;
-  archiveDate: string;
 }
 
 @Component({
@@ -97,37 +87,6 @@ export class Students implements OnInit, OnDestroy {
     { label: 'Guardian ID Proof', uploaded: false, documentType: 'OTHER' }
   ];
 
-  archiveExitYear = 'all';
-  archiveExitReason = 'all';
-  archiveSearchTerm = '';
-
-  archiveCurrentPage = 1;
-  archiveTotalPages = 3;
-  archiveTotalEntries = 42;
-
-  archivedStudents: ArchivedStudent[] = [
-    {
-      archiveId: 'AC-19-042',
-      name: 'Eleanor Vance',
-      batchYear: 'Class of 2023',
-      exitReason: 'Graduated',
-      archiveDate: 'May 15, 2023'
-    },
-    {
-      archiveId: 'AC-21-118',
-      name: 'Marcus Thorne',
-      batchYear: 'Class of 2024',
-      exitReason: 'Transferred',
-      archiveDate: 'Aug 22, 2023'
-    },
-    {
-      archiveId: 'AC-20-003',
-      name: 'Sophia Chen',
-      batchYear: 'Class of 2023',
-      exitReason: 'Graduated',
-      archiveDate: 'May 15, 2023'
-    }
-  ];
 
   constructor(
     private fb: FormBuilder,
@@ -135,8 +94,6 @@ export class Students implements OnInit, OnDestroy {
     private api: SchoolApiService,
     private cdr: ChangeDetectorRef
   ) {
-
-    this.archivedStudents = [];
 
     this.enrollmentForm = this.fb.group({
 
@@ -196,6 +153,7 @@ export class Students implements OnInit, OnDestroy {
 
   setTab(tab: MainTab): void {
     this.activeTab = tab;
+    if (tab === 'directory') this.loadStudents();
   }
 
   setStep(step: number): void {
@@ -314,14 +272,6 @@ export class Students implements OnInit, OnDestroy {
 
   onAddNewStudent(): void {
     this.activeTab = 'enrollment';
-  }
-
-  onGetTemplate(): void {
-    console.log('Download template');
-  }
-
-  onViewProgress(): void {
-    console.log('View progress');
   }
 
   loadStudents(): void {
@@ -444,40 +394,4 @@ export class Students implements OnInit, OnDestroy {
     return error?.error?.message || fallback;
   }
 
-  deactivateStudent(student: StudentRow): void {
-    this.studentService.deactivateStudent(student.id).subscribe({
-      next: () => this.loadStudents(),
-      error: error => this.errorMessage = error.error?.message || 'Unable to archive student'
-    });
-  }
-
-  onExportArchiveList(): void {
-    console.log('Export archive list');
-  }
-
-  onClearArchiveFilters(): void {
-    this.archiveExitYear = 'all';
-    this.archiveExitReason = 'all';
-    this.archiveSearchTerm = '';
-  }
-
-  onViewProfile(student: ArchivedStudent): void {
-    console.log(student);
-  }
-
-  onRestoreStudent(student: ArchivedStudent): void {
-    console.log(student);
-  }
-
-  getExitReasonClass(reason: ExitReason): string {
-    return 'reason-' + reason.toLowerCase();
-  }
-
-  goToArchivePage(page: number): void {
-
-    if (page < 1 || page > this.archiveTotalPages) {
-      return;
-    }
-    this.archiveCurrentPage = page;
-  }
 }
