@@ -1,0 +1,60 @@
+<main class="manager">
+    <header>
+        <div><span>Academic setup</span>
+            <h1>Classes</h1>
+            <p>Create and maintain the real classes used by enrollment, attendance, exams, timetable, and reports.</p>
+        </div><button class="primary" type="button" (click)="open()">+ Add class</button>
+    </header>
+    <p *ngIf="error" class="message error">{{error}}</p>
+    <p *ngIf="success" class="message success">{{success}}</p>
+    <form id="class-editor" *ngIf="show" (ngSubmit)="save()">
+        <h2>{{editing?'Edit class':'Create class'}}</h2><label>Class Name<input [(ngModel)]="form.name" name="name"
+                placeholder="Example: Grade 6 A" required></label><label>Section<input [(ngModel)]="form.section"
+                name="section" placeholder="Example: A" required></label><label>Grade<select [(ngModel)]="form.gradeId"
+                name="grade">
+                <option [ngValue]="0">Select grade</option>
+                <option *ngFor="let x of grades" [ngValue]="x.id">{{x.name}}</option>
+            </select></label><label>Academic Year<select [(ngModel)]="form.academicYearId" name="year">
+                <option [ngValue]="0">Select academic year</option>
+                <option *ngFor="let x of years" [ngValue]="x.id">{{x.name}}</option>
+            </select></label><label class="wide">Subjects<select multiple [(ngModel)]="form.subjectIds" name="subjects">
+                <option *ngFor="let x of subjects" [ngValue]="x.id">{{x.name}}</option>
+            </select><small>Hold Ctrl to select multiple subjects.</small></label>
+        <div class="actions"><button class="secondary" type="button" (click)="close()">Cancel</button><button
+                class="primary" [disabled]="saving">{{saving?'Saving...':'Save class'}}</button></div>
+    </form>
+    <section>
+        <div class="section-title">
+            <h2>All classes</h2><button class="secondary" type="button" (click)="load()">Refresh</button>
+        </div>
+        <div *ngIf="loading" class="empty">Loading classes...</div>
+        <div *ngIf="!loading&&!classes.length" class="empty">No classes found. Create your first class.</div>
+        <div class="table-wrap" *ngIf="classes.length">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Class</th>
+                        <th>Grade</th>
+                        <th>Academic Year</th>
+                        <th>Subjects</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of classes">
+                        <td><strong>{{item.name}}</strong><small>Section {{item.section}}</small></td>
+                        <td>{{item.gradeName||'Not assigned'}}</td>
+                        <td>{{item.academicYearName||'Not assigned'}}</td>
+                        <td>{{item.subjectIds?.length||0}} linked</td>
+                        <td><span [class.inactive]="!item.active"
+                                class="status">{{item.active?'Active':'Inactive'}}</span></td>
+                        <td><button class="edit" type="button" (click)="open(item)">Edit</button><button class="state"
+                                type="button" (click)="toggle(item)">{{item.active?'Deactivate':'Activate'}}</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>

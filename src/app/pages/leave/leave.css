@@ -1,1 +1,82 @@
-.leave-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:22px}.leave-summary div{padding:18px}.leave-summary span{display:block;color:#718096;font-size:13px}.leave-summary strong{font-size:26px;margin-top:7px;display:block}.text-action{border:0;background:transparent;font-weight:700;cursor:pointer;margin-right:10px}.approve{color:#16803a}.reject{color:#dc2626}@media(max-width:700px){.leave-summary{grid-template-columns:1fr}}
+.lumina-page {
+  min-height: 100%;
+  padding: 28px;
+  background: #f5f8fc;
+  color: #102a56;
+  font-family: Inter, Arial, sans-serif;
+}
+
+.lumina-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 18px; }
+.lumina-heading h1 { margin: 0; font-size: 1.7rem; letter-spacing: -.03em; }
+.lumina-heading p { margin: 7px 0 0; color: #64748b; }
+.header-actions { display: flex; align-items: center; gap: 10px; }
+
+.lumina-button {
+  border: 0; border-radius: 10px; padding: 11px 18px; color: #fff;
+  background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+  box-shadow: 0 7px 15px rgba(37, 99, 235, .2); font-weight: 750; cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.lumina-button:hover { transform: translateY(-1px); box-shadow: 0 10px 20px rgba(37, 99, 235, .25); }
+.refresh-button, .cancel-button { border: 1px solid #cbd9ed; border-radius: 9px; padding: 10px 15px; background: #fff; color: #31527d; font-weight: 700; cursor: pointer; }
+.refresh-button:hover, .cancel-button:hover { background: #f2f6fc; }
+
+.leave-tabs { display: flex; gap: 5px; width: max-content; margin-bottom: 18px; padding: 5px; border: 1px solid #dce6f6; border-radius: 11px; background: #eaf1fc; }
+.leave-tabs button { border: 0; border-radius: 7px; padding: 10px 20px; color: #52637c; background: transparent; font-weight: 700; cursor: pointer; transition: color .15s ease, background .15s ease, box-shadow .15s ease; }
+.leave-tabs button.active { color: #1d4ed8; background: #fff; box-shadow: 0 2px 7px rgba(30, 58, 95, .12); }
+
+.lumina-card { overflow: hidden; border: 1px solid #dce5f2; border-radius: 15px; padding: 14px 18px; background: #fff; box-shadow: 0 10px 25px rgba(32, 65, 112, .05); }
+.lumina-empty { margin: 0; padding: 28px; text-align: center; color: #64748b; }
+.lumina-page > .lumina-empty { border: 1px solid #fecaca; border-radius: 10px; background: #fff6f6; color: #b91c1c; }
+
+.apply-card { margin: 0 0 18px; border: 1px solid #bed4f8; border-radius: 15px; padding: 20px; background: linear-gradient(135deg, #f9fbff, #f0f6ff); box-shadow: 0 10px 25px rgba(32, 65, 112, .06); }
+.apply-card-title { display: flex; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+.apply-card h2 { margin: 0; font-size: 1.05rem; }
+.apply-card p { margin: 5px 0 0; color: #64748b; font-size: .88rem; }
+.form-close { width: 31px; height: 31px; border: 0; border-radius: 8px; background: #e8effa; color: #42638f; font-size: 1.35rem; line-height: 1; cursor: pointer; }
+.form-close:hover { background: #dce8fb; }
+.form-loading { padding: 18px 0; color: #64748b; }
+.leave-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px 18px; }
+.leave-form label { display: grid; gap: 7px; color: #365074; font-size: .8rem; font-weight: 750; }
+.leave-form label span { color: #8a9ab2; font-weight: 500; }
+.leave-form input, .leave-form select, .leave-form textarea { box-sizing: border-box; width: 100%; border: 1px solid #cbd9ed; border-radius: 8px; padding: 10px 11px; background: #fff; color: #102a56; font: inherit; font-size: .9rem; outline: none; }
+.leave-form textarea { resize: vertical; }
+.leave-form input:focus, .leave-form select:focus, .leave-form textarea:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, .12); }
+.leave-form :disabled { color: #94a3b8; background: #f3f6fa; cursor: not-allowed; }
+.full-width { grid-column: 1 / -1; }
+.form-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 2px; }
+.submit-button { border: 0; border-radius: 9px; padding: 10px 17px; color: #fff; background: #2563eb; box-shadow: 0 5px 11px rgba(37, 99, 235, .18); font-weight: 750; cursor: pointer; }
+.submit-button:disabled { opacity: .65; cursor: wait; }
+
+.lumina-table { width: 100%; border-collapse: collapse; }
+.lumina-table th, .lumina-table td { padding: 15px 14px; border-bottom: 1px solid #e8eef7; text-align: left; vertical-align: middle; }
+.lumina-table tbody tr { transition: background .15s ease; }
+.lumina-table tbody tr:hover { background: #f8fbff; }
+.lumina-table tbody tr:last-child td { border-bottom: 0; }
+.lumina-table th { color: #7a8ca8; background: #f6f8fc; font-size: .72rem; font-weight: 800; letter-spacing: .045em; text-transform: uppercase; }
+.leave-dates { color: #3f5475; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.leave-actions { min-width: 180px; white-space: nowrap; }
+
+.approve, .reject { border: 1px solid transparent; border-radius: 8px; padding: 8px 12px; font-size: .82rem; font-weight: 750; cursor: pointer; transition: transform .15s ease, filter .15s ease; }
+.approve { margin-right: 8px; color: #166534; background: #dcfce7; border-color: #bbf7d0; }
+.reject { color: #be123c; background: #fff1f2; border-color: #fecdd3; }
+.approve:hover, .reject:hover { filter: brightness(.97); transform: translateY(-1px); }
+
+.leave-status { display: inline-flex; align-items: center; justify-content: center; min-width: 79px; padding: 5px 9px; border-radius: 999px; font-size: .71rem; font-weight: 800; letter-spacing: .025em; }
+.leave-status.pending { color: #92400e; background: #fef3c7; }
+.leave-status.approved { color: #166534; background: #dcfce7; }
+.leave-status.rejected { color: #b91c1c; background: #fee2e2; }
+.completed { color: #94a3b8; font-size: .82rem; font-style: italic; }
+
+@media (max-width: 650px) {
+  .lumina-page { padding: 16px; }
+  .lumina-heading { align-items: flex-start; flex-direction: column; }
+  .header-actions { width: 100%; }
+  .header-actions button { flex: 1; }
+  .leave-tabs { width: 100%; }
+  .leave-tabs button { flex: 1; }
+  .lumina-card { overflow-x: auto; }
+  .lumina-table { min-width: 720px; }
+  .leave-form { grid-template-columns: 1fr; }
+  .full-width { grid-column: auto; }
+}

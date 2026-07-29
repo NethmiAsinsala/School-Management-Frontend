@@ -1,1 +1,116 @@
-<div class="parents-page"><div class="page-title-row"><div><h1>Parent Directory</h1><p>Manage parent accounts and their real student relationships.</p></div><div class="header-actions"><button class="btn-outline" type="button" [disabled]="!parents.length" (click)="exportCurrentResults()">Export current page</button><button class="btn-primary" type="button" (click)="openCreate()">Connect Parent</button></div></div><div class="parent-stats"><article><span>Listed parents</span><strong>{{ total }}</strong></article><article><span>Active parents</span><strong>{{ activeCount }}</strong></article><article><span>Inactive parents</span><strong>{{ inactiveCount }}</strong></article></div><p *ngIf="error" class="message error" role="alert">{{ error }}</p><p *ngIf="success" class="message success" role="status">{{ success }}</p><form *ngIf="showForm" class="parent-editor" (ngSubmit)="saveParent()"><h2>{{ editing ? 'Edit parent' : 'Connect parent account' }}</h2><label>Name<input [(ngModel)]="form.name" name="name" required></label><label>Phone<input [(ngModel)]="form.phoneNumber" name="phoneNumber" required placeholder="0771234567"></label><label>Occupation<input [(ngModel)]="form.occupation" name="occupation" required></label><ng-container *ngIf="!editing"><label>Login email (optional)<input [(ngModel)]="form.loginEmail" name="loginEmail" type="email"></label><label>Temporary password (required if email is used)<input [(ngModel)]="form.loginPassword" name="loginPassword" type="password" minlength="8"></label></ng-container><label class="wide">Address<textarea [(ngModel)]="form.address" name="address" required></textarea></label><div class="wide form-actions"><button type="button" class="btn-outline" (click)="closeForm()">Cancel</button><button type="submit" class="btn-primary" [disabled]="saving">{{ saving ? 'Saving…' : (editing ? 'Save parent' : 'Create parent') }}</button></div></form><div class="content-grid"><div class="main-col"><div class="table-panel"><div class="panel-header"><h3>Guardian List</h3><div class="search-controls"><input type="search" [(ngModel)]="query" (keyup.enter)="search()" placeholder="Search parent name, phone, email"><button class="btn-outline" type="button" (click)="search()">Search</button><button class="clear-button" type="button" (click)="clearSearch()">Clear</button></div></div><div *ngIf="loading" class="empty-state">Loading parents…</div><div *ngIf="!loading && !parents.length" class="empty-state">No parents match this search.</div><div class="table-wrapper" *ngIf="!loading && parents.length"><table class="guardians-table"><thead><tr><th>Parent name</th><th>Contact</th><th>Occupation</th><th>Status</th><th>Actions</th></tr></thead><tbody><tr *ngFor="let parent of parents"><td><button class="parent-link" type="button" (click)="selectParent(parent)"><span class="avatar-initials">{{ parent.name.slice(0,2).toUpperCase() }}</span><span>{{ parent.name }}</span></button></td><td><div class="contact-cell"><span class="phone">{{ parent.phoneNumber }}</span><span class="email">{{ parent.loginEmail || 'No login account' }}</span></div></td><td>{{ parent.occupation }}</td><td><span class="status" [class.inactive]="!parent.active">{{ parent.active ? 'Active' : 'Inactive' }}</span></td><td class="row-actions"><button class="edit-button" type="button" (click)="openEdit(parent)">Edit</button><button class="edit-button" type="button" (click)="selectParent(parent)">Relationships</button><button class="status-button" type="button" (click)="changeStatus(parent)">{{ parent.active ? 'Deactivate' : 'Activate' }}</button></td></tr></tbody></table></div><div class="table-footer"><span class="results-text">Showing {{ total ? page * pageSize + 1 : 0 }}–{{ (page + 1) * pageSize > total ? total : (page + 1) * pageSize }} of {{ total }}</span><div class="pager"><button class="pager-btn" type="button" (click)="previousPage()" [disabled]="page === 0">Previous</button><button class="pager-btn" type="button" (click)="nextPage()" [disabled]="page + 1 >= totalPages">Next</button></div></div></div></div><aside class="side-col"><div class="panel"><h3 class="panel-title">Student Relationships</h3><div *ngIf="!selectedParent" class="empty-state">Select a parent to manage linked students.</div><ng-container *ngIf="selectedParent"><p class="selected-parent">{{ selectedParent.name }}</p><div *ngIf="relationshipsLoading" class="empty-state">Loading relationships…</div><div *ngIf="!relationshipsLoading && !relationships.length" class="empty-state">No linked students.</div><div class="relationship" *ngFor="let link of relationships"><strong>{{ studentLabel(link.studentId) }}</strong><span>{{ link.relationshipType }}</span><div class="contact-toggles"><button type="button" [class.active]="link.primaryContact" (click)="updateContact(link, 'primary')">Primary</button><button type="button" [class.active]="link.emergencyContact" (click)="updateContact(link, 'emergency')">Emergency</button><button type="button" class="unlink" (click)="unlinkStudent(link)">Remove</button></div></div><form class="link-form" (ngSubmit)="linkStudent()"><h4>Link student</h4><select [(ngModel)]="linkStudentId" name="student" required><option [ngValue]="null">Select student</option><option *ngFor="let student of availableStudents()" [ngValue]="student.id">{{ student.name }} — {{ student.admissionNumber || student.id }}</option></select><input [(ngModel)]="linkForm.relationshipType" name="relationshipType" required placeholder="Relationship, e.g. Mother"><label><input [(ngModel)]="linkForm.primaryContact" name="primaryContact" type="checkbox"> Primary contact</label><label><input [(ngModel)]="linkForm.emergencyContact" name="emergencyContact" type="checkbox"> Emergency contact</label><button class="btn-primary" type="submit" [disabled]="saving || !linkStudentId">Link student</button></form></ng-container></div></aside></div></div>
+<div class="parents-page">
+    <div class="page-title-row">
+        <div>
+            <h1>Parent Directory</h1>
+            <p>Manage parent accounts and their real student relationships.</p>
+        </div>
+        <div class="header-actions"><button class="btn-outline" type="button" [disabled]="!parents.length"
+                (click)="exportCurrentResults()">Export current page</button><button class="btn-primary" type="button"
+                (click)="openCreate()">Connect Parent</button></div>
+    </div>
+    <div class="parent-stats">
+        <article><span>Listed parents</span><strong>{{ total }}</strong></article>
+        <article><span>Active parents</span><strong>{{ activeCount }}</strong></article>
+        <article><span>Inactive parents</span><strong>{{ inactiveCount }}</strong></article>
+    </div>
+    <p *ngIf="error" class="message error" role="alert">{{ error }}</p>
+    <p *ngIf="success" class="message success" role="status">{{ success }}</p>
+    <form *ngIf="showForm" class="parent-editor" (ngSubmit)="saveParent()">
+        <h2>{{ editing ? 'Edit parent' : 'Connect parent account' }}</h2><label>Name<input [(ngModel)]="form.name"
+                name="name" required></label><label>Phone<input [(ngModel)]="form.phoneNumber" name="phoneNumber"
+                required placeholder="0771234567"></label><label>Occupation<input [(ngModel)]="form.occupation"
+                name="occupation" required></label><ng-container *ngIf="!editing"><label>Login email (optional)<input
+                    [(ngModel)]="form.loginEmail" name="loginEmail" type="email"></label><label>Temporary password
+                (required if email is used)<input [(ngModel)]="form.loginPassword" name="loginPassword" type="password"
+                    minlength="8"></label></ng-container><label class="wide">Address<textarea [(ngModel)]="form.address"
+                name="address" required></textarea></label>
+        <div class="wide form-actions"><button type="button" class="btn-outline"
+                (click)="closeForm()">Cancel</button><button type="submit" class="btn-primary" [disabled]="saving">{{
+                saving ? 'Saving…' : (editing ? 'Save parent' : 'Create parent') }}</button></div>
+    </form>
+    <div class="content-grid">
+        <div class="main-col">
+            <div class="table-panel">
+                <div class="panel-header">
+                    <h3>Guardian List</h3>
+                    <div class="search-controls"><input type="search" [(ngModel)]="query" (keyup.enter)="search()"
+                            placeholder="Search parent name, phone, email"><button class="btn-outline" type="button"
+                            (click)="search()">Search</button><button class="clear-button" type="button"
+                            (click)="clearSearch()">Clear</button></div>
+                </div>
+                <div *ngIf="loading" class="empty-state">Loading parents…</div>
+                <div *ngIf="!loading && !parents.length" class="empty-state">No parents match this search.</div>
+                <div class="table-wrapper" *ngIf="!loading && parents.length">
+                    <table class="guardians-table">
+                        <thead>
+                            <tr>
+                                <th>Parent name</th>
+                                <th>Contact</th>
+                                <th>Occupation</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let parent of parents">
+                                <td><button class="parent-link" type="button" (click)="selectParent(parent)"><span
+                                            class="avatar-initials">{{ parent.name.slice(0,2).toUpperCase()
+                                            }}</span><span>{{ parent.name }}</span></button></td>
+                                <td>
+                                    <div class="contact-cell"><span class="phone">{{ parent.phoneNumber }}</span><span
+                                            class="email">{{ parent.loginEmail || 'No login account' }}</span></div>
+                                </td>
+                                <td>{{ parent.occupation }}</td>
+                                <td><span class="status" [class.inactive]="!parent.active">{{ parent.active ? 'Active' :
+                                        'Inactive' }}</span></td>
+                                <td class="row-actions"><button class="edit-button" type="button"
+                                        (click)="openEdit(parent)">Edit</button><button class="edit-button"
+                                        type="button" (click)="selectParent(parent)">Relationships</button><button
+                                        class="status-button" type="button" (click)="changeStatus(parent)">{{
+                                        parent.active ? 'Deactivate' : 'Activate' }}</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-footer"><span class="results-text">Showing {{ total ? page * pageSize + 1 : 0 }}–{{
+                        (page + 1) * pageSize > total ? total : (page + 1) * pageSize }} of {{ total }}</span>
+                    <div class="pager"><button class="pager-btn" type="button" (click)="previousPage()"
+                            [disabled]="page === 0">Previous</button><button class="pager-btn" type="button"
+                            (click)="nextPage()" [disabled]="page + 1 >= totalPages">Next</button></div>
+                </div>
+            </div>
+        </div>
+        <aside class="side-col">
+            <div class="panel">
+                <h3 class="panel-title">Student Relationships</h3>
+                <div *ngIf="!selectedParent" class="empty-state">Select a parent to manage linked students.</div>
+                <ng-container *ngIf="selectedParent">
+                    <p class="selected-parent">{{ selectedParent.name }}</p>
+                    <div *ngIf="relationshipsLoading" class="empty-state">Loading relationships…</div>
+                    <div *ngIf="!relationshipsLoading && !relationships.length" class="empty-state">No linked students.
+                    </div>
+                    <div class="relationship" *ngFor="let link of relationships"><strong>{{ studentLabel(link.studentId)
+                            }}</strong><span>{{ link.relationshipType }}</span>
+                        <div class="contact-toggles"><button type="button" [class.active]="link.primaryContact"
+                                (click)="updateContact(link, 'primary')">Primary</button><button type="button"
+                                [class.active]="link.emergencyContact"
+                                (click)="updateContact(link, 'emergency')">Emergency</button><button type="button"
+                                class="unlink" (click)="unlinkStudent(link)">Remove</button></div>
+                    </div>
+                    <form class="link-form" (ngSubmit)="linkStudent()">
+                        <h4>Link student</h4><select [(ngModel)]="linkStudentId" name="student" required>
+                            <option [ngValue]="null">Select student</option>
+                            <option *ngFor="let student of availableStudents()" [ngValue]="student.id">{{ student.name
+                                }} — {{ student.admissionNumber || student.id }}</option>
+                        </select><input [(ngModel)]="linkForm.relationshipType" name="relationshipType" required
+                            placeholder="Relationship, e.g. Mother"><label><input [(ngModel)]="linkForm.primaryContact"
+                                name="primaryContact" type="checkbox"> Primary contact</label><label><input
+                                [(ngModel)]="linkForm.emergencyContact" name="emergencyContact" type="checkbox">
+                            Emergency contact</label><button class="btn-primary" type="submit"
+                            [disabled]="saving || !linkStudentId">Link student</button>
+                    </form>
+                </ng-container>
+            </div>
+        </aside>
+    </div>
+</div>

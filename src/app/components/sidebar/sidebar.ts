@@ -19,6 +19,8 @@ export class Sidebar {
   navItems: NavItem[] = [
     { label: 'Dashboard', route: '/admin/dashboard', icon: 'grid' },
     { label: 'Students', route: '/admin/students', icon: 'cap' },
+    { label: 'Classes', route: '/admin/classes', icon: 'calendar' },
+    { label: 'Subjects', route: '/admin/subjects', icon: 'document' },
     { label: 'Teachers', route: '/admin/teachers', icon: 'user' },
     { label: 'Staff', route: '/admin/staff', icon: 'users' },
     { label: 'Parents', route: '/admin/parents', icon: 'users' },
@@ -28,8 +30,6 @@ export class Sidebar {
     { label: 'Reports', route: '/admin/reports', icon: 'chart' },
     { label: 'Documents', route: '/admin/documents', icon: 'document-lib' },
     { label: 'Notices', route: '/admin/notices', icon: 'megaphone' },
-    { label: 'Leave Requests', route: '/admin/leave', icon: 'calendar' },
-    { label: 'Archives', route: '/admin/archives', icon: 'document-lib' },
-    { label: 'Settings', route: '/admin/settings', icon: 'gear' }
+    { label: 'Leave Requests', route: '/admin/leave', icon: 'calendar' }
   ];
 }

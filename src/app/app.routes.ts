@@ -43,6 +43,14 @@ export const routes: Routes = [
           import('./pages/students/students')
             .then(m => m.Students)
       },
+      {
+        path: 'classes',
+        loadComponent: () => import('./pages/classes/classes').then(m => m.Classes)
+      },
+      {
+        path: 'subjects',
+        loadComponent: () => import('./pages/subjects/subjects').then(m => m.Subjects)
+      },
 
       {
         path: 'teachers',
@@ -62,10 +70,7 @@ export const routes: Routes = [
         path: 'leave',
         loadComponent: () => import('./pages/leave/leave').then(m => m.Leave)
       },
-      {
-        path: 'archives',
-        loadComponent: () => import('./pages/archives/archives').then(m => m.Archives)
-      },
+    
       
       {
         path: 'parents',
@@ -111,13 +116,6 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/timetable/timetable')
             .then(m => m.Timetable)
-      },
-
-      {
-        path: 'settings',
-        loadComponent: () =>
-          import('./pages/settings/settings')
-            .then(m => m.Settings)
       }
 
     ]

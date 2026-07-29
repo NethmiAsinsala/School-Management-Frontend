@@ -1,0 +1,63 @@
+<main class="manager">
+    <header>
+        <div><span>Academic setup</span>
+            <h1>Subjects</h1>
+            <p>Create the real subjects used in classes, exams, marks, timetables, and reports.</p>
+        </div><button class="primary" type="button" (click)="open()">+ Add subject</button>
+    </header>
+    <p *ngIf="error" class="message error">{{error}}</p>
+    <p *ngIf="success" class="message success">{{success}}</p>
+    <form id="subject-editor" *ngIf="show" (ngSubmit)="save()">
+        <h2>{{editing?'Edit subject':'Create subject'}}</h2><label>Subject Code<input [(ngModel)]="form.code"
+                name="code" placeholder="Example: MATH-06" required></label><label>Subject Name<input
+                [(ngModel)]="form.name" name="name" placeholder="Example: Mathematics" required></label><label
+            class="wide">Description<textarea [(ngModel)]="form.description" name="description"
+                placeholder="Describe this subject" required></textarea></label><label>Available Grades<select multiple
+                [(ngModel)]="form.gradeIds" name="grades">
+                <option *ngFor="let x of grades" [ngValue]="x.id">{{x.name}}</option>
+            </select></label><label>Available Classes<select multiple [(ngModel)]="form.classIds" name="classes">
+                <option *ngFor="let x of classes" [ngValue]="x.id">{{x.name}}</option>
+            </select></label>
+        <div class="actions"><button class="secondary" type="button" (click)="close()">Cancel</button><button
+                class="primary" [disabled]="saving">{{saving?'Saving...':'Save subject'}}</button></div>
+    </form>
+    <section>
+        <div class="section-title">
+            <div>
+                <h2>All subjects</h2>
+                <p>Search and manage subjects in the database.</p>
+            </div>
+            <div class="search"><input [(ngModel)]="keyword" (keyup.enter)="load()"
+                    placeholder="Search subjects"><button class="secondary" type="button"
+                    (click)="load()">Search</button><button class="secondary" type="button" [disabled]="!keyword"
+                    (click)="clearFilter()">Clear</button></div>
+        </div>
+        <div *ngIf="loading" class="empty">Loading subjects...</div>
+        <div *ngIf="!loading&&!subjects.length" class="empty">No subjects found. Create your first subject.</div>
+        <div class="table-wrap" *ngIf="subjects.length">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Subject</th>
+                        <th>Description</th>
+                        <th>Grades</th>
+                        <th>Classes</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of subjects">
+                        <td><strong>{{item.code}}</strong></td>
+                        <td>{{item.name}}</td>
+                        <td class="description">{{item.description}}</td>
+                        <td>{{item.gradeIds?.length||0}} linked</td>
+                        <td>{{item.classIds?.length||0}} linked</td>
+                        <td><button class="edit" type="button" (click)="open(item)">Edit</button><button class="delete"
+                                type="button" (click)="remove(item)">Delete</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>

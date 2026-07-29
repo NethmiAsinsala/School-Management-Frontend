@@ -1,89 +1,48 @@
-<div class="documents-page">
-
-  <div class="page-header-row">
-    <div>
-      <h1>Document Library</h1>
-      <p>Centralized repository for institutional records. Maintain structure and ensure sensitive materials remain compliant and accessible.</p>
-    </div>
-    <button class="upload-btn" (click)="onUploadFile()">
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 2H15L19 6V22H6V2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 11V17M12 11L9.5 13.5M12 11L14.5 13.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Upload File
-    </button>
-  </div>
-
-  <form *ngIf="showUpload" class="document-upload" (ngSubmit)="submitUpload()"><h2>Upload student document</h2><label>Student<select [(ngModel)]="upload.studentId" name="student" required><option value="">Choose a student</option><option *ngFor="let student of students" [value]="student.id">{{ student.name }}</option></select></label><label>Document title<input [(ngModel)]="upload.title" name="title" required></label><label>Document type<select [(ngModel)]="upload.documentType" name="type"><option value="REPORT_CARD">Report card</option><option value="MEDICAL_RECORD">Medical record</option><option value="CERTIFICATE">Certificate</option><option value="STUDENT_RECORD">Student record</option><option value="OTHER">Other</option></select></label><label>File<input type="file" (change)="setFile($event)" required></label><label class="wide">Description<textarea [(ngModel)]="upload.description" name="description"></textarea></label><label class="wide check"><input type="checkbox" [(ngModel)]="upload.visibleToParent" name="visible"> Visible to parent</label><div class="wide"><button class="upload-btn" type="submit">Upload document</button></div></form>
-
-  <div class="content-grid">
-    <!-- Primary directories -->
-    <div class="directories-col">
-      <h3 class="section-heading">Primary Directories</h3>
-
-      <div
-        class="directory-card"
-        *ngFor="let dir of directories"
-        (click)="onOpenDirectory(dir)"
-      >
-        <div class="dir-icon" [ngClass]="'theme-' + dir.theme">
-          <svg *ngIf="dir.icon === 'folder'" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 7C3 5.9 3.9 5 5 5H9L11 7H19C20.1 7 21 7.9 21 9V17C21 18.1 20.1 19 19 19H5C3.9 19 3 18.1 3 17V7Z" fill="currentColor"/></svg>
-          <svg *ngIf="dir.icon === 'staff'" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 7C3 5.9 3.9 5 5 5H9L11 7H19C20.1 7 21 7.9 21 9V17C21 18.1 20.1 19 19 19H5C3.9 19 3 18.1 3 17V7Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="12" r="2" fill="currentColor"/><path d="M9 16C9 14.34 10.34 13 12 13C13.66 13 15 14.34 15 16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-          <svg *ngIf="dir.icon === 'legal'" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 7C3 5.9 3.9 5 5 5H9L11 7H19C20.1 7 21 7.9 21 9V17C21 18.1 20.1 19 19 19H5C3.9 19 3 18.1 3 17V7Z" fill="currentColor"/><path d="M12 10L13 12.5L15.5 12.8L13.7 14.6L14.2 17L12 15.7L9.8 17L10.3 14.6L8.5 12.8L11 12.5L12 10Z" fill="#ffffff"/></svg>
+<main class="documents">
+    <header>
+        <div><span>Student records</span>
+            <h1>Documents</h1>
+            <p>Upload and manage real student files stored by the school system.</p>
+        </div><button class="primary" type="button" [disabled]="!studentId" (click)="open()">+ Upload document</button>
+    </header>
+    <section class="filter"><label>Student<select [(ngModel)]="studentId" (ngModelChange)="load()">
+                <option *ngFor="let x of students" [ngValue]="x.id">{{name(x)}}{{x.admissionNumber?' ·
+                    '+x.admissionNumber:''}}</option>
+            </select></label><button class="secondary" type="button" (click)="load()">Refresh</button></section>
+    <p *ngIf="error" class="message error">{{error}}</p>
+    <p *ngIf="success" class="message success">{{success}}</p>
+    <form *ngIf="show" (ngSubmit)="upload()">
+        <h2>Upload document</h2><label>Document Type<select [(ngModel)]="form.documentType" name="type">
+                <option value="REPORT_CARD">Report Card</option>
+                <option value="MEDICAL_RECORD">Medical Record</option>
+                <option value="LEAVE_LETTER">Leave Letter</option>
+                <option value="CERTIFICATE">Certificate</option>
+                <option value="TRANSFER_LETTER">Transfer Letter</option>
+                <option value="STUDENT_RECORD">Student Record</option>
+                <option value="OTHER">Other</option>
+            </select></label><label>Title<input [(ngModel)]="form.title" name="title" required
+                placeholder="Document title"></label><label class="wide">Description<textarea
+                [(ngModel)]="form.description" name="description"
+                placeholder="Optional description"></textarea></label><label class="wide file">Choose File<input
+                type="file" (change)="pick($event)" required><small *ngIf="file">{{file.name}}</small></label><label
+            class="check"><input type="checkbox" [(ngModel)]="form.visibleToParent" name="visible"> Visible to
+            parent</label>
+        <div class="actions"><button class="secondary" type="button" (click)="show=false">Cancel</button><button
+                class="primary" [disabled]="saving">{{saving?'Uploading...':'Upload document'}}</button></div>
+    </form>
+    <section class="panel">
+        <h2>Student documents</h2>
+        <div *ngIf="loading" class="empty">Loading documents...</div>
+        <div *ngIf="!loading&&!docs.length" class="empty">No documents for this student.</div>
+        <div *ngIf="docs.length" class="list">
+            <article *ngFor="let doc of docs">
+                <div><strong>{{doc.title}}</strong><span>{{doc.documentType.replace('_',' ')}} ·
+                        {{doc.originalFileName}} · {{size(doc.fileSize)}}</span><small>{{doc.description||'No
+                        description'}}</small></div>
+                <div class="row-actions"><button class="secondary" type="button"
+                        (click)="download(doc)">Download</button><button class="delete" type="button"
+                        (click)="remove(doc)">Delete</button></div>
+            </article>
         </div>
-
-        <div class="dir-info">
-          <span class="dir-name">{{ dir.name }}</span>
-          <span class="dir-desc">{{ dir.description }}</span>
-          <span class="dir-meta">{{ dir.fileCount }} Files • {{ dir.size }}</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Recent uploads -->
-    <div class="uploads-col">
-      <div class="uploads-header">
-        <h3 class="section-heading">Recent Uploads</h3>
-        <a href="#" class="view-all-link" (click)="onViewAllFiles()">
-          View All
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-      </div>
-
-      <div class="table-panel">
-        <div class="table-wrapper">
-          <table class="files-table">
-            <thead>
-              <tr>
-                <th>File Name</th>
-                <th>Date</th>
-                <th>Size</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let file of recentFiles">
-                <td>
-                  <div class="file-cell">
-                    <div class="file-icon" [ngClass]="'file-' + file.fileType">
-                      <svg *ngIf="file.fileType === 'pdf'" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 2H15L19 6V22H6V2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 15H10.5C11.3 15 12 14.3 12 13.5C12 12.7 11.3 12 10.5 12H9V17" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                      <svg *ngIf="file.fileType === 'doc'" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 2H15L19 6V22H6V2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 11H15M9 15H13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-                      <svg *ngIf="file.fileType === 'sheet'" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M4 10H20M10 10V20" stroke="currentColor" stroke-width="1.6"/></svg>
-                      <svg *ngIf="file.fileType === 'shield'" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L4 5V11C4 16.55 7.16 20.74 12 22C16.84 20.74 20 16.55 20 11V5L12 2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
-                      <svg *ngIf="file.fileType === 'archive'" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="6" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M3 10H21" stroke="currentColor" stroke-width="1.6"/><path d="M10 14L12 16L14 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    </div>
-                    <span class="file-name">{{ truncateName(file.name) }}</span>
-                  </div>
-                </td>
-                <td>{{ file.date }}</td>
-                <td>{{ file.size }}</td>
-                <td>
-                  <button class="download-btn" (click)="onDownloadFile(file)" aria-label="Download">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3V15M12 15L8 11M12 15L16 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 17V19C4 20.1 4.9 21 6 21H18C19.1 21 20 20.1 20 19V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+    </section>
+</main>

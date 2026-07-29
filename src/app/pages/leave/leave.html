@@ -1,1 +1,103 @@
-<section class="lumina-page"><header class="lumina-heading"><div><h1>Leave Management Portal</h1><p>Review teacher leave requests and keep class coverage on track.</p></div><button class="lumina-button secondary" (click)="load()">Refresh requests</button></header><div class="leave-summary"><div class="lumina-card"><span>Open requests</span><strong>{{ requests.length }}</strong></div><div class="lumina-card"><span>Approved</span><strong>{{ approvedCount }}</strong></div><div class="lumina-card"><span>Coverage planning</span><strong>Ready</strong></div></div><div class="lumina-card"><div *ngIf="loading" class="lumina-empty">Loading leave requests…</div><div *ngIf="!loading && !requests.length" class="lumina-empty">There are no leave requests to review.</div><table *ngIf="!loading && requests.length" class="lumina-table"><thead><tr><th>Staff member</th><th>Leave type</th><th>Period</th><th>Reason</th><th>Status</th><th>Action</th></tr></thead><tbody><tr *ngFor="let request of requests"><td><strong>{{ request.staffName || request.teacherName || 'Staff member' }}</strong></td><td>{{ request.leaveType || 'Leave request' }}</td><td>{{ request.startDate || '—' }} – {{ request.endDate || '—' }}</td><td>{{ request.reason || '—' }}</td><td><span class="lumina-badge" [class.muted]="request.status !== 'PENDING'">{{ request.status }}</span></td><td *ngIf="request.status === 'PENDING'"><button class="text-action approve" (click)="act(request,'approve')">Approve</button><button class="text-action reject" (click)="act(request,'reject')">Reject</button></td><td *ngIf="request.status !== 'PENDING'">—</td></tr></tbody></table></div></section>
+<section class="lumina-page">
+  <header class="lumina-heading">
+    <div>
+      <h1>Leave Requests</h1>
+      <p>Review real student and teacher leave records from the school database.</p>
+    </div>
+    <div class="header-actions">
+      <button *ngIf="tab === 'student'" class="lumina-button" type="button" (click)="openApplyForm()">+ Apply student leave</button>
+      <button *ngIf="tab === 'teacher'" class="lumina-button" type="button" (click)="openTeacherApplyForm()">+ Apply teacher leave</button>
+      <button class="refresh-button" type="button" (click)="load()">Refresh</button>
+    </div>
+  </header>
+
+  <nav class="leave-tabs" aria-label="Leave request type">
+    <button type="button" [class.active]="tab === 'student'" (click)="select('student')">Student leave</button>
+    <button type="button" [class.active]="tab === 'teacher'" (click)="select('teacher')">Teacher leave</button>
+  </nav>
+
+  <p *ngIf="error" class="lumina-empty">{{ error }}</p>
+  <section *ngIf="showApplyForm && tab === 'student'" class="apply-card">
+    <div class="apply-card-title">
+      <div><h2>Apply student leave</h2><p>Submit a real request to the school database.</p></div>
+      <button type="button" class="form-close" (click)="cancelApply()" aria-label="Close form">&times;</button>
+    </div>
+    <div *ngIf="loadingPeople" class="form-loading">Loading parents and students...</div>
+    <form *ngIf="!loadingPeople" class="leave-form" (ngSubmit)="submitStudentLeave()">
+      <label>Parent
+        <select name="parentId" [(ngModel)]="form.parentId" (change)="onParentChange()" required>
+          <option [ngValue]="0">Select parent</option>
+          <option *ngFor="let parent of parents" [ngValue]="parent.id">{{ parent.name }}</option>
+        </select>
+      </label>
+      <label>Student
+        <select name="studentId" [(ngModel)]="form.studentId" [disabled]="!form.parentId" required>
+          <option [ngValue]="0">{{ form.parentId ? 'Select linked student' : 'Select a parent first' }}</option>
+          <option *ngFor="let student of parentStudents" [ngValue]="student.id">{{ student.name }}{{ student.admissionNumber ? ' (' + student.admissionNumber + ')' : '' }}</option>
+        </select>
+      </label>
+      <label>Start date<input name="startDate" type="date" [(ngModel)]="form.startDate" required></label>
+      <label>End date<input name="endDate" type="date" [(ngModel)]="form.endDate" required></label>
+      <label class="full-width">Reason<input name="reason" maxlength="500" [(ngModel)]="form.reason" placeholder="Explain the reason for leave" required></label>
+      <label class="full-width">Note <span>(optional)</span><textarea name="note" rows="3" maxlength="1000" [(ngModel)]="form.note" placeholder="Additional information"></textarea></label>
+      <div class="form-actions full-width">
+        <button class="cancel-button" type="button" (click)="cancelApply()">Cancel</button>
+        <button class="submit-button" type="submit" [disabled]="saving">{{ saving ? 'Submitting...' : 'Apply leave' }}</button>
+      </div>
+    </form>
+  </section>
+
+  <section *ngIf="showTeacherApplyForm && tab === 'teacher'" class="apply-card">
+    <div class="apply-card-title">
+      <div><h2>Apply teacher leave</h2><p *ngIf="isTeacher">Your request is sent directly to the school database for administrator review.</p><p *ngIf="!isTeacher">Sign in as the teacher to submit this request. Administrators can review requests from this tab.</p></div>
+      <button type="button" class="form-close" (click)="cancelTeacherApply()" aria-label="Close form">&times;</button>
+    </div>
+    <form class="leave-form" (ngSubmit)="submitTeacherLeave()">
+      <label>Leave type
+        <select name="teacherLeaveType" [(ngModel)]="teacherForm.leaveType" required>
+          <option value="CASUAL">Casual leave</option><option value="MEDICAL">Medical leave</option>
+          <option value="OFFICIAL_DUTY">Official duty</option><option value="OTHER">Other</option>
+        </select>
+      </label>
+      <label>Duration
+        <select name="teacherDurationType" [(ngModel)]="teacherForm.durationType" required>
+          <option value="FULL_DAY">Full day</option><option value="PARTIAL_DAY">Partial day</option>
+        </select>
+      </label>
+      <label>Start date<input name="teacherStartDate" type="date" [(ngModel)]="teacherForm.startDate" required></label>
+      <label>End date<input name="teacherEndDate" type="date" [(ngModel)]="teacherForm.endDate" required></label>
+      <label *ngIf="teacherForm.durationType === 'PARTIAL_DAY'">Start time<input name="teacherStartTime" type="time" [(ngModel)]="teacherForm.startTime" required></label>
+      <label *ngIf="teacherForm.durationType === 'PARTIAL_DAY'">End time<input name="teacherEndTime" type="time" [(ngModel)]="teacherForm.endTime" required></label>
+      <label class="full-width">Reason<textarea name="teacherReason" rows="3" maxlength="500" [(ngModel)]="teacherForm.reason" placeholder="Explain the reason for leave" required></textarea></label>
+      <div class="form-actions full-width">
+        <button class="cancel-button" type="button" (click)="cancelTeacherApply()">Cancel</button>
+        <button class="submit-button" type="submit" [disabled]="saving || !isTeacher">{{ saving ? 'Submitting...' : 'Apply leave' }}</button>
+      </div>
+    </form>
+  </section>
+
+  <div class="lumina-card">
+    <div *ngIf="loading" class="lumina-empty">Loading real leave data...</div>
+    <table *ngIf="!loading && rows.length" class="lumina-table">
+      <thead>
+        <tr><th>Applicant</th><th>Dates</th><th>Reason</th><th>Status</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of rows">
+          <td>{{ row.studentName || row.teacherName || row.staffName || row.requesterName || 'Unknown applicant' }}</td>
+          <td class="leave-dates">{{ row.startDate }} &ndash; {{ row.endDate }}</td>
+          <td>{{ row.reason }}</td>
+          <td><span class="leave-status" [class.pending]="row.status === 'PENDING'" [class.approved]="row.status === 'APPROVED'" [class.rejected]="row.status === 'REJECTED'">{{ row.status }}</span></td>
+          <td class="leave-actions">
+            <ng-container *ngIf="row.status === 'PENDING' && !(isTeacher && tab === 'teacher'); else decided">
+              <button class="approve" type="button" (click)="review(row, 'approve')">Approve</button>
+              <button class="reject" type="button" (click)="review(row, 'reject')">Reject</button>
+            </ng-container>
+            <ng-template #decided><span class="completed">Completed</span></ng-template>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="!loading && !rows.length" class="lumina-empty">No leave records found for this tab.</div>
+  </div>
+</section>

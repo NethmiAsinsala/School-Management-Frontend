@@ -1,1 +1,79 @@
-<div class="attendance-page"><div class="page-title-row"><div><h1>Daily Attendance</h1><p>View and update real student attendance records.</p></div><div class="header-controls"><button class="date-arrow" (click)="changeDate(-1)">‹</button><input type="date" [(ngModel)]="date" (change)="apply()"><button class="date-arrow" (click)="changeDate(1)">›</button><select [(ngModel)]="classId" (ngModelChange)="onClassChange()"><option [ngValue]="undefined">All classes</option><option *ngFor="let item of classes" [ngValue]="item.id">{{item.name}}</option></select><select [(ngModel)]="status" (ngModelChange)="apply()"><option [ngValue]="undefined">All statuses</option><option value="PRESENT">Present</option><option value="ABSENT">Absent</option><option value="LATE">Late</option></select></div></div><p *ngIf="error" class="attendance-error">{{error}}</p><p *ngIf="success" class="attendance-success">{{success}}</p><div class="stats-row"><div class="stat-card"><div class="stat-label">Attendance records</div><div class="stat-value">{{total}}</div></div><div class="stat-card"><div class="stat-label">Selected date</div><div class="stat-value small">{{date}}</div></div></div><div class="table-panel"><div class="panel-header"><h3>{{classId ? 'Class Attendance' : 'Attendance Records'}}</h3><div class="panel-actions"><button class="link-btn" [disabled]="!classId||!students.length||saving" (click)="markAllPresent()">Mark class present</button><button class="link-btn secondary" [disabled]="!records.length" (click)="export()">Export</button></div></div><div *ngIf="loading" class="empty">Loading attendance…</div><div *ngIf="!loading&&!records.length" class="empty">No attendance records for this date and filter.</div><div class="table-wrapper" *ngIf="!loading&&records.length"><table class="roster-table"><thead><tr><th>Student</th><th>Class</th><th>Date</th><th>Status</th><th>Update</th></tr></thead><tbody><tr *ngFor="let record of records"><td><div class="student-cell"><div class="avatar-initials">{{record.studentName.slice(0,2).toUpperCase()}}</div><span class="student-name">{{record.studentName}}</span></div></td><td>{{record.className||'—'}}</td><td>{{record.attendanceDate}}</td><td><span class="status-badge" [ngClass]="'status-'+record.status.toLowerCase()">{{label(record.status)}}</span></td><td><select class="status-select" [ngModel]="record.status" (ngModelChange)="setStatus(record,$event)"><option value="PRESENT">Present</option><option value="ABSENT">Absent</option><option value="LATE">Late</option></select></td></tr></tbody></table></div><div class="table-footer"><span class="results-text">Showing {{records.length}} of {{total}} entries</span><div class="pagination"><button class="page-text" (click)="prev()" [disabled]="page===0">Previous</button><span>Page {{page+1}} of {{totalPages}}</span><button class="page-text" (click)="next()" [disabled]="page+1>=totalPages">Next</button></div></div></div></div>
+<div class="attendance-page">
+    <div class="page-title-row">
+        <div>
+            <h1>Daily Attendance</h1>
+            <p>View and update real student attendance records.</p>
+        </div>
+        <div class="header-controls"><button class="date-arrow" (click)="changeDate(-1)">‹</button><input type="date"
+                [(ngModel)]="date" (change)="apply()"><button class="date-arrow"
+                (click)="changeDate(1)">›</button><select [(ngModel)]="classId" (ngModelChange)="onClassChange()">
+                <option [ngValue]="undefined">All classes</option>
+                <option *ngFor="let item of classes" [ngValue]="item.id">{{item.name}}</option>
+            </select><select [(ngModel)]="status" (ngModelChange)="apply()">
+                <option [ngValue]="undefined">All statuses</option>
+                <option value="PRESENT">Present</option>
+                <option value="ABSENT">Absent</option>
+                <option value="LATE">Late</option>
+            </select></div>
+    </div>
+    <p *ngIf="error" class="attendance-error">{{error}}</p>
+    <p *ngIf="success" class="attendance-success">{{success}}</p>
+    <div class="stats-row">
+        <div class="stat-card">
+            <div class="stat-label">Attendance records</div>
+            <div class="stat-value">{{total}}</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Selected date</div>
+            <div class="stat-value small">{{date}}</div>
+        </div>
+    </div>
+    <div class="table-panel">
+        <div class="panel-header">
+            <h3>{{classId ? 'Class Attendance' : 'Attendance Records'}}</h3>
+            <div class="panel-actions"><button class="link-btn" [disabled]="!classId||!students.length||saving"
+                    (click)="markAllPresent()">Mark class present</button><button class="link-btn secondary"
+                    [disabled]="!records.length" (click)="export()">Export</button></div>
+        </div>
+        <div *ngIf="loading" class="empty">Loading attendance…</div>
+        <div *ngIf="!loading&&!records.length" class="empty">No attendance records for this date and filter.</div>
+        <div class="table-wrapper" *ngIf="!loading&&records.length">
+            <table class="roster-table">
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Class</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let record of records">
+                        <td>
+                            <div class="student-cell">
+                                <div class="avatar-initials">{{record.studentName.slice(0,2).toUpperCase()}}</div><span
+                                    class="student-name">{{record.studentName}}</span>
+                            </div>
+                        </td>
+                        <td>{{record.className||'—'}}</td>
+                        <td>{{record.attendanceDate}}</td>
+                        <td><span class="status-badge"
+                                [ngClass]="'status-'+record.status.toLowerCase()">{{label(record.status)}}</span></td>
+                        <td><select class="status-select" [ngModel]="record.status"
+                                (ngModelChange)="setStatus(record,$event)">
+                                <option value="PRESENT">Present</option>
+                                <option value="ABSENT">Absent</option>
+                                <option value="LATE">Late</option>
+                            </select></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="table-footer"><span class="results-text">Showing {{records.length}} of {{total}} entries</span>
+            <div class="pagination"><button class="page-text" (click)="prev()"
+                    [disabled]="page===0">Previous</button><span>Page {{page+1}} of {{totalPages}}</span><button
+                    class="page-text" (click)="next()" [disabled]="page+1>=totalPages">Next</button></div>
+        </div>
+    </div>
+</div>

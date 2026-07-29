@@ -1,1 +1,99 @@
-<section class="lumina-page"><header class="lumina-heading"><div><h1>Staff Management Directory</h1><p>Manage academic and operational teams using live school data.</p></div><div class="header-actions"><button class="lumina-button secondary" type="button" [disabled]="!staff.length" (click)="exportCurrentResults()">Export current page</button><button class="lumina-button" type="button" (click)="openCreate()">Register staff</button></div></header><div class="staff-stats"><article><span>Filtered staff</span><strong>{{ total }}</strong></article><article><span>Active staff</span><strong>{{ activeCount }}</strong></article><article><span>Inactive staff</span><strong>{{ inactiveCount }}</strong></article></div><p *ngIf="error" class="lumina-error" role="alert">{{ error }}</p><p *ngIf="success" class="lumina-success" role="status">{{ success }}</p><form *ngIf="showForm" class="lumina-card lumina-form" (ngSubmit)="save()"><h2>{{ editing ? 'Edit staff member' : 'Register staff member' }}</h2><label>Staff ID<input [(ngModel)]="form.staffId" name="staffId" required [readOnly]="!!editing"></label><label>Full name<input [(ngModel)]="form.name" name="name" required></label><label>Designation<input [(ngModel)]="form.designation" name="designation" required></label><label>Department<input [(ngModel)]="form.department" name="department"></label><label>Phone number<input [(ngModel)]="form.phoneNumber" name="phoneNumber" required placeholder="0771234567"></label><label>Staff category<select [(ngModel)]="form.staffCategory" name="staffCategory"><option value="ACADEMIC">Academic</option><option value="ADMINISTRATIVE">Administrative</option><option value="SUPPORT">Support</option><option value="OPERATIONAL">Operational</option></select></label><label>Employment type<select [(ngModel)]="form.employmentType" name="employmentType"><option value="PERMANENT">Permanent</option><option value="CONTRACT">Contract</option><option value="TEMPORARY">Temporary</option><option value="CASUAL">Casual</option></select></label><label>Joining date<input [(ngModel)]="form.joiningDate" name="joiningDate" type="date"></label><ng-container *ngIf="!editing"><label>Login email (optional)<input [(ngModel)]="form.loginEmail" name="loginEmail" type="email"></label><label>Temporary password (required if email is used)<input [(ngModel)]="form.loginPassword" name="loginPassword" type="password" minlength="8"></label></ng-container><div class="form-actions"><button class="lumina-button secondary" type="button" (click)="closeForm()">Cancel</button><button class="lumina-button" type="submit" [disabled]="saving">{{ saving ? 'Saving…' : (editing ? 'Save staff member' : 'Create staff profile') }}</button></div></form><div class="lumina-card" [style.margin-top.px]="showForm ? 24 : 0"><div class="lumina-toolbar"><div class="status-filter"><button type="button" [class.active]="active === undefined" (click)="setStatus(undefined)">All</button><button type="button" [class.active]="active === true" (click)="setStatus(true)">Active</button><button type="button" [class.active]="active === false" (click)="setStatus(false)">Inactive</button></div><div class="staff-filters"><input class="lumina-search" [(ngModel)]="query" (keyup.enter)="search()" placeholder="Search name or staff ID"><input class="lumina-search" [(ngModel)]="department" (keyup.enter)="search()" placeholder="Department"><select [(ngModel)]="category"><option value="">All categories</option><option value="ACADEMIC">Academic</option><option value="ADMINISTRATIVE">Administrative</option><option value="SUPPORT">Support</option><option value="OPERATIONAL">Operational</option></select><button class="lumina-button secondary" type="button" (click)="search()">Search</button><button class="clear-button" type="button" (click)="clearFilters()">Clear</button></div></div><div *ngIf="loading" class="lumina-empty">Loading staff directory…</div><div *ngIf="!loading && !staff.length" class="lumina-empty">No staff records match this filter.</div><table *ngIf="!loading && staff.length" class="lumina-table"><thead><tr><th>Staff member</th><th>Role</th><th>Category</th><th>Department</th><th>Contact</th><th>Status</th><th>Actions</th></tr></thead><tbody><tr *ngFor="let member of staff"><td><strong>{{ member.name }}</strong><br><small>{{ member.staffId }}</small></td><td>{{ member.designation }}</td><td>{{ member.staffCategory || '—' }}</td><td>{{ member.department || '—' }}</td><td>{{ member.phoneNumber }}</td><td><span class="lumina-badge" [class.muted]="!member.active">{{ member.active ? 'Active' : 'Inactive' }}</span></td><td class="row-actions"><button *ngIf="member.active" class="lumina-button secondary" type="button" (click)="openEdit(member)">Edit</button><a *ngIf="member.active" class="lumina-button secondary" [routerLink]="['/admin/staff', member.id]">Profile</a><button *ngIf="member.active" class="deactivate-button" type="button" (click)="deactivate(member)">Deactivate</button><span *ngIf="!member.active" class="muted">Inactive</span></td></tr></tbody></table><div class="lumina-pager" *ngIf="totalPages > 1"><button class="lumina-button secondary" type="button" (click)="previousPage()" [disabled]="page === 0">Previous</button><span>Page {{ page + 1 }} of {{ totalPages }}</span><button class="lumina-button secondary" type="button" (click)="nextPage()" [disabled]="page + 1 >= totalPages">Next</button></div></div></section>
+<section class="lumina-page">
+    <header class="lumina-heading">
+        <div>
+            <h1>Staff Management Directory</h1>
+            <p>Manage academic and operational teams using live school data.</p>
+        </div>
+        <div class="header-actions"><button class="lumina-button secondary" type="button" [disabled]="!staff.length"
+                (click)="exportCurrentResults()">Export current page</button><button class="lumina-button" type="button"
+                (click)="openCreate()">Register staff</button></div>
+    </header>
+    <div class="staff-stats">
+        <article><span>Filtered staff</span><strong>{{ total }}</strong></article>
+        <article><span>Active staff</span><strong>{{ activeCount }}</strong></article>
+        <article><span>Inactive staff</span><strong>{{ inactiveCount }}</strong></article>
+    </div>
+    <p *ngIf="error" class="lumina-error" role="alert">{{ error }}</p>
+    <p *ngIf="success" class="lumina-success" role="status">{{ success }}</p>
+    <form *ngIf="showForm" class="lumina-card lumina-form" (ngSubmit)="save()">
+        <h2>{{ editing ? 'Edit staff member' : 'Register staff member' }}</h2><label>Staff ID<input
+                [(ngModel)]="form.staffId" name="staffId" required [readOnly]="!!editing"></label><label>Full name<input
+                [(ngModel)]="form.name" name="name" required></label><label>Designation<input
+                [(ngModel)]="form.designation" name="designation" required></label><label>Department<input
+                [(ngModel)]="form.department" name="department"></label><label>Phone number<input
+                [(ngModel)]="form.phoneNumber" name="phoneNumber" required placeholder="0771234567"></label><label>Staff
+            category<select [(ngModel)]="form.staffCategory" name="staffCategory">
+                <option value="ACADEMIC">Academic</option>
+                <option value="ADMINISTRATIVE">Administrative</option>
+                <option value="SUPPORT">Support</option>
+                <option value="OPERATIONAL">Operational</option>
+            </select></label><label>Employment type<select [(ngModel)]="form.employmentType" name="employmentType">
+                <option value="PERMANENT">Permanent</option>
+                <option value="CONTRACT">Contract</option>
+                <option value="TEMPORARY">Temporary</option>
+                <option value="CASUAL">Casual</option>
+            </select></label><label>Joining date<input [(ngModel)]="form.joiningDate" name="joiningDate"
+                type="date"></label><ng-container *ngIf="!editing"><label>Login email (optional)<input
+                    [(ngModel)]="form.loginEmail" name="loginEmail" type="email"></label><label>Temporary password
+                (required if email is used)<input [(ngModel)]="form.loginPassword" name="loginPassword" type="password"
+                    minlength="8"></label></ng-container>
+        <div class="form-actions"><button class="lumina-button secondary" type="button"
+                (click)="closeForm()">Cancel</button><button class="lumina-button" type="submit" [disabled]="saving">{{
+                saving ? 'Saving…' : (editing ? 'Save staff member' : 'Create staff profile') }}</button></div>
+    </form>
+    <div class="lumina-card" [style.margin-top.px]="showForm ? 24 : 0">
+        <div class="lumina-toolbar">
+            <div class="status-filter"><button type="button" [class.active]="active === undefined"
+                    (click)="setStatus(undefined)">All</button><button type="button" [class.active]="active === true"
+                    (click)="setStatus(true)">Active</button><button type="button" [class.active]="active === false"
+                    (click)="setStatus(false)">Inactive</button></div>
+            <div class="staff-filters"><input class="lumina-search" [(ngModel)]="query" (keyup.enter)="search()"
+                    placeholder="Search name or staff ID"><input class="lumina-search" [(ngModel)]="department"
+                    (keyup.enter)="search()" placeholder="Department"><select [(ngModel)]="category">
+                    <option value="">All categories</option>
+                    <option value="ACADEMIC">Academic</option>
+                    <option value="ADMINISTRATIVE">Administrative</option>
+                    <option value="SUPPORT">Support</option>
+                    <option value="OPERATIONAL">Operational</option>
+                </select><button class="lumina-button secondary" type="button" (click)="search()">Search</button><button
+                    class="clear-button" type="button" (click)="clearFilters()">Clear</button></div>
+        </div>
+        <div *ngIf="loading" class="lumina-empty">Loading staff directory…</div>
+        <div *ngIf="!loading && !staff.length" class="lumina-empty">No staff records match this filter.</div>
+        <table *ngIf="!loading && staff.length" class="lumina-table">
+            <thead>
+                <tr>
+                    <th>Staff member</th>
+                    <th>Role</th>
+                    <th>Category</th>
+                    <th>Department</th>
+                    <th>Contact</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let member of staff">
+                    <td><strong>{{ member.name }}</strong><br><small>{{ member.staffId }}</small></td>
+                    <td>{{ member.designation }}</td>
+                    <td>{{ member.staffCategory || '—' }}</td>
+                    <td>{{ member.department || '—' }}</td>
+                    <td>{{ member.phoneNumber }}</td>
+                    <td><span class="lumina-badge" [class.muted]="!member.active">{{ member.active ? 'Active' :
+                            'Inactive' }}</span></td>
+                    <td class="row-actions"><button *ngIf="member.active" class="lumina-button secondary" type="button"
+                            (click)="openEdit(member)">Edit</button><a *ngIf="member.active"
+                            class="lumina-button secondary"
+                            [routerLink]="['/admin/staff', member.id]">Profile</a><button *ngIf="member.active"
+                            class="deactivate-button" type="button"
+                            (click)="deactivate(member)">Deactivate</button><span *ngIf="!member.active"
+                            class="muted">Inactive</span></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="lumina-pager" *ngIf="totalPages > 1"><button class="lumina-button secondary" type="button"
+                (click)="previousPage()" [disabled]="page === 0">Previous</button><span>Page {{ page + 1 }} of {{
+                totalPages }}</span><button class="lumina-button secondary" type="button" (click)="nextPage()"
+                [disabled]="page + 1 >= totalPages">Next</button></div>
+    </div>
+</section>
