@@ -32,6 +32,7 @@
   gap: 12px;
   flex-wrap: wrap;
 }
+.header-controls input,.header-controls select,.status-select{min-height:38px;border:1px solid #e2e8f0;border-radius:8px;padding:0 10px;background:#fff;font:inherit;color:#334155}.attendance-error,.attendance-success{padding:10px 12px;border-radius:8px}.attendance-error{background:#fef3f2;color:#b42318;border:1px solid #fecdca}.attendance-success{background:#ecfdf3;color:#067647;border:1px solid #abefc6}.empty{padding:30px;text-align:center;color:#64748b}.small{font-size:18px}.link-btn:disabled{opacity:.5;cursor:not-allowed}
 
 .date-picker {
   display: flex;

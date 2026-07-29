@@ -40,38 +40,9 @@
     </div>
     <p *ngIf="errorMessage" class="form-error">{{ errorMessage }}</p>
 
-    <!-- Stat cards -->
     <div class="stats-row">
-      <div class="stat-card" *ngFor="let stat of stats">
-        <div>
-          <div class="stat-label">{{ stat.label }}</div>
-          <div class="stat-value">
-            {{ stat.label === 'Total Students' ? students.length : stat.value }}
-          </div>
-        </div>
-        <div class="icon-box" [ngClass]="'theme-' + stat.theme">
-          <svg *ngIf="stat.icon === 'users'" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="9" cy="8" r="3" fill="currentColor" />
-            <circle cx="17" cy="9" r="2.5" fill="currentColor" opacity="0.6" />
-            <path d="M3 20C3 16.69 5.69 14 9 14C12.31 14 15 16.69 15 20" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" />
-          </svg>
-          <svg *ngIf="stat.icon === 'trend'" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3 17L9 11L13 15L21 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round" />
-            <path d="M15 7H21V13" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round" />
-          </svg>
-          <svg *ngIf="stat.icon === 'check'" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="2" />
-            <path d="M8 12L11 15L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round" />
-          </svg>
-          <svg *ngIf="stat.icon === 'card'" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="2" y="6" width="20" height="14" rx="2" stroke="currentColor" stroke-width="2" />
-            <path d="M2 10H22" stroke="currentColor" stroke-width="2" />
-          </svg>
-        </div>
+      <div class="stat-card">
+        <div><div class="stat-label">Total Students</div><div class="stat-value">{{ totalStudents }}</div></div>
       </div>
     </div>
 
@@ -79,20 +50,6 @@
     <div class="table-panel">
       <div class="panel-header">
         <h3>Recently Enrolled Students</h3>
-        <div class="panel-icons">
-          <button class="icon-btn-sm" aria-label="Filter">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M4 6H20M7 12H17M10 18H14" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-            </svg>
-          </button>
-          <button class="icon-btn-sm" aria-label="More options">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="12" cy="5" r="1.5" fill="currentColor" />
-              <circle cx="12" cy="12" r="1.5" fill="currentColor" />
-              <circle cx="12" cy="19" r="1.5" fill="currentColor" />
-            </svg>
-          </button>
-        </div>
       </div>
 
       <div class="table-wrapper">
@@ -102,8 +59,7 @@
               <th>Student ID</th>
               <th>Name</th>
               <th>Class</th>
-              <th>Contact</th>
-              <th>Actions</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
@@ -123,19 +79,7 @@
                 </div>
               </td>
               <td>{{ s.className }}</td>
-              <td>
-                <span class="contact-cell">
-                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      d="M22 16.92V19.92C22 20.47 21.55 20.92 21 20.9C10.4 20.3 2.7 12.6 2.1 2C2.08 1.45 2.53 1 3.08 1H6.08C6.58 1 7 1.39 7.05 1.89L7.6 5.89C7.65 6.28 7.51 6.68 7.23 6.96L5.7 8.49C7.06 11.36 9.64 13.94 12.51 15.3L14.04 13.77C14.32 13.49 14.72 13.35 15.11 13.4L19.11 13.95C19.61 14 20 14.42 20 14.92V16.92"
-                      stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-                  {{ s.contact }}
-                </span>
-              </td>
-              <td>
-                <span class="muted-action">Active</span>
-              </td>
+              <td><span class="muted-action">{{ s.status }}</span></td>
             </tr>
           </tbody>
         </table>
@@ -240,26 +184,6 @@
                 </div>
               </div>
 
-              <div class="form-row-2">
-                <div class="form-group">
-                  <label>Blood Group</label>
-                  <select formControlName="bloodGroup" class="form-input">
-                    <option value="" disabled selected>Select type</option>
-                    <option value="A+">A+</option>
-                    <option value="A-">A-</option>
-                    <option value="B+">B+</option>
-                    <option value="B-">B-</option>
-                    <option value="O+">O+</option>
-                    <option value="O-">O-</option>
-                    <option value="AB+">AB+</option>
-                    <option value="AB-">AB-</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label>Nationality</label>
-                  <input type="text" formControlName="nationality" placeholder="e.g. American" class="form-input" />
-                </div>
-              </div>
             </div>
 
             <!-- Step 2: Academic -->
@@ -275,10 +199,6 @@
                 <div class="form-group">
                   <label>Class</label>
                   <select formControlName="gradeApplying" class="form-input"><option value="">Select class</option><option *ngFor="let classItem of classes" [value]="classItem.id">{{ classItem.name }}</option></select>
-                </div>
-                <div class="form-group">
-                  <label>Section</label>
-                  <input type="text" formControlName="section" placeholder="e.g. B" class="form-input" />
                 </div>
               </div>
 
@@ -404,8 +324,7 @@
           <div class="progress-track">
             <div class="progress-fill" [style.width.%]="progressPercent"></div>
           </div>
-          <p class="progress-note">Complete this first section to establish the core student record. You can save
-            progress and return later if needed.</p>
+          <p class="progress-note">Complete each step before submitting the enrollment to create the student record.</p>
         </div>
 
         <div class="panel">
