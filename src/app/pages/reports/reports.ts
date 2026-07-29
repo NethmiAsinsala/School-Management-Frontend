@@ -1,82 +1,158 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { forkJoin } from 'rxjs';
+import { SchoolApiService } from '../../services/school-api.service';
 
-interface GradeBar {
-  grade: string;
-  value: number;
-  theme: 'default' | 'highlight' | 'warn';
+interface Option { id: number; name: string; }
+interface Student { id: number; firstName?: string; lastName?: string; fullName?: string; name?: string; admissionNumber?: string; }
+interface Report {
+  id: number; studentId: number; studentName: string; className: string; academicTermName: string;
+  status: 'DRAFT' | 'PUBLISHED'; overallPercentage?: number; overallGrade?: string;
+  subjectCount: number; passedSubjectCount: number; attendancePercentage?: number;
+  classTeacherRemarks?: string; principalRemarks?: string;
 }
+interface Readiness { canGenerate: boolean; subjectCount: number; markCount: number; attendanceRecordCount: number; items: { label: string; ready: boolean; message: string; }[]; }
 
-@Component({
-  selector: 'app-reports',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './reports.html',
-  styleUrl: './reports.css'
-})
-export class Reports {
-  periodMode: 'term' | 'year' = 'term';
-  currentPeriod = 'Oct 2024';
+@Component({ selector: 'app-reports', standalone: true, imports: [CommonModule, FormsModule], templateUrl: './reports.html', styleUrl: './reports.css' })
+export class Reports implements OnInit {
+  private requestVersion = 0;
+  classes: Option[] = [];
+  terms: Option[] = [];
+  students: Student[] = [];
+  reports: Report[] = [];
+  selectedClassId = 0;
+  selectedTermId = 0;
+  selectedStudentId = 0;
+  loading = true;
+  saving = false;
+  error = '';
+  success = '';
+  showGenerate = false;
+  editing: Report | null = null;
+  readiness: Readiness | null = null;
+  form = { classTeacherRemarks: '', principalRemarks: '' };
 
-  gradeDistribution: GradeBar[] = [
-    { grade: 'A', value: 62, theme: 'default' },
-    { grade: 'B', value: 100, theme: 'highlight' },
-    { grade: 'C', value: 58, theme: 'default' },
-    { grade: 'D', value: 30, theme: 'default' },
-    { grade: 'F', value: 18, theme: 'warn' }
-  ];
+  constructor(private readonly api: SchoolApiService, private readonly cdr: ChangeDetectorRef) {}
 
-  tuitionCollected = '$2.4M';
-  tuitionTrend = '+12% vs last term';
-  tuitionProgressPercent = 78;
-  outstanding = '$145k';
-  scholarships = '$320k';
-
-  growthLinePath = 'M0,90 C60,88 110,85 150,70 C190,55 220,20 260,12 C300,5 340,10 380,20 C420,30 460,32 500,30 C540,28 570,22 600,20 C630,18 660,20 700,22';
-  growthMarkerX = 260;
-  growthMarkerY = 12;
-  growthPercent = '+24% Growth';
-
-  constructor() {
-    this.currentPeriod = 'Select academic data';
-    this.gradeDistribution = [];
-    this.tuitionCollected = '—';
-    this.tuitionTrend = 'No financial API data';
-    this.tuitionProgressPercent = 0;
-    this.outstanding = '—';
-    this.scholarships = '—';
-    this.growthPercent = 'No report data';
+  ngOnInit(): void {
+    forkJoin({
+      classes: this.api.getPage<Option>('classes', { page: 0, size: 200 }),
+      terms: this.api.getPage<Option>('academic-terms', { page: 0, size: 200 })
+    }).subscribe({
+      next: ({ classes, terms }) => {
+        this.classes = classes.content;
+        this.terms = terms.content;
+        this.selectedClassId = this.classes[0]?.id ?? 0;
+        this.selectedTermId = this.terms[0]?.id ?? 0;
+        this.refresh();
+      },
+      error: error => this.fail(error, 'Could not load classes and academic terms.')
+    });
   }
 
-  setPeriodMode(mode: 'term' | 'year'): void {
-    this.periodMode = mode;
+  refresh(): void {
+    const version = ++this.requestVersion;
+    this.loading = true;
+    this.error = '';
+    this.success = '';
+    if (!this.selectedClassId || !this.selectedTermId) {
+      this.reports = [];
+      this.students = [];
+      this.loading = false;
+      this.cdr.detectChanges();
+      return;
+    }
+    forkJoin({
+      students: this.api.getPage<Student>('students', { classId: this.selectedClassId, active: true, page: 0, size: 500 }),
+      reports: this.api.getPage<Report>(`academic-reports/classes/${this.selectedClassId}`, { academicTermId: this.selectedTermId, page: 0, size: 500 })
+    }).subscribe({
+      next: ({ students, reports }) => {
+        if (version !== this.requestVersion) return;
+        this.students = students.content;
+        this.reports = reports.content;
+        this.loading = false;
+        this.cdr.detectChanges();
+      },
+      error: error => {
+        if (version !== this.requestVersion) return;
+        this.reports = [];
+        this.students = [];
+        this.fail(error, 'Could not load reports for the selected class and term.');
+      }
+    });
   }
 
-  onExportPdf(): void {
-    console.log('Export grade distribution as PDF');
+  openGenerate(): void {
+    this.editing = null;
+    this.selectedStudentId = this.students[0]?.id ?? 0;
+    this.form = { classTeacherRemarks: '', principalRemarks: '' };
+    this.showGenerate = true;
+    this.checkReadiness();
   }
 
-  onExportCsvChart(): void {
-    console.log('Export grade distribution as CSV');
+  openEdit(report: Report): void {
+    this.editing = report;
+    this.form = { classTeacherRemarks: report.classTeacherRemarks ?? '', principalRemarks: report.principalRemarks ?? '' };
+    this.showGenerate = true;
+    setTimeout(() => document.getElementById('report-editor')?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
   }
 
-  onMoreOptions(): void {
-    console.log('More chart options clicked');
+  closeEditor(): void { this.showGenerate = false; this.editing = null; this.readiness = null; }
+
+  checkReadiness(): void {
+    this.readiness = null;
+    if (!this.selectedStudentId || !this.selectedTermId || this.editing) return;
+    this.api.get<Readiness>('academic-reports/readiness', { studentId: this.selectedStudentId, academicTermId: this.selectedTermId }).subscribe({
+      next: value => { this.readiness = value; this.cdr.detectChanges(); },
+      error: error => this.fail(error, 'Could not check report readiness.')
+    });
   }
 
-  onDownloadFinancial(): void {
-    console.log('Download financial health data');
+  save(): void {
+    if (this.saving) return;
+    this.saving = true;
+    const request = this.editing
+      ? this.api.patch<Report>(`academic-reports/${this.editing.id}`, this.form)
+      : this.api.post<Report>('academic-reports', { studentId: this.selectedStudentId, academicTermId: this.selectedTermId, ...this.form });
+    request.subscribe({
+      next: () => { this.saving = false; this.success = this.editing ? 'Report remarks saved.' : 'Academic report generated.'; this.closeEditor(); this.refresh(); },
+      error: error => { this.saving = false; this.fail(error, 'Could not save the academic report.'); }
+    });
   }
 
-  onViewFullLedger(): void {
-    console.log('View full ledger clicked');
+  publish(report: Report): void {
+    this.api.post<Report>(`academic-reports/${report.id}/publish`).subscribe({ next: () => { this.success = 'Report published.'; this.refresh(); }, error: error => this.fail(error, 'Could not publish the report.') });
   }
 
-  onGenerateReport(): void {
-    console.log('Generate cognitive growth report clicked');
+  regenerate(report: Report): void {
+    this.api.post<Report>(`academic-reports/${report.id}/regenerate`).subscribe({ next: () => { this.success = 'Report regenerated from current marks and attendance.'; this.refresh(); }, error: error => this.fail(error, 'Could not regenerate the report.') });
   }
 
-  onExportCsvGrowth(): void {
-    console.log('Export cognitive growth CSV clicked');
+  delete(report: Report): void {
+    if (!window.confirm(`Delete the draft report for ${report.studentName}?`)) return;
+    this.api.delete(`academic-reports/${report.id}`).subscribe({ next: () => { this.success = 'Draft report deleted.'; this.refresh(); }, error: error => this.fail(error, 'Only draft reports can be deleted.') });
   }
+
+  download(report: Report): void {
+    this.api.download(`academic-reports/${report.id}/pdf`).subscribe({
+      next: blob => {
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `${report.studentName || 'academic-report'}-report-card.pdf`;
+        link.click();
+        URL.revokeObjectURL(url);
+      },
+      error: error => this.fail(error, 'Could not download the report card PDF.')
+    });
+  }
+
+  get generatedCount(): number { return this.reports.length; }
+  get publishedCount(): number { return this.reports.filter(x => x.status === 'PUBLISHED').length; }
+  get averageScore(): string { const values = this.reports.map(x => Number(x.overallPercentage)).filter(Number.isFinite); return values.length ? `${(values.reduce((a, b) => a + b, 0) / values.length).toFixed(1)}%` : '—'; }
+  get averageAttendance(): string { const values = this.reports.map(x => Number(x.attendancePercentage)).filter(Number.isFinite); return values.length ? `${(values.reduce((a, b) => a + b, 0) / values.length).toFixed(1)}%` : '—'; }
+  studentName(student: Student): string { return student.fullName || student.name || `${student.firstName ?? ''} ${student.lastName ?? ''}`.trim() || `Student #${student.id}`; }
+
+  private fail(error: any, fallback: string): void { this.error = error?.error?.message || fallback; this.loading = false; this.cdr.detectChanges(); }
 }

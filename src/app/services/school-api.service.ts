@@ -28,6 +28,7 @@ export class SchoolApiService {
   patch<T>(path: string, body: unknown): Observable<T> { return this.http.patch<T>(this.url(path), body); }
   put<T>(path: string, body: unknown): Observable<T> { return this.http.put<T>(this.url(path), body); }
   delete<T = void>(path: string): Observable<T> { return this.http.delete<T>(this.url(path)); }
+  download(path: string): Observable<Blob> { return this.http.get(this.url(path), { responseType: 'blob' }); }
 
   private url(path: string): string { return `${environment.apiUrl}/${path.replace(/^\//, '')}`; }
 

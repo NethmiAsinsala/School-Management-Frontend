@@ -1,1 +1,89 @@
-<div class="exams"><header><div><h1>Exam Schedule</h1><p>Manage real examination records from the school database.</p></div><button (click)="open()">+ Add exam</button></header><p *ngIf="error" class="error">{{error}}</p><form *ngIf="show" (ngSubmit)="save()"><h2>{{editing?'Edit exam':'Create exam'}}</h2><input [(ngModel)]="form.name" name="name" placeholder="Exam name" required><select [(ngModel)]="form.academicTermId" name="term" required><option [ngValue]="0">Select term</option><option *ngFor="let x of terms" [ngValue]="x.id">{{x.name}}</option></select><select [(ngModel)]="form.classId" name="class" required><option [ngValue]="0">Select class</option><option *ngFor="let x of classes" [ngValue]="x.id">{{x.name}}</option></select><select [(ngModel)]="form.subjectId" name="subject" required><option [ngValue]="0">Select subject</option><option *ngFor="let x of subjects" [ngValue]="x.id">{{x.name}}</option></select><select [(ngModel)]="form.type" name="type"><option value="UNIT_TEST">Unit test</option><option value="TERM_TEST">Term test</option><option value="FINAL_EXAM">Final exam</option><option value="ASSIGNMENT">Assignment</option><option value="PRACTICAL">Practical</option></select><input [(ngModel)]="form.examDate" name="date" type="date" required><input [(ngModel)]="form.maxMarks" name="max" type="number" min="1" required><input [(ngModel)]="form.passMarks" name="pass" type="number" min="0" required><textarea [(ngModel)]="form.description" name="description" placeholder="Description"></textarea><button [disabled]="saving">Save exam</button><button type="button" (click)="show=false">Cancel</button></form><section><div *ngIf="loading">Loading exams…</div><div *ngIf="!loading&&!exams.length">No exam records found.</div><table *ngIf="exams.length"><thead><tr><th>Exam</th><th>Class</th><th>Subject</th><th>Date</th><th>Marks</th><th>Status</th><th></th></tr></thead><tbody><tr *ngFor="let x of exams"><td>{{x.name}}<small>{{x.type}}</small></td><td>{{x.className}}</td><td>{{x.subjectName}}</td><td>{{x.examDate}}</td><td>{{x.passMarks}} / {{x.maxMarks}}</td><td>{{x.active?'Active':'Inactive'}}</td><td><button (click)="open(x)">Edit</button><button (click)="toggle(x)">{{x.active?'Deactivate':'Activate'}}</button></td></tr></tbody></table></section></div>
+<div class="exams">
+  <header>
+    <div>
+      <h1>Exam Schedule</h1>
+      <p>Manage real examination records from the school database.</p>
+    </div>
+    <button class="add-exam" type="button" (click)="open()">+ Add exam</button>
+  </header>
+
+  <p *ngIf="error" class="error">{{ error }}</p>
+
+  <form id="exam-editor" *ngIf="show" (ngSubmit)="save()">
+    <h2>{{ editing ? 'Edit exam' : 'Create exam' }}</h2>
+
+    <label>Exam Name
+      <input [(ngModel)]="form.name" name="name" required>
+    </label>
+    <label>Academic Year
+      <select [(ngModel)]="form.academicYearId" name="year" required>
+        <option [ngValue]="0">Select academic year</option>
+        <option *ngFor="let x of years" [ngValue]="x.id">{{ x.name }}</option>
+      </select>
+    </label>
+    <label>Academic Term
+      <select [(ngModel)]="form.academicTermId" name="term" required>
+        <option [ngValue]="0">Select academic term</option>
+        <option *ngFor="let x of terms" [ngValue]="x.id">{{ x.name }}</option>
+      </select>
+    </label>
+    <label>Class
+      <select [(ngModel)]="form.classId" name="class" required>
+        <option [ngValue]="0">Select class</option>
+        <option *ngFor="let x of classes" [ngValue]="x.id">{{ x.name }}</option>
+      </select>
+    </label>
+    <label>Subject
+      <select [(ngModel)]="form.subjectId" name="subject" required>
+        <option [ngValue]="0">Select subject</option>
+        <option *ngFor="let x of subjects" [ngValue]="x.id">{{ x.name }}</option>
+      </select>
+    </label>
+    <label>Exam Type
+      <select [(ngModel)]="form.type" name="type">
+        <option value="UNIT_TEST">Unit test</option>
+        <option value="TERM_TEST">Term test</option>
+        <option value="FINAL_EXAM">Final exam</option>
+        <option value="ASSIGNMENT">Assignment</option>
+        <option value="PRACTICAL">Practical</option>
+      </select>
+    </label>
+    <label>Exam Date
+      <input [(ngModel)]="form.examDate" name="date" type="date" required>
+    </label>
+    <label>Full Marks
+      <input [(ngModel)]="form.maxMarks" name="max" type="number" min="1" required>
+    </label>
+    <label>Pass Percentage
+      <input [(ngModel)]="form.passPercentage" name="percentage" type="number" min="0" max="100" required>
+    </label>
+    <label class="wide">Description
+      <textarea [(ngModel)]="form.description" name="description" placeholder="Optional exam details"></textarea>
+    </label>
+    <div class="form-actions">
+      <button class="cancel-exam" type="button" (click)="closeEditor()">Cancel</button>
+      <button class="save-exam" [disabled]="saving">{{ saving ? 'Saving...' : (editing ? 'Save changes' : 'Create exam') }}</button>
+    </div>
+  </form>
+
+  <section>
+    <div *ngIf="loading">Loading exams...</div>
+    <div *ngIf="!loading && !exams.length">No exam records found.</div>
+    <table *ngIf="exams.length">
+      <thead><tr><th>Exam</th><th>Class</th><th>Subject</th><th>Date</th><th>Pass Percentage</th><th>Actions</th></tr></thead>
+      <tbody>
+        <tr *ngFor="let x of exams" [class.selected-exam]="editing?.id === x.id">
+          <td>{{ x.name }}<small>{{ x.type }}</small></td>
+          <td>{{ x.className }}</td>
+          <td>{{ x.subjectName }}</td>
+          <td>{{ x.examDate }}</td>
+          <td>{{ passPercentage(x) }}%</td>
+          <td>
+            <button class="edit-action" type="button" (click)="open(x)">Edit</button>
+            <button class="status-action" type="button" [class.deactivate]="x.active" [class.activate]="!x.active" (click)="toggle(x)">{{ x.active ? 'Deactivate' : 'Activate' }}</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</div>
