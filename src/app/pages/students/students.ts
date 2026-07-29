@@ -17,12 +17,11 @@ interface StudentRow {
   id: number;
   studentId: string;
   name: string;
-  email: string;
   avatarUrl?: string;
   initials?: string;
   avatarTheme?: 'blue' | 'purple';
   className: string;
-  contact: string;
+  status: string;
 }
 
 interface DocItem {
@@ -52,13 +51,6 @@ export class Students implements OnInit, OnDestroy {
   totalPages = 1;
   pageSize = 10;
   totalStudents = 0;
-
-  stats = [
-    { label: 'Total Students', value: '0', icon: 'users', theme: 'blue' as const },
-    { label: 'New Registrations', value: '-', icon: 'trend', theme: 'green' as const },
-    { label: 'Attendance Rate', value: '-', icon: 'check', theme: 'orange' as const },
-    { label: 'Fee Status', value: '-', icon: 'card', theme: 'purple' as const }
-  ];
 
   students: StudentRow[] = [];
   classes: { id: number; name: string }[] = [];
@@ -101,8 +93,6 @@ export class Students implements OnInit, OnDestroy {
         fullName: ['', Validators.required],
         dob: ['', Validators.required],
         gender: ['', Validators.required],
-        bloodGroup: [''],
-        nationality: ['']
       }),
 
       academic: this.fb.group({
@@ -110,7 +100,6 @@ export class Students implements OnInit, OnDestroy {
         medium: ['ENGLISH', Validators.required],
         previousSchool: [''],
         admissionDate: ['', Validators.required],
-        section: ['']
       }),
 
       guardian: this.fb.group({
@@ -210,7 +199,7 @@ export class Students implements OnInit, OnDestroy {
   }
 
   onCancelEnrollment(): void {
-    this.enrollmentForm.reset();
+    this.enrollmentForm.reset({ academic: { medium: 'ENGLISH' } });
     this.currentStep = 1;
     this.documents.forEach(doc => {
       doc.uploaded = false;
@@ -280,8 +269,10 @@ export class Students implements OnInit, OnDestroy {
     this.loading = true;
     this.errorMessage = '';
 
-    this.studentsRequest = this.studentService
-      .getStudents(this.currentPage - 1, this.pageSize)
+    const request = this.searchTerm.trim()
+      ? this.studentService.searchStudents(this.searchTerm.trim(), this.currentPage - 1, this.pageSize)
+      : this.studentService.getStudents(this.currentPage - 1, this.pageSize);
+    this.studentsRequest = request
       .pipe(finalize(() => {
         if (requestVersion === this.studentsRequestVersion) {
           this.loading = false;
@@ -297,7 +288,6 @@ export class Students implements OnInit, OnDestroy {
             studentId:
               student.admissionNumber ?? ('STU-' + student.id),
             name: student.name,
-            email: student.currentAcademicYearName ?? '',
             avatarUrl: '',
             initials: student.name
               ?.split(' ')
@@ -307,7 +297,7 @@ export class Students implements OnInit, OnDestroy {
             avatarTheme: 'blue',
             className:
               student.currentClassName ?? 'Not Assigned',
-            contact: student.active ? 'Active' : 'Inactive',
+            status: student.active ? 'Active' : 'Inactive',
           }));
           this.cdr.detectChanges();
         },
@@ -322,44 +312,7 @@ export class Students implements OnInit, OnDestroy {
 
   }
 
-  search(): void {
-
-    if (!this.searchTerm.trim()) {
-      this.loadStudents();
-      return;
-    }
-    this.studentService
-      .searchStudents(this.searchTerm)
-      .subscribe({
-        next: response => {
-          this.totalPages = Math.max(response.totalPages, 1);
-          this.totalStudents = response.totalElements;
-          this.students = response.content.map((student: any) => ({
-            id: student.id,
-            studentId:
-              student.admissionNumber ||
-              `STU-${student.id}`,
-            name: student.name,
-            email: student.currentAcademicYearName || '',
-            avatarUrl: '',
-            initials: student.name
-              ?.split(' ')
-              .map((word: string) => word.charAt(0))
-              .join('')
-              .substring(0, 2),
-            avatarTheme: 'blue',
-            className:
-              student.currentClassName || 'Not Assigned',
-            contact:
-              student.active ? 'Active' : 'Inactive'
-          }));
-        },
-
-        error: error => {
-          console.error(error);
-        }
-      });
-  }
+  search(): void { this.currentPage = 1; this.loadStudents(); }
 
   goToPage(page: number): void {
 
